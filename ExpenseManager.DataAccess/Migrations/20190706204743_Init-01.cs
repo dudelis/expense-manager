@@ -14,9 +14,9 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true)
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -27,8 +27,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 name: "Currencies",
                 columns: table => new
                 {
-                    Code = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Code = table.Column<string>(fixedLength: true, maxLength: 3, nullable: false),
+                    Name = table.Column<string>(maxLength: 25, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -63,8 +63,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
                     Name = table.Column<string>(nullable: true),
                     AccountNumber = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
@@ -100,7 +100,7 @@ namespace ExpenseManager.DataAccess.Migrations
                         column: x => x.AccountTypeId,
                         principalTable: "AccountTypes",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Accounts_Currencies_CurrencyCode",
                         column: x => x.CurrencyCode,
@@ -115,8 +115,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    UpdatedOn = table.Column<DateTime>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
                     Name = table.Column<string>(nullable: true),
                     ExpenseDate = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),

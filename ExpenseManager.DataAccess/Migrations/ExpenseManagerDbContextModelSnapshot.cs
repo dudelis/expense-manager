@@ -63,11 +63,17 @@ namespace ExpenseManager.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetDate()");
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
-                    b.Property<DateTime?>("UpdatedOn");
+                    b.Property<DateTime?>("UpdatedOn")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetDate()");
 
                     b.HasKey("Id");
 
@@ -77,9 +83,12 @@ namespace ExpenseManager.DataAccess.Migrations
             modelBuilder.Entity("ExpenseManager.Entities.Concrete.Currency", b =>
                 {
                     b.Property<string>("Code")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .IsFixedLength(true)
+                        .HasMaxLength(3);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .HasMaxLength(25);
 
                     b.HasKey("Code");
 
@@ -96,7 +105,9 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<int?>("CategoryId");
 
-                    b.Property<DateTime>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("CurrencyCode");
 
@@ -110,7 +121,10 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<int?>("PayeeId");
 
-                    b.Property<DateTime?>("UpdatedOn");
+                    b.Property<DateTime?>("UpdatedOn")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetDate()");
 
                     b.HasKey("Id");
 
@@ -159,7 +173,9 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<string>("AccountNumber");
 
-                    b.Property<DateTime>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd()
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("Name");
 
@@ -167,7 +183,10 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<string>("PhoneNumber");
 
-                    b.Property<DateTime?>("UpdatedOn");
+                    b.Property<DateTime?>("UpdatedOn")
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasDefaultValueSql("GetDate()");
 
                     b.Property<string>("WebSite");
 
@@ -181,30 +200,35 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.HasOne("ExpenseManager.Entities.Concrete.AccountType", "AccountType")
                         .WithMany("Accounts")
                         .HasForeignKey("AccountTypeId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ExpenseManager.Entities.Concrete.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyCode");
+                        .WithMany("Accounts")
+                        .HasForeignKey("CurrencyCode")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("ExpenseManager.Entities.Concrete.Expense", b =>
                 {
                     b.HasOne("ExpenseManager.Entities.Concrete.ExpenseCategory", "Category")
                         .WithMany("Expenses")
-                        .HasForeignKey("CategoryId");
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ExpenseManager.Entities.Concrete.Currency", "Currency")
-                        .WithMany()
-                        .HasForeignKey("CurrencyCode");
+                        .WithMany("Expenses")
+                        .HasForeignKey("CurrencyCode")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ExpenseManager.Entities.Concrete.Account", "PayFromAccount")
-                        .WithMany()
-                        .HasForeignKey("PayFromAccountId");
+                        .WithMany("Expenses")
+                        .HasForeignKey("PayFromAccountId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ExpenseManager.Entities.Concrete.Payee", "Payee")
                         .WithMany("Expenses")
-                        .HasForeignKey("PayeeId");
+                        .HasForeignKey("PayeeId")
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("ExpenseManager.Entities.Concrete.ExpenseCategory", b =>

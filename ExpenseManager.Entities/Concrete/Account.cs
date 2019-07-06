@@ -22,5 +22,8 @@ namespace ExpenseManager.Entities.Concrete
         public bool IncludeInTotals { get; set; }
 
 
+        public virtual ICollection<Expense> Expenses { get; set; }
+
+
     }
 }

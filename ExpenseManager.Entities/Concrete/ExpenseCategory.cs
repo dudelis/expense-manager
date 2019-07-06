@@ -10,8 +10,8 @@ namespace ExpenseManager.Entities.Concrete
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }
         public virtual ExpenseCategory ParentCategory { get; set; }
-        public virtual ICollection<ExpenseCategory> ChildCategories { get; set; }
 
+        public virtual ICollection<ExpenseCategory> ChildCategories { get; set; }
         public virtual ICollection<Expense> Expenses { get; set; }
     }
 }
