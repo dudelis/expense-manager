@@ -6,5 +6,6 @@ namespace ExpenseManager.Entities.Interfaces
 {
     public interface IEntity
     {
+
     }
 }
