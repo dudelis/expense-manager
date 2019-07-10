@@ -9,35 +9,35 @@ namespace ExpenseManager.Business.Concrete
 {
     public class AccountTypeManager : IAccountTypeService
     {
-        private IAccountTypeRepository _repository;
+        private IRepositoryWrapper _repository;
 
-        public AccountTypeManager(IAccountTypeRepository repository)
+        public AccountTypeManager(IRepositoryWrapper repository)
         {
             this._repository = repository;
         }
         public void Create(AccountType entity)
         {
-            this._repository.Create(entity);
+            this._repository.AccountType.Create(entity);
         }
 
         public void Delete(AccountType entity)
         {
-            this._repository.Delete(entity);
+            this._repository.AccountType.Delete(entity);
         }
 
         public List<AccountType> GetAll()
         {
-            return this._repository.GetList();
+            return this._repository.AccountType.GetList();
         }
 
         public AccountType GetById(int id)
         {
-            return this._repository.Get(e => e.Id == id);
+            return this._repository.AccountType.Get(e => e.Id == id);
         }
 
         public void Update(AccountType entity)
         {
-            this._repository.Update(entity);
+            this._repository.AccountType.Update(entity);
         }
     }
 }

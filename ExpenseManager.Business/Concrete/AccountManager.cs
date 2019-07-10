@@ -9,40 +9,40 @@ namespace ExpenseManager.Business.Concrete
 {
     public class AccountManager : IAccountService
     {
-        private IAccountRepository _repository;
-        public AccountManager(IAccountRepository repository)
+        private IRepositoryWrapper _repository;
+        public AccountManager(IRepositoryWrapper repository)
         {
             this._repository = repository;
         }
 
         public void Create(Account account)
         {
-            this._repository.Create(account);
+            this._repository.Account.Create(account);
         }
 
         public void Delete(Account account)
         {
-            this._repository.Delete(account);
+            this._repository.Account.Delete(account);
         }
 
         public List<Account> GetAll()
         {
-            return this._repository.GetList();
+            return this._repository.Account.GetList();
         }
 
         public void Update(Account account)
         {
-            this._repository.Update(account);
+            this._repository.Account.Update(account);
         }
 
         public List<Account> GetAllByAccountType(int accountTypeId)
         {
-            return this._repository.GetList(a => a.AccountTypeId == accountTypeId);
+            return this._repository.Account.GetList(a => a.AccountTypeId == accountTypeId);
         }
 
         public Account GetById(int accountId)
         {
-            return this._repository.Get(a => a.Id == accountId);
+            return this._repository.Account.Get(a => a.Id == accountId);
         }
     }
 }

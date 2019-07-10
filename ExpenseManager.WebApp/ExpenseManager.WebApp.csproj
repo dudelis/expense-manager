@@ -12,4 +12,11 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <ProjectReference Include="..\ExpenseManager.Business\ExpenseManager.Business.csproj" />
+    <ProjectReference Include="..\ExpenseManager.DataAccess\ExpenseManager.DataAccess.csproj" />
+    <ProjectReference Include="..\ExpenseManager.Entities\ExpenseManager.Entities.csproj" />
+  </ItemGroup>
+
 </Project>

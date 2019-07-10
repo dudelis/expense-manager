@@ -9,14 +9,14 @@ namespace ExpenseManager.Business.Concrete
 {
     public class CurrencyManager : ICurrencyService
     {
-        private ICurrencyRepository _repository;
-        public CurrencyManager(ICurrencyRepository repository)
+        private IRepositoryWrapper _repository;
+        public CurrencyManager(IRepositoryWrapper repository)
         {
             this._repository = repository;
         }
         public List<Currency> GetAll()
         {
-            return this._repository.GetList();
+            return this._repository.Currency.GetList();
         }
     }
 }

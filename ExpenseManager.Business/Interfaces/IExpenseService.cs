@@ -7,7 +7,7 @@ namespace ExpenseManager.Business.Interfaces
 {
     public interface IExpenseService: IServiceBase<Expense>
     {
-        List<Expense> GetByDate(DateTime epenseDate);
+        List<Expense> GetByExpenseDate(DateTime epenseDate);
         List<Expense> GetByAccount(int payFromAccountId);
         List<Expense> GetByCategory(int expenseCategoryId);
         List<Expense> GetByPayee(int payeeId);
