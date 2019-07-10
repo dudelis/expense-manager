@@ -8,9 +8,9 @@ namespace ExpenseManager.WebApp.Controllers
 {
     public class TestController : Controller
     {
-        public string Index()
+        public IActionResult Index()
         {
-            return "This is the Index controller";
+            return View();
         }
     }
 }

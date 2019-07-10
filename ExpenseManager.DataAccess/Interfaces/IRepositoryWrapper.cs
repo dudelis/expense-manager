@@ -7,7 +7,7 @@ namespace ExpenseManager.DataAccess.Interfaces
     public interface IRepositoryWrapper
     {
         IAccountRepository Account { get;  }
-        IAccountRepository AccountType { get; }
+        IAccountTypeRepository AccountType { get; }
         ICurrencyRepository Currency { get; }
         IExpenseRepository Expense { get; }
         IExpenseCategoryRepository ExpenseCategory { get; }
