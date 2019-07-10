@@ -44,5 +44,15 @@ namespace ExpenseManager.Business.Concrete
         {
             return this._repository.Account.Get(a => a.Id == accountId);
         }
+
+        public void SaveChanges()
+        {
+            this._repository.Save();
+        }
+
+        public bool ItemExists(int id)
+        {
+            return this._repository.Account.ItemExists(a => a.Id == id);
+        }
     }
 }

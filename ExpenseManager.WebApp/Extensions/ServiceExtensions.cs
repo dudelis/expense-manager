@@ -1,5 +1,7 @@
-﻿using ExpenseManager.Business.Interfaces;
+﻿using ExpenseManager.Business.Concrete;
+using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
+using ExpenseManager.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,8 +21,13 @@ namespace ExpenseManager.WebApp.Extensions
         }
         public static void ConfigureDataManagers(this IServiceCollection services)
         {
-            services.AddScoped<IAccountService, EfAccountRepository>();
-            services.AddScoped<IFunctionTypeService, FunctionTypeManager>();
+            //Adding Data Access for Repository - SQL Implementation
+            services.AddScoped<IRepositoryWrapper, EfRepositoryWrapper>();
+            //Adding all the Entity managers, which are to be used in the Controllers
+            services.AddScoped<IAccountService, AccountManager>();
+            services.AddScoped<IAccountTypeService, AccountTypeManager>();
+            services.AddScoped<ICurrencyService, CurrencyManager>();
+            services.AddScoped<IExpenseService, ExpenseDataManager>();
         }
     }
 }

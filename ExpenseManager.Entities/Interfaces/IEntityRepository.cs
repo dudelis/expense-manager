@@ -9,8 +9,9 @@ namespace ExpenseManager.Entities.Interfaces
     {
         List<T> GetList(Expression<Func<T, bool>> filter = null);
         T Get(Expression<Func<T, bool>> filter);
+        bool ItemExists(Expression<Func<T, bool>> filter);
         void Create(T entity);
         void Update(T entity);
-        void Delete(T entity);
+        void Delete(T entity);        
     }
 }

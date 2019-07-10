@@ -35,9 +35,18 @@ namespace ExpenseManager.Business.Concrete
             return this._repository.AccountType.Get(e => e.Id == id);
         }
 
+        public void SaveChanges()
+        {
+            this._repository.Save();
+        }
+
         public void Update(AccountType entity)
         {
             this._repository.AccountType.Update(entity);
+        }
+        public bool ItemExists(int id)
+        {
+            return this._repository.AccountType.ItemExists(a => a.Id == id);
         }
     }
 }

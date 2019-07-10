@@ -40,6 +40,11 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 this._context.Set<TEntity>().Where(filter).ToList();
         }
 
+        public bool ItemExists(Expression<Func<TEntity, bool>> filter)
+        {
+            return this._context.Set<TEntity>().Any(filter);
+        }
+
         public void Update(TEntity entity)
         {
             this._context.Set<TEntity>().Update(entity);

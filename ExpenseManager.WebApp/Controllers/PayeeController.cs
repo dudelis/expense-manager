@@ -13,20 +13,6 @@ namespace ExpenseManager.WebApp.Controllers
         {
             return View();
         }
-        public IActionResult Details()
-        {
-            Payee payee = new Payee()
-            {
-                Id = 1,
-                CreatedOn = DateTime.Now,
-                UpdatedOn = DateTime.Now,
-                Name = "Metro",
-                AccountNumber = "111222333",
-                PhoneNumber = "999-000-111",
-                WebSite = "https://metro.de",
-                Notes = "Some notes"
-            };
-            return View(payee);
-        }
+        
     }
 }

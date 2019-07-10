@@ -7,11 +7,11 @@ using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class ExpenseManager : IExpenseService
+    public class ExpenseDataManager : IExpenseService
     {
         private IRepositoryWrapper _repository;
 
-        public ExpenseManager(IRepositoryWrapper repository)
+        public ExpenseDataManager(IRepositoryWrapper repository)
         {
             this._repository = repository;
         }
@@ -55,9 +55,18 @@ namespace ExpenseManager.Business.Concrete
             return this._repository.Expense.GetList(e => e.PayeeId == payeeId);
         }
 
+        public void SaveChanges()
+        {
+            this._repository.Save();
+        }
+
         public void Update(Expense entity)
         {
             this._repository.Expense.Update(entity);
+        }
+        public bool ItemExists(int id)
+        {
+            return this._repository.Expense.ItemExists(a => a.Id == id);
         }
     }
 }

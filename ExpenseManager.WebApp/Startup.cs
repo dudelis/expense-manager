@@ -26,6 +26,7 @@ namespace ExpenseManager.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureSqlContext(Configuration);
+            services.ConfigureDataManagers();
 
             services.Configure<CookiePolicyOptions>(options =>
             {
