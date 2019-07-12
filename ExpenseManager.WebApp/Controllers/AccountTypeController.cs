@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
+using ExpenseManager.WebApp.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,7 +22,9 @@ namespace ExpenseManager.WebApp.Controllers
         //GET: AccountTypes
         public IActionResult Index()
         {
-            return View(_service.GetAll());
+            var types = _service.GetAll();
+            var typesDto = AccountTypeDto.Convert(types);
+            return View(typesDto);
         }
         
         public IActionResult Details(int? id)
@@ -36,7 +39,7 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 return NotFound();
             }
-            return View(accountType);
+            return View(new AccountTypeDto(accountType));
         }
         //GET: AccountType/Create
         public IActionResult Create()
@@ -45,11 +48,13 @@ namespace ExpenseManager.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name")] AccountType accountType)
+        public IActionResult Create([Bind("Name")] AccountTypeDto accountType)
         {
             if (ModelState.IsValid)
             {
-                _service.Create(accountType);
+                _service.Create(new AccountType() {
+                    Name = accountType.Name
+                });
                 _service.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
@@ -68,13 +73,13 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 return NotFound();
             }
-            return View(accountType);
+            return View(new AccountTypeDto(accountType));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id, Name")] AccountType accountType)
+        public IActionResult Edit(int id, [Bind("Id, Name")] AccountTypeDto type)
         {
-            if (id != accountType.Id)
+            if (id != type.Id)
             {
                 return NotFound();
             }
@@ -82,7 +87,7 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 try
                 {
-                    _service.Update(accountType);
+                    _service.Update(new AccountType() { Name = type.Name });
                     _service.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -99,7 +104,7 @@ namespace ExpenseManager.WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(accountType);
+            return View(type);
         }
     }
 }
