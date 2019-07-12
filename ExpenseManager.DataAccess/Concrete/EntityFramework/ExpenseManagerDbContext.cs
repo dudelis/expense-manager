@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
@@ -10,7 +11,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
     {
         public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options): base(options)
         {
-            
+            Database.Migrate();
         }
 
         public DbSet<Account> Accounts { get; set; }
@@ -21,6 +22,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public DbSet<Payee> Payees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
+
         {
             modelBuilder.Entity<Account>(entity =>
             {
@@ -52,14 +54,6 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             {
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
-
-                entity.Property(p => p.CreatedOn).IsRequired();
-                entity.Property(p => p.CreatedOn).ValueGeneratedOnAdd();
-                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GetDate()");
-
-                entity.Property(p => p.UpdatedOn).IsRequired();
-                entity.Property(p => p.UpdatedOn).ValueGeneratedOnAddOrUpdate();
-                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GetDate()");
 
                 entity.Property(p => p.Name).IsRequired();
             });
@@ -122,10 +116,25 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GetDate()");
             });
 
+        }
+        public override int SaveChanges()
+        {
+            AddTimeStamps();
+            return base.SaveChanges();
+        }
 
+        private void AddTimeStamps()
+        {
+            var entities = ChangeTracker.Entries().Where(x => x.Entity is BaseEntity && (x.State == EntityState.Added || x.State == EntityState.Modified));
 
-
-
+            foreach (var entity in entities)
+            {
+                if (entity.State == EntityState.Added)
+                {
+                    ((BaseEntity)entity.Entity).CreatedOn = DateTime.UtcNow;
+                }
+                ((BaseEntity)entity.Entity).UpdatedOn = DateTime.UtcNow;
+            }
         }
     }
 }

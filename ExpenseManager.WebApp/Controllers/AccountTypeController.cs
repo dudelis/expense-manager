@@ -38,6 +38,38 @@ namespace ExpenseManager.WebApp.Controllers
             }
             return View(accountType);
         }
+        //GET: AccountType/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Create([Bind("Name")] AccountType accountType)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Create(accountType);
+                _service.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            return View();
+        }
+        // GET: Books/Edit/5
+        public IActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var accountType = _service.GetById(Convert.ToInt32(id));
+            if (accountType == null)
+            {
+                return NotFound();
+            }
+            return View(accountType);
+        }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(int id, [Bind("Id, Name")] AccountType accountType)
