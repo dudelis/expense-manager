@@ -14,9 +14,35 @@ namespace ExpenseManager.Business.Concrete
         {
             this._repository = repository;
         }
+
+        public void Create(Currency currency)
+        {
+            this._repository.Currency.Create(currency);
+        }
+
+        public void Delete(Currency currency)
+        {
+            this._repository.Currency.Delete(currency);
+        }
+
         public List<Currency> GetAll()
         {
             return this._repository.Currency.GetList();
+        }
+
+        public Currency GetById(string code)
+        {
+            return this._repository.Currency.Get(x => x.Code == code);
+        }
+
+        public bool ItemExists(string code)
+        {
+            return this._repository.Currency.ItemExists(x => x.Code == code);
+        }
+
+        public void Update(Currency currency)
+        {
+            this._repository.Currency.Update(currency);
         }
     }
 }
