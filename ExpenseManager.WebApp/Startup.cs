@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.WebApp.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -41,7 +42,7 @@ namespace ExpenseManager.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ExpenseManagerDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -58,6 +59,7 @@ namespace ExpenseManager.WebApp
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            //context.SeedData();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
