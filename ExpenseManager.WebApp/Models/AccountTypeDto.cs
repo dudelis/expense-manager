@@ -15,23 +15,21 @@ namespace ExpenseManager.WebApp.Models
         [Required]
         [Display(Name = "Account Type Name")]
         public string Name { get; set; }
+        public ICollection<AccountDto> Accounts { get; set; }
 
-        public AccountTypeDto()
-        {
-
-        }
         public AccountTypeDto(AccountType source)
         {
             Id = source.Id;
             CreatedOn = source.CreatedOn;
             UpdatedOn = source.UpdatedOn;
             Name = source.Name;
+            Accounts = AccountDto.Convert(source.Accounts);
         }
-        public static IEnumerable<AccountTypeDto> Convert(IEnumerable<AccountType> types)
+        public static ICollection<AccountTypeDto> Convert(ICollection<AccountType> types)
         {
             if (types == null)
                 return null;
-            return types.Select(x => new AccountTypeDto(x));
+            return types.Select(x => new AccountTypeDto(x)).ToList();
         }
     }
 }
