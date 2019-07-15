@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Navbar";
+}
+
+
+<nav class="navbar navbar-dark bg-dark navbar-toggleable-sm navbar-expand-sm border-bottom box-shadow mb-3">
+
+    <div class="container">
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ExpenseManager.WebApp</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Entities
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" asp-controller="Account" asp-action="Index">Account</a>
+                        <a class="dropdown-item" asp-controller="AccountType" asp-action="Index">Account Type</a>
+                        <a class="dropdown-item" asp-controller="Currency" asp-action="Index">Currency</a>
+                        <a class="dropdown-item" asp-controller="ExpenseCategory" asp-action="Index">Expense Category</a>
+                        <a class="dropdown-item" asp-controller="Expense" asp-action="Index">Expense</a>
+                        <a class="dropdown-item" asp-controller="Payee" asp-action="Index">Payee</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+

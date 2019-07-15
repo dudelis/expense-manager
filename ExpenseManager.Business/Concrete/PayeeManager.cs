@@ -22,7 +22,7 @@ namespace ExpenseManager.Business.Concrete
 
         public void Delete(Payee entity)
         {
-            throw new NotImplementedException();
+            _repository.Payee.Delete(entity);
         }
 
         public List<Payee> GetAll()

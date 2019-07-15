@@ -28,15 +28,7 @@ namespace ExpenseManager.WebApp.Controllers
         {
             return View();
         }
-        public IActionResult Details(string id)
-        {
-            if (id == null)
-                return NotFound();
-            var currency = _service.GetById(id);
-            if (currency == null)
-                return NotFound();
-            return View(new CurrencyDto(currency));
-        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create([Bind("Code, Name")] CurrencyDto currency)

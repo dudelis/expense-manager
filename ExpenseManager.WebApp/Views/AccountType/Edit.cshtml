@@ -1,27 +1,24 @@
 ﻿@model  AccountTypeDto
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Account Type";
 }
 
-<h1>Edit</h1>
+<h3>@ViewData["Title"]</h3>
 <hr/>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-10">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary btn-sm float-right" />
+                <input asp-action="Index" type="submit" value="Cancel" class="btn btn-secondary btn-sm" />
+            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-                <input asp-action="Index" type="submit" value="Cancel" class="btn btn-secondary" />
-            </div>
         </form>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Back to List</a>
 </div>

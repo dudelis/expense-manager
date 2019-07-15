@@ -1,8 +1,8 @@
 ﻿@model IEnumerable<ExpenseManager.WebApp.Models.CurrencyDto>
 
-<h1>Currencies</h1>
+<h4>Currencies</h4>
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary btn-sm">New Currency</a>
 </p>
 <table class="table">
     <thead>
@@ -27,7 +27,6 @@
             </td>
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id=item.Code}) |
-                @Html.ActionLink("Details", "Details", new { id = item.Code }) |
                 @Html.ActionLink("Delete", "Delete", new { id = item.Code })
             </td>
         </tr>

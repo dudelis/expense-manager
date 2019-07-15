@@ -1,53 +1,55 @@
 ﻿@model IEnumerable<AccountTypeDto>
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Account Types";
     AccountTypeDto firstType = Model.ToList().FirstOrDefault();
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="btn btn-primary btn-sm">Add</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <label asp-for="@firstType.Id"></label>
-            </th>
-            <th>
-                <label asp-for="@firstType.Name"></label>
-            </th>
-            <th>
-                <label asp-for="@firstType.CreatedOn"></label>
-            </th>
-            <th>
-                <label asp-for="@firstType.UpdatedOn"></label>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-responsive-sm">
+    <table class="table">
+        <thead>
             <tr>
-                <td>
-                    <label>@item.Id</label>
-                </td>
-                <td>
-                    <label>@item.Name</label>
-                </td>
-                <td>
-                    <label>@item.CreatedOn</label>
-                </td>
-                <td>
-                    <label>@item.UpdatedOn</label>
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
+                <th>
+                    <label asp-for="@firstType.Id"></label>
+                </th>
+                <th>
+                    <label asp-for="@firstType.Name"></label>
+                </th>
+                <th>
+                    <label asp-for="@firstType.CreatedOn"></label>
+                </th>
+                <th>
+                    <label asp-for="@firstType.UpdatedOn"></label>
+                </th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <label>@item.Id</label>
+                    </td>
+                    <td>
+                        <label>@item.Name</label>
+                    </td>
+                    <td>
+                        <label>@item.CreatedOn</label>
+                    </td>
+                    <td>
+                        <label>@item.UpdatedOn</label>
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

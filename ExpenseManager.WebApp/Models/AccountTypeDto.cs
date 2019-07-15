@@ -10,7 +10,7 @@ namespace ExpenseManager.WebApp.Models
     public class AccountTypeDto: BaseEntityDto
     {
         [Required]
-        [Display(Name = "Account Type Name")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
         public ICollection<AccountDto> Accounts { get; set; }
 
