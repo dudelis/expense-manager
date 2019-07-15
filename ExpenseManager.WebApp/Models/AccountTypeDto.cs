@@ -7,15 +7,17 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class AccountTypeDto
+    public class AccountTypeDto: BaseEntityDto
     {
-        public int Id { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
         [Required]
         [Display(Name = "Account Type Name")]
         public string Name { get; set; }
         public ICollection<AccountDto> Accounts { get; set; }
+
+        public AccountTypeDto()
+        {
+
+        }
 
         public AccountTypeDto(AccountType source)
         {

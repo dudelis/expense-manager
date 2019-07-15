@@ -1,25 +1,28 @@
 ﻿using ExpenseManager.Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class PayeeDto
+    public class PayeeDto: BaseEntityDto
     {
-        public int Id { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
-
+        [Required(ErrorMessage ="Name is a required field")]
         public string Name { get; set; }
+        [Display(Name = "Account Number")]
         public string AccountNumber { get; set; }
+        [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
         public string WebSite { get; set; }
         public string Notes { get; set; }
 
         public ICollection<ExpenseDto> Expenses { get; set; }
+        public PayeeDto()
+        {
 
+        }
         public PayeeDto(Payee payee)
         {
             Id = payee.Id;

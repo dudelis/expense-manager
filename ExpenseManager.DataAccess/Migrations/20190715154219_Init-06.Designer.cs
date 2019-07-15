@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ExpenseManager.DataAccess.Migrations
 {
     [DbContext(typeof(ExpenseManagerDbContext))]
-    [Migration("20190712191639_Init-02")]
-    partial class Init02
+    [Migration("20190715154219_Init-06")]
+    partial class Init06
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -33,10 +33,8 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<DateTime>("BalanceDate");
 
-                    b.Property<DateTime?>("CreatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GetDate()");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CurrencyCode");
 
@@ -47,9 +45,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<string>("Name");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GetDate()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -66,12 +62,14 @@ namespace ExpenseManager.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("CreatedOn");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<DateTime?>("UpdatedOn");
+                    b.Property<DateTime?>("UpdatedOn")
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -103,10 +101,8 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<int?>("CategoryId");
 
-                    b.Property<DateTime?>("CreatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GetDate()");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CurrencyCode");
 
@@ -121,9 +117,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<int?>("PayeeId");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GetDate()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -144,19 +138,15 @@ namespace ExpenseManager.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<DateTime?>("CreatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GetDate()");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
                     b.Property<int?>("ParentCategoryId");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GetDate()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -173,21 +163,18 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<string>("AccountNumber");
 
-                    b.Property<DateTime?>("CreatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GetDate()");
+                    b.Property<DateTime>("CreatedOn")
+                        .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Name");
+                    b.Property<string>("Name")
+                        .IsRequired();
 
                     b.Property<string>("Notes");
 
                     b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GetDate()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("WebSite");
 

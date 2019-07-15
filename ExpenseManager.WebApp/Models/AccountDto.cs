@@ -6,11 +6,8 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class AccountDto
+    public class AccountDto: BaseEntityDto
     {
-        public int Id { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
         public string Name { get; set; }
         public string IconCode { get; set; }
 

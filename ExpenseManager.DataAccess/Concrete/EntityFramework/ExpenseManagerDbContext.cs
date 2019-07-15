@@ -28,14 +28,11 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             {
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
-
                 entity.Property(p => p.CreatedOn).IsRequired();
-                entity.Property(p => p.CreatedOn).ValueGeneratedOnAdd();
-                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GetDate()");
-
+                entity.Property(p => p.CreatedOn).ValueGeneratedOnAddOrUpdate();
+                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(p => p.UpdatedOn).IsRequired();
-                entity.Property(p => p.UpdatedOn).ValueGeneratedOnAddOrUpdate();
-                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GetDate()");
+                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GETUTCDATE()");
 
                 entity
                     .HasOne(p => p.Currency)
@@ -55,6 +52,12 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
 
+                entity.Property(p => p.CreatedOn).IsRequired();
+                entity.Property(p => p.CreatedOn).ValueGeneratedOnAddOrUpdate();
+                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GETUTCDATE()");
+                entity.Property(p => p.UpdatedOn).IsRequired();
+                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GETUTCDATE()");
+
                 entity.Property(p => p.Name).IsRequired();
             });
 
@@ -67,14 +70,11 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<Expense>(entity => {
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
-
                 entity.Property(p => p.CreatedOn).IsRequired();
-                entity.Property(p => p.CreatedOn).ValueGeneratedOnAdd();
-                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GetDate()");
-
+                entity.Property(p => p.CreatedOn).ValueGeneratedOnAddOrUpdate();
+                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(p => p.UpdatedOn).IsRequired();
-                entity.Property(p => p.UpdatedOn).ValueGeneratedOnAddOrUpdate();
-                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GetDate()");
+                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GETUTCDATE()");
 
                 entity.HasOne(p => p.Category).WithMany(p => p.Expenses).HasForeignKey(p => p.CategoryId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(p => p.PayFromAccount).WithMany(p => p.Expenses).HasForeignKey(p => p.PayFromAccountId).OnDelete(DeleteBehavior.Restrict);
@@ -86,14 +86,11 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             {
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
-
                 entity.Property(p => p.CreatedOn).IsRequired();
-                entity.Property(p => p.CreatedOn).ValueGeneratedOnAdd();
-                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GetDate()");
-
+                entity.Property(p => p.CreatedOn).ValueGeneratedOnAddOrUpdate();
+                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(p => p.UpdatedOn).IsRequired();
-                entity.Property(p => p.UpdatedOn).ValueGeneratedOnAddOrUpdate();
-                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GetDate()");
+                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GETUTCDATE()");
 
                 entity
                 .HasOne(c => c.ParentCategory)
@@ -106,14 +103,14 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             {
                 entity.HasKey(p => p.Id);
                 entity.Property(p => p.Id).ValueGeneratedOnAdd();
-
                 entity.Property(p => p.CreatedOn).IsRequired();
-                entity.Property(p => p.CreatedOn).ValueGeneratedOnAdd();
-                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GetDate()");
-
+                entity.Property(p => p.CreatedOn).ValueGeneratedOnAddOrUpdate();
+                entity.Property(p => p.CreatedOn).HasDefaultValueSql("GETUTCDATE()");
                 entity.Property(p => p.UpdatedOn).IsRequired();
-                entity.Property(p => p.UpdatedOn).ValueGeneratedOnAddOrUpdate();
-                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GetDate()");
+                entity.Property(p => p.UpdatedOn).HasDefaultValueSql("GETUTCDATE()");
+
+                entity.Property(p => p.Name).IsRequired();
+
             });
 
         }
@@ -131,9 +128,9 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             {
                 if (entity.State == EntityState.Added)
                 {
-                    ((BaseEntity)entity.Entity).CreatedOn = DateTime.UtcNow;
+                    entity.Property("CreatedOn").CurrentValue = DateTime.UtcNow;
                 }
-                ((BaseEntity)entity.Entity).UpdatedOn = DateTime.UtcNow;
+                entity.Property("UpdatedOn").CurrentValue= DateTime.UtcNow;
             }
         }
     }

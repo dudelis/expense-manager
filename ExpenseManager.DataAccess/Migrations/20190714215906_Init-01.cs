@@ -14,8 +14,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -41,8 +41,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     ParentCategoryId = table.Column<int>(nullable: true)
                 },
@@ -63,9 +63,9 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    Name = table.Column<string>(nullable: true),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: false),
+                    Name = table.Column<string>(nullable: false),
                     AccountNumber = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     WebSite = table.Column<string>(nullable: true),
@@ -82,8 +82,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IconCode = table.Column<string>(nullable: true),
                     CurrencyCode = table.Column<string>(nullable: true),
@@ -115,8 +115,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    CreatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
-                    UpdatedOn = table.Column<DateTime>(nullable: false, defaultValueSql: "GetDate()"),
+                    CreatedOn = table.Column<DateTime>(nullable: true),
+                    UpdatedOn = table.Column<DateTime>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     ExpenseDate = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),

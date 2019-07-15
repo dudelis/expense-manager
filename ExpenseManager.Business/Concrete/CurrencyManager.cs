@@ -44,5 +44,9 @@ namespace ExpenseManager.Business.Concrete
         {
             this._repository.Currency.Update(currency);
         }
+        public void SaveChanges()
+        {
+            this._repository.Save();
+        }
     }
 }

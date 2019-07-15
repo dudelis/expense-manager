@@ -87,7 +87,7 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 try
                 {
-                    _service.Update(new AccountType() { Name = type.Name });
+                    _service.Update(new AccountType() { Id=type.Id, Name = type.Name });
                     _service.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)

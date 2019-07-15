@@ -13,5 +13,6 @@ namespace ExpenseManager.Business.Interfaces
         void Update(Currency currency);
         void Delete(Currency currency);
         bool ItemExists(string code);
+        void SaveChanges();
     }
 }

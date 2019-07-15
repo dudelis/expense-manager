@@ -1,28 +1,27 @@
 ﻿using ExpenseManager.Entities.Concrete;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class ExpenseDto
-    {
-        public int Id { get; set; }
-        public DateTime? CreatedOn { get; set; }
-        public DateTime? UpdatedOn { get; set; }
-        public string Name { get; set; }
+    public class ExpenseDto: BaseEntityDto
+    {        
+        [Required]
         public DateTime ExpenseDate { get; set; }
+        [Required]
         public decimal Amount { get; set; }
         public string Notes { get; set; }
 
         public int? PayFromAccountId { get; set; }
         public AccountDto PayFromAccount { get; set; }
 
-
+        [Required]
         public int? CategoryId { get; set; }
         public ExpenseCategoryDto Category { get; set; }
-
+        [Required]
         public string CurrencyCode { get; set; }
         public CurrencyDto Currency { get; set; }
 
@@ -34,7 +33,6 @@ namespace ExpenseManager.WebApp.Models
             Id = e.Id;
             CreatedOn = e.CreatedOn;
             UpdatedOn = e.UpdatedOn;
-            Name = e.Name;
             ExpenseDate = e.ExpenseDate;
             Amount = e.Amount;
             Notes = e.Notes;

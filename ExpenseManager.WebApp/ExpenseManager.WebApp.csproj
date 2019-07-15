@@ -19,9 +19,4 @@
     <ProjectReference Include="..\ExpenseManager.Entities\ExpenseManager.Entities.csproj" />
   </ItemGroup>
 
-
-  <ItemGroup>
-    <Folder Include="Views\Payee\" />
-  </ItemGroup>
-
 </Project>

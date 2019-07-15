@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExpenseManager.DataAccess.Migrations
 {
-    public partial class Init02 : Migration
+    public partial class Init07 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,15 +11,16 @@ namespace ExpenseManager.DataAccess.Migrations
                 name: "UpdatedOn",
                 table: "AccountTypes",
                 nullable: true,
+                defaultValueSql: "GETUTCDATE()",
                 oldClrType: typeof(DateTime),
-                oldDefaultValueSql: "GetDate()");
+                oldNullable: true);
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedOn",
                 table: "AccountTypes",
-                nullable: true,
-                oldClrType: typeof(DateTime),
-                oldDefaultValueSql: "GetDate()");
+                nullable: false,
+                defaultValueSql: "GETUTCDATE()",
+                oldClrType: typeof(DateTime));
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -27,18 +28,17 @@ namespace ExpenseManager.DataAccess.Migrations
             migrationBuilder.AlterColumn<DateTime>(
                 name: "UpdatedOn",
                 table: "AccountTypes",
-                nullable: false,
-                defaultValueSql: "GetDate()",
+                nullable: true,
                 oldClrType: typeof(DateTime),
-                oldNullable: true);
+                oldNullable: true,
+                oldDefaultValueSql: "GETUTCDATE()");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "CreatedOn",
                 table: "AccountTypes",
                 nullable: false,
-                defaultValueSql: "GetDate()",
                 oldClrType: typeof(DateTime),
-                oldNullable: true);
+                oldDefaultValueSql: "GETUTCDATE()");
         }
     }
 }

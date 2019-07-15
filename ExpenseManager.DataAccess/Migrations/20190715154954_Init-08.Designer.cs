@@ -4,14 +4,16 @@ using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExpenseManager.DataAccess.Migrations
 {
     [DbContext(typeof(ExpenseManagerDbContext))]
-    partial class ExpenseManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190715154954_Init-08")]
+    partial class Init08
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,8 +34,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<DateTime>("BalanceDate");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CurrencyCode");
 
@@ -44,9 +45,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<string>("Name");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -70,10 +69,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
-                    b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    b.Property<DateTime?>("UpdatedOn");
 
                     b.HasKey("Id");
 
@@ -106,8 +102,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<int?>("CategoryId");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("CurrencyCode");
 
@@ -122,9 +117,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<int?>("PayeeId");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -146,17 +139,14 @@ namespace ExpenseManager.DataAccess.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name");
 
                     b.Property<int?>("ParentCategoryId");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.HasKey("Id");
 
@@ -174,8 +164,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<string>("AccountNumber");
 
                     b.Property<DateTime>("CreatedOn")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -185,9 +174,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     b.Property<string>("PhoneNumber");
 
                     b.Property<DateTime?>("UpdatedOn")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                        .ValueGeneratedOnAddOrUpdate();
 
                     b.Property<string>("WebSite");
 

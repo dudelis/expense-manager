@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ExpenseManager.Entities.Concrete
+namespace ExpenseManager.WebApp.Models
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntityDto
     {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }
