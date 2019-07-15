@@ -11,13 +11,13 @@ namespace ExpenseManager.Entities.Concrete
         public string IconCode { get; set; }
 
         public string CurrencyCode { get; set; }
-        public virtual Currency Currency { get; set; }
+        public Currency Currency { get; set; }
 
         public decimal Balance { get; set; }
         public DateTime BalanceDate { get; set; }
 
         public int AccountTypeId { get; set; }
-        public virtual AccountType AccountType { get; set; }
+        public AccountType AccountType { get; set; }
 
         public bool IncludeInTotals { get; set; }
 

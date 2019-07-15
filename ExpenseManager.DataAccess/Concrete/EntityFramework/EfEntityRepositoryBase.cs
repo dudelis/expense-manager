@@ -36,8 +36,13 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 
         public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            return filter == null ? this._context.Set<TEntity>().AsNoTracking().ToList() :
-                this._context.Set<TEntity>().Where(filter).ToList();
+            var query = this._context.Set<TEntity>().Include(_context.GetIncludePaths(typeof(TEntity)));
+            if (filter != null)
+                query = query.Where(filter);
+            return query.ToList();
+
+                //                 return filter == null ? this._context.Set<TEntity>().ToList() :
+                //this._context.Set<TEntity>().Where(filter).ToList();
         }
 
         public bool ItemExists(Expression<Func<TEntity, bool>> filter)

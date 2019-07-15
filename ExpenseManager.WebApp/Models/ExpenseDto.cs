@@ -28,22 +28,30 @@ namespace ExpenseManager.WebApp.Models
         public int? PayeeId { get; set; }
         public PayeeDto Payee { get; set; }
 
+        public ExpenseDto()
+        {
+
+        }
+
         public ExpenseDto(Expense e)
         {
-            Id = e.Id;
-            CreatedOn = e.CreatedOn;
-            UpdatedOn = e.UpdatedOn;
-            ExpenseDate = e.ExpenseDate;
-            Amount = e.Amount;
-            Notes = e.Notes;
-            PayFromAccountId = e.PayFromAccountId;
-            PayFromAccount = new AccountDto(e.PayFromAccount);
-            CategoryId = e.CategoryId;
-            Category = new ExpenseCategoryDto(e.Category);
-            CurrencyCode = e.CurrencyCode;
-            Currency = new CurrencyDto(e.Currency);
-            PayeeId = e.PayeeId;
-            Payee = new PayeeDto(e.Payee);
+            if (e != null)
+            {
+                Id = e.Id;
+                CreatedOn = e.CreatedOn;
+                UpdatedOn = e.UpdatedOn;
+                ExpenseDate = e.ExpenseDate;
+                Amount = e.Amount;
+                Notes = e.Notes;
+                PayFromAccountId = e.PayFromAccountId;
+                PayFromAccount = new AccountDto(e.PayFromAccount);
+                CategoryId = e.CategoryId;
+                Category = new ExpenseCategoryDto(e.Category);
+                CurrencyCode = e.CurrencyCode;
+                Currency = new CurrencyDto(e.Currency);
+                PayeeId = e.PayeeId;
+                Payee = new PayeeDto(e.Payee);
+            }
         }
         public static ICollection<ExpenseDto> Convert(ICollection<Expense> expenses)
         {

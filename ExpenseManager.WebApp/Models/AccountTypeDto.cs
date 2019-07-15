@@ -14,18 +14,18 @@ namespace ExpenseManager.WebApp.Models
         public string Name { get; set; }
         public ICollection<AccountDto> Accounts { get; set; }
 
-        public AccountTypeDto()
-        {
-
-        }
+        public AccountTypeDto(){}
 
         public AccountTypeDto(AccountType source)
         {
-            Id = source.Id;
-            CreatedOn = source.CreatedOn;
-            UpdatedOn = source.UpdatedOn;
-            Name = source.Name;
-            Accounts = AccountDto.Convert(source.Accounts);
+            if (source != null)
+            {
+                Id = source.Id;
+                CreatedOn = source.CreatedOn;
+                UpdatedOn = source.UpdatedOn;
+                Name = source.Name;
+                Accounts = AccountDto.Convert(source.Accounts);
+            }
         }
         public static ICollection<AccountTypeDto> Convert(ICollection<AccountType> types)
         {

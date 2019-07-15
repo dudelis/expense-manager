@@ -21,11 +21,15 @@ namespace ExpenseManager.WebApp.Models
         public CurrencyDto(){}
         public CurrencyDto(Currency currency)
         {
-            Code = currency.Code;
-            Name = currency.Name;
+            if (currency != null)
+            {
+                Code = currency.Code;
+                Name = currency.Name;
 
-            Accounts = AccountDto.Convert(currency.Accounts);
-            Expenses = ExpenseDto.Convert(currency.Expenses);
+                Accounts = AccountDto.Convert(currency.Accounts);
+                Expenses = ExpenseDto.Convert(currency.Expenses);
+            }
+            
         }
         public static ICollection<CurrencyDto> Convert (ICollection<Currency> currencies)
         {
