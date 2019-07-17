@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public abstract class BaseEntityDto
+    public abstract class BaseViewModel
     {
         public int Id { get; set; }
         public DateTime CreatedOn { get; set; }

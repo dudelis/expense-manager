@@ -21,7 +21,7 @@ namespace ExpenseManager.WebApp.Controllers
         public IActionResult Index()
         {
             var currencies = _service.GetAll();
-            var currencyDtos = CurrencyDto.Convert(currencies);
+            var currencyDtos = CurrencyViewModel.Convert(currencies);
             return View(currencyDtos);
         }
         public IActionResult Create()
@@ -31,7 +31,7 @@ namespace ExpenseManager.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Code, Name")] CurrencyDto currency)
+        public IActionResult Create([Bind("Code, Name")] CurrencyViewModel currency)
         {
             if (ModelState.IsValid)
             {
@@ -53,11 +53,11 @@ namespace ExpenseManager.WebApp.Controllers
             var currency = _service.GetById(id);
             if (currency == null)
                 return NotFound();
-            return View(new CurrencyDto(currency));
+            return View(new CurrencyViewModel(currency));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("Code, Name")] CurrencyDto currency)
+        public IActionResult Edit(string id, [Bind("Code, Name")] CurrencyViewModel currency)
         {
             if (id != currency.Code)
                 return NotFound();

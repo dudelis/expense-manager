@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class AccountTypeDto: BaseEntityDto
+    public class AccountTypeDto: BaseViewModel
     {
         [Required]
         [Display(Name = "Name")]
         public string Name { get; set; }
-        public ICollection<AccountDto> Accounts { get; set; }
+        public ICollection<AccountViewModel> Accounts { get; set; }
 
         public AccountTypeDto(){}
 
@@ -24,7 +24,7 @@ namespace ExpenseManager.WebApp.Models
                 CreatedOn = source.CreatedOn;
                 UpdatedOn = source.UpdatedOn;
                 Name = source.Name;
-                Accounts = AccountDto.Convert(source.Accounts);
+                Accounts = AccountViewModel.Convert(source.Accounts);
             }
         }
         public static ICollection<AccountTypeDto> Convert(ICollection<AccountType> types)

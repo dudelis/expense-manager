@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class ExpenseCategoryDto: BaseEntityDto
+    public class ExpenseCategoryDto: BaseViewModel
     {
         public int? ParentCategoryId { get; set; }
         public ExpenseCategoryDto ParentCategory { get; set; }

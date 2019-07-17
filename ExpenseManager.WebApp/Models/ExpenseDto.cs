@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class ExpenseDto: BaseEntityDto
+    public class ExpenseDto: BaseViewModel
     {        
         [Required]
         public DateTime ExpenseDate { get; set; }
@@ -16,14 +16,14 @@ namespace ExpenseManager.WebApp.Models
         public string Notes { get; set; }
 
         public int? PayFromAccountId { get; set; }
-        public AccountDto PayFromAccount { get; set; }
+        public AccountViewModel PayFromAccount { get; set; }
 
         [Required]
         public int? CategoryId { get; set; }
         public ExpenseCategoryDto Category { get; set; }
         [Required]
         public string CurrencyCode { get; set; }
-        public CurrencyDto Currency { get; set; }
+        public CurrencyViewModel Currency { get; set; }
 
         public int? PayeeId { get; set; }
         public PayeeDto Payee { get; set; }
@@ -44,11 +44,11 @@ namespace ExpenseManager.WebApp.Models
                 Amount = e.Amount;
                 Notes = e.Notes;
                 PayFromAccountId = e.PayFromAccountId;
-                PayFromAccount = new AccountDto(e.PayFromAccount);
+                PayFromAccount = new AccountViewModel(e.PayFromAccount);
                 CategoryId = e.CategoryId;
                 Category = new ExpenseCategoryDto(e.Category);
                 CurrencyCode = e.CurrencyCode;
-                Currency = new CurrencyDto(e.Currency);
+                Currency = new CurrencyViewModel(e.Currency);
                 PayeeId = e.PayeeId;
                 Payee = new PayeeDto(e.Payee);
             }

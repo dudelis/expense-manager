@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class CurrencyDto
+    public class CurrencyViewModel
     {
         [Required]
         [MaxLength(3)]
@@ -15,27 +15,27 @@ namespace ExpenseManager.WebApp.Models
         [Required]
         public string Name { get; set; }
 
-        public ICollection<AccountDto> Accounts { get; set; }
-        public ICollection<ExpenseDto> Expenses { get; set; }
+        public ICollection<Account> Accounts { get; set; }
+        public ICollection<Expense> Expenses { get; set; }
 
-        public CurrencyDto(){}
-        public CurrencyDto(Currency currency)
+        public CurrencyViewModel(){}
+        public CurrencyViewModel(Currency currency)
         {
             if (currency != null)
             {
                 Code = currency.Code;
                 Name = currency.Name;
 
-                Accounts = AccountDto.Convert(currency.Accounts);
-                Expenses = ExpenseDto.Convert(currency.Expenses);
+                Accounts = currency.Accounts;
+                Expenses = currency.Expenses;
             }
             
         }
-        public static ICollection<CurrencyDto> Convert (ICollection<Currency> currencies)
+        public static ICollection<CurrencyViewModel> Convert (ICollection<Currency> currencies)
         {
             if (currencies == null)
                 return null;
-            return currencies.Select(x => new CurrencyDto(x)).ToList();
+            return currencies.Select(x => new CurrencyViewModel(x)).ToList();
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class PayeeDto: BaseEntityDto
+    public class PayeeDto: BaseViewModel
     {
         [Required(ErrorMessage ="Name is a required field")]
         public string Name { get; set; }
