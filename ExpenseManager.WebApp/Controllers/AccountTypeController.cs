@@ -12,17 +12,17 @@ namespace ExpenseManager.WebApp.Controllers
 {
     public class AccountTypeController : Controller
     {
-        private readonly IAccountTypeService _service;
+        private readonly IAccountTypeService _accountTypeService;
 
         public AccountTypeController(IAccountTypeService service)
         {
-            this._service = service;
+            this._accountTypeService = service;
         }
 
         public IActionResult Index()
         {
-            var types = _service.GetAll();
-            var typesDto = AccountTypeDto.Convert(types);
+            var types = _accountTypeService.GetAll();
+            var typesDto = AccountTypeViewModel.Convert(types);
             return View(typesDto);
         }
         
@@ -33,12 +33,12 @@ namespace ExpenseManager.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name")] AccountTypeDto accountType)
+        public IActionResult Create([Bind("Name")] AccountTypeViewModel accountType)
         {
             if (ModelState.IsValid)
             {
-                _service.Create(new AccountType() {Name = accountType.Name});
-                _service.SaveChanges();
+                _accountTypeService.Create(new AccountType() {Name = accountType.Name});
+                _accountTypeService.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
             return View();
@@ -49,33 +49,42 @@ namespace ExpenseManager.WebApp.Controllers
             if (id == null)
                 return NotFound();
             
-            var accountType = _service.GetById(Convert.ToInt32(id));
+            var accountType = _accountTypeService.GetById(Convert.ToInt32(id));
             if (accountType == null)
                 return NotFound();
             
-            return View(new AccountTypeDto(accountType));
+            return View(new AccountTypeViewModel(accountType));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, [Bind("Id, Name")] AccountTypeDto type)
+        public IActionResult Edit(int id, [Bind("Id, Name")] AccountTypeViewModel type)
         {
             if (id != type.Id)
                 return NotFound();
             if (!ModelState.IsValid)
-                return View(type);
-            
+                return View(type);           
             try
             {
-                _service.Update(new AccountType() { Id=type.Id, Name = type.Name });
-                _service.SaveChanges();
+                _accountTypeService.Update(new AccountType() { Id=type.Id, Name = type.Name });
+                _accountTypeService.SaveChanges();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_service.ItemExists(id))
+                if (!_accountTypeService.ItemExists(id))
                     return NotFound();
                 throw;
             }
             return RedirectToAction(nameof(Index));            
+        }
+
+        [AcceptVerbs("Get", "Post")]
+        public IActionResult VerifyNameUnique (string name)
+        {
+            if (_accountTypeService.ItemExists(name))
+            {
+                return Json($"Account type with name {name} already exists!");
+            }
+            return Json(true);
         }
     }
 }

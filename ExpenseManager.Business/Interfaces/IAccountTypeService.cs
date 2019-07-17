@@ -7,6 +7,7 @@ namespace ExpenseManager.Business.Interfaces
 {
     public interface IAccountTypeService: IServiceBase<AccountType>
     {
+        bool ItemExists(string name);
         
     }
 }

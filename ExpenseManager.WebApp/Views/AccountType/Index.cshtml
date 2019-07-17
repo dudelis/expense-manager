@@ -1,7 +1,7 @@
-﻿@model IEnumerable<AccountTypeDto>
+﻿@model IEnumerable<AccountTypeViewModel>
 @{
     ViewData["Title"] = "Account Types";
-    AccountTypeDto firstType = Model.ToList().FirstOrDefault();
+    AccountTypeViewModel firstType = Model.ToList().FirstOrDefault();
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -14,16 +14,7 @@
         <thead>
             <tr>
                 <th>
-                    <label asp-for="@firstType.Id"></label>
-                </th>
-                <th>
                     <label asp-for="@firstType.Name"></label>
-                </th>
-                <th>
-                    <label asp-for="@firstType.CreatedOn"></label>
-                </th>
-                <th>
-                    <label asp-for="@firstType.UpdatedOn"></label>
                 </th>
                 <th></th>
             </tr>
@@ -33,16 +24,7 @@
             {
                 <tr>
                     <td>
-                        <label>@item.Id</label>
-                    </td>
-                    <td>
                         <label>@item.Name</label>
-                    </td>
-                    <td>
-                        <label>@item.CreatedOn</label>
-                    </td>
-                    <td>
-                        <label>@item.UpdatedOn</label>
                     </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>

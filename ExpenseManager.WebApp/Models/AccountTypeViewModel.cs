@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.Entities.Concrete;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -7,16 +8,17 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class AccountTypeDto: BaseViewModel
+    public class AccountTypeViewModel: BaseViewModel
     {
         [Required]
         [Display(Name = "Name")]
+        [Remote(action: "VerifyNameUnique", controller: "AccountType")]
         public string Name { get; set; }
         public ICollection<AccountViewModel> Accounts { get; set; }
 
-        public AccountTypeDto(){}
+        public AccountTypeViewModel(){}
 
-        public AccountTypeDto(AccountType source)
+        public AccountTypeViewModel(AccountType source)
         {
             if (source != null)
             {
@@ -27,11 +29,11 @@ namespace ExpenseManager.WebApp.Models
                 Accounts = AccountViewModel.Convert(source.Accounts);
             }
         }
-        public static ICollection<AccountTypeDto> Convert(ICollection<AccountType> types)
+        public static ICollection<AccountTypeViewModel> Convert(ICollection<AccountType> types)
         {
             if (types == null)
                 return null;
-            return types.Select(x => new AccountTypeDto(x)).ToList();
+            return types.Select(x => new AccountTypeViewModel(x)).ToList();
         }
     }
 }
