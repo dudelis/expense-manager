@@ -1,14 +1,16 @@
 ﻿@model AccountViewModel
 
+@{
+    ViewData["Title"] = "Edit Account";
+}
 
-<hr />
 <div class="row">
     <div class="col-md-10">
         <form asp-action="Edit">
             <div class="form-group d-flex flex-row-reverse justify-content-between">
-                <input type="submit" value="Save" class="btn btn-primary btn-sm" />
-                <span>Edit Account</span>
-                <a asp-action="Index" class="btn btn-secondary btn-sm">Cancel</a>
+                <button value="Save" class="btn btn-primary btn-sm"><i class="material-icons">save</i></button>
+                <span>@ViewData["Title"]</span>
+                <a asp-action="Index" class="btn btn-secondary btn-sm"><i class="material-icons">cancel</i></a>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
