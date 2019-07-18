@@ -1,27 +1,33 @@
-﻿@model CurrencyViewModel
-@{ 
-    ViewData["Title"] = "New Currency";
+﻿@model ExpenseManager.WebApp.Models.ExpenseCategoryViewModel
+@{
+    ViewData["Title"] = "New Category";
 }
-
 <div class="row">
     <div class="col-md-10">
-        <form asp-action="Create">
+        <form asp-action="View">
             <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center">
                 <button value="Save" class="btn btn-primary btn-sm"><i class="material-icons">save</i></button>
-                <span class="font-weight-bold text">@ViewData["Title"]</span>
+                <span class="font-weight-bold text-uppercase">@ViewData["Title"]</span>
                 <a asp-action="Index" class="btn btn-secondary btn-sm"><i class="material-icons">cancel</i></a>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Code" class="control-label"></label>
-                <input asp-for="Code" class="form-control"/>
-                <span asp-validation-for="Code" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="ParentCategoryId" class="control-label"></label>
+                @Html.DropDownListFor(
+                    p => p.ParentCategoryId,
+                    new SelectList(Model.ListOfExpenseCategories.Where(c => c.Id != Model.Id), "Id", "Name"),
+                    "Select Category",
+                    new { @class = "form-control"})
+                <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
+            </div>        
         </form>
     </div>
 </div>
+
+
+

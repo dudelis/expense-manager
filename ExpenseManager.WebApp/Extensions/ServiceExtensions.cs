@@ -28,6 +28,7 @@ namespace ExpenseManager.WebApp.Extensions
             services.AddScoped<IAccountTypeService, AccountTypeManager>();
             services.AddScoped<ICurrencyService, CurrencyManager>();
             services.AddScoped<IExpenseService, ExpenseDataManager>();
+            services.AddScoped<IExpenseCategoryService, ExpenseCategoryManager>();
             services.AddScoped<IPayeeService, PayeeManager>();
         }
     }

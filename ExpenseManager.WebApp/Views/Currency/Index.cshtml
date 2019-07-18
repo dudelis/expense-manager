@@ -26,8 +26,10 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.Code}) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Code })
+                <div class="btn-toolbar float-right">
+                    <a asp-action="Edit" asp-route-id="@item.Code" class="btn btn-sm"><i class="material-icons">edit</i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Code" class="btn btn-sm"><i class="material-icons">delete</i></a>
+                </div>
             </td>
         </tr>
 }

@@ -20,7 +20,7 @@ namespace ExpenseManager.WebApp.Models
 
         [Required]
         public int? CategoryId { get; set; }
-        public ExpenseCategoryDto Category { get; set; }
+        public ExpenseCategoryViewModel Category { get; set; }
         [Required]
         public string CurrencyCode { get; set; }
         public CurrencyViewModel Currency { get; set; }
@@ -46,7 +46,7 @@ namespace ExpenseManager.WebApp.Models
                 PayFromAccountId = e.PayFromAccountId;
                 PayFromAccount = new AccountViewModel(e.PayFromAccount);
                 CategoryId = e.CategoryId;
-                Category = new ExpenseCategoryDto(e.Category);
+                Category = new ExpenseCategoryViewModel(e.Category);
                 CurrencyCode = e.CurrencyCode;
                 Currency = new CurrencyViewModel(e.Currency);
                 PayeeId = e.PayeeId;
