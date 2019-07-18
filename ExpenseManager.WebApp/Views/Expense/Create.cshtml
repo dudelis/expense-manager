@@ -1,0 +1,77 @@
+﻿@model ExpenseManager.WebApp.Models.ExpenseViewModel
+
+@{
+    ViewData["Title"] = "New Expense";
+}
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="Create">
+            <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center">
+                <button value="Save" class="btn btn-primary btn-sm"><i class="material-icons">save</i></button>
+                <span class="font-weight-bold text">@ViewData["Title"]</span>
+                <a asp-action="Index" class="btn btn-secondary btn-sm"><i class="material-icons">cancel</i></a>
+            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="d-flex justify-content-between">
+                <div class="form-group">
+                    <label asp-for="ExpenseDate" class="control-label"></label>
+                    <input type="date" asp-for="ExpenseDate" class="form-control" />
+                    <span asp-validation-for="ExpenseDate" class="text-danger"></span>
+                </div>
+                <div class="form-group w-50">
+                    <label asp-for="CategoryId" class="control-label"></label>
+                    @Html.DropDownListFor(
+                            p => p.CategoryId,
+                            new SelectList(Model.ListOfCategories, "Id", "Name"),
+                            "Select Category",
+                            new { @class = "form-control"})
+                    <span asp-validation-for="CategoryId" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Amount" class="control-label"></label>
+                <div class="input-group">
+                    <input asp-for="Amount" class="form-control" />
+                    <div class="input-group-append">
+                        @Html.DropDownListFor(
+                            p => p.CurrencyCode,
+                            new SelectList(Model.ListOfCurrencies, "Code", "Code"),
+                            "Currency",
+                            new { @class = "form-control"})
+                    </div>
+                </div>
+                <span asp-validation-for="Amount" class="text-danger"></span>
+                <span asp-validation-for="CurrencyCode" class="text-danger"></span>
+
+            </div>
+            <div class="d-flex justify-content-between">
+                <div class="form-group w-50 pr-md-4 pr-2">
+                    <label asp-for="PayFromAccountId" class="control-label"></label>
+                    @Html.DropDownListFor(
+                            p => p.PayFromAccountId,
+                            new SelectList(Model.ListOfAccounts, "Id", "Name"),
+                            "Select Account",
+                            new { @class = "form-control"})
+                    <span asp-validation-for="PayFromAccountId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group w-50 pl-md-4 pl-2">
+                    <label asp-for="PayeeId" class="control-label"></label>
+                    @Html.DropDownListFor(
+                            p => p.PayeeId,
+                            new SelectList(Model.ListOfPayees, "Id", "Name"),
+                            "Select Payee",
+                            new { @class = "form-control"})
+                    <span asp-validation-for="PayeeId" class="text-danger"></span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <textarea rows="5" asp-for="Notes" class="form-control"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+        </form>
+    </div>
+</div>
+

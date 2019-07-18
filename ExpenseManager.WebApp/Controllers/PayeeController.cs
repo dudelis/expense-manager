@@ -20,7 +20,7 @@ namespace ExpenseManager.WebApp.Controllers
         public IActionResult Index()
         {
             var payees = _service.GetAll();
-            return View(PayeeDto.Convert(payees));
+            return View(PayeeViewModel.Convert(payees));
         }
         [HttpGet]
         public IActionResult Create()
@@ -30,7 +30,7 @@ namespace ExpenseManager.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name,AccountNumber,PhoneNumber,WebSite,Notes")]PayeeDto payee)
+        public IActionResult Create([Bind("Name,AccountNumber,PhoneNumber,WebSite,Notes")]PayeeViewModel payee)
         {
             if (ModelState.IsValid)
             {
@@ -55,11 +55,11 @@ namespace ExpenseManager.WebApp.Controllers
             var payee = _service.GetById(Convert.ToInt32(id));
             if (payee == null)
                 return NotFound();
-            return View(new PayeeDto(payee));
+            return View(new PayeeViewModel(payee));
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, PayeeDto payee)
+        public IActionResult Edit(int id, PayeeViewModel payee)
         {
             if (id != payee.Id)
                 return NotFound();

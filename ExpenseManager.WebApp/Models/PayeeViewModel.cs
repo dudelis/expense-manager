@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.WebApp.Models
 {
-    public class PayeeDto: BaseViewModel
+    public class PayeeViewModel: BaseViewModel
     {
         [Required(ErrorMessage ="Name is a required field")]
         public string Name { get; set; }
@@ -18,12 +18,12 @@ namespace ExpenseManager.WebApp.Models
         public string WebSite { get; set; }
         public string Notes { get; set; }
 
-        public ICollection<ExpenseDto> Expenses { get; set; }
-        public PayeeDto()
+        public ICollection<Expense> Expenses { get; set; }
+        public PayeeViewModel()
         {
 
         }
-        public PayeeDto(Payee payee)
+        public PayeeViewModel(Payee payee)
         {
             Id = payee.Id;
             CreatedOn = payee.CreatedOn;
@@ -33,14 +33,14 @@ namespace ExpenseManager.WebApp.Models
             PhoneNumber = payee.PhoneNumber;
             WebSite = payee.WebSite;
             Notes = payee.Notes;
-            Expenses = ExpenseDto.Convert(payee.Expenses);
+            Expenses = payee.Expenses;
         }
 
-        public static ICollection<PayeeDto> Convert(ICollection<Payee> payees)
+        public static ICollection<PayeeViewModel> Convert(ICollection<Payee> payees)
         {
             if (payees == null)
                 return null;
-            return payees.Select(x => new PayeeDto(x)).ToList();
+            return payees.Select(x => new PayeeViewModel(x)).ToList();
         }
 
     }
