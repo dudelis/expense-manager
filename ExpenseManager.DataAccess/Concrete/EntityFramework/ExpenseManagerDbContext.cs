@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.Entities.Concrete;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class ExpenseManagerDbContext: DbContext
+    public class ExpenseManagerDbContext: IdentityDbContext
     {
         public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options): base(options)
         {
@@ -112,6 +113,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.Property(p => p.Name).IsRequired();
 
             });
+            base.OnModelCreating(modelBuilder);
 
         }
         public override int SaveChanges()

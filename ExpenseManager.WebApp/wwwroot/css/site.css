@@ -54,3 +54,34 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+/* Round buttons
+-------------------------------------------------- */
+.btn-circle {
+    width: 30px;
+    height: 30px;
+    text-align: center;
+    padding: 0 0;
+    font-size: 12px;
+    line-height: 12px;
+    border-radius: 15px;
+}
+
+    .btn-circle.btn-lg {
+        width: 50px;
+        height: 50px;
+        padding: 12px 10px;
+        font-size: 24px;
+        line-height: 24px;
+        border-radius: 25px;
+        vertical-align: middle;
+    }
+
+    .btn-circle.btn-xl {
+        width: 70px;
+        height: 70px;
+        padding: 10px 16px;
+        font-size: 24px;
+        line-height: 1.33;
+        border-radius: 35px;
+    }

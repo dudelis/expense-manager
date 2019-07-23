@@ -2,6 +2,7 @@
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,6 +19,11 @@ namespace ExpenseManager.WebApp.Extensions
         {
             var connectionString = config["connectionStrings:expenseManagerDbConnectionString"];
             services.AddDbContext<ExpenseManagerDbContext>(c => c.UseSqlServer(connectionString));
+        }
+        public static void ConfigureIdentityServices(this IServiceCollection services, IConfiguration config)
+        {
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<ExpenseManagerDbContext>();
         }
         public static void ConfigureDataManagers(this IServiceCollection services)
         {

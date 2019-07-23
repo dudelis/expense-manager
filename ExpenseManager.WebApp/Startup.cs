@@ -27,6 +27,7 @@ namespace ExpenseManager.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.ConfigureSqlContext(Configuration);
+            services.ConfigureIdentityServices(Configuration);
             services.ConfigureDataManagers();
 
             services.Configure<CookiePolicyOptions>(options =>
@@ -60,7 +61,7 @@ namespace ExpenseManager.WebApp
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseAuthentication();
             //context.SeedData();
             app.UseMvc(routes =>
             {

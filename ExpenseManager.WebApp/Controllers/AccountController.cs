@@ -37,7 +37,9 @@ namespace ExpenseManager.WebApp.Controllers
                 ListOfCurrencies = _currencyService.GetAll(),
                 ListOfAccountTypes = _accountTypeService.GetAll()
         };
-            return View(account);
+            ViewData["AspAction"] = "Create";
+            ViewData["Title"] = "New Account";
+            return View("CreateEdit", account);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -73,7 +75,10 @@ namespace ExpenseManager.WebApp.Controllers
             var accountModel = new AccountViewModel(account);
             accountModel.ListOfAccountTypes = _accountTypeService.GetAll();
             accountModel.ListOfCurrencies = _currencyService.GetAll();
-            return View(accountModel);
+            ViewData["AspAction"] = "Edit";
+            ViewData["Title"] = "Edit Account";
+            return View("CreateEdit", accountModel);
+            
         }
         [HttpPost]
         [ValidateAntiForgeryToken]

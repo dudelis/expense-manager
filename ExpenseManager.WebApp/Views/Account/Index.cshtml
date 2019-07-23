@@ -3,10 +3,11 @@
 @{ 
     ViewData["Title"] = "Accounts";
 }
-<h4>@ViewData["Title"]</h4>
-<p>
-    <a class="btn btn-primary btn-sm"  asp-action="Create">New Account</a>
-</p>
+<div class="d-flex justify-content-between align-items-center">
+    <h4>@ViewData["Title"]</h4>
+        <a class="btn btn-primary btn-circle shadow btn-lg" asp-action="Create"><i class="material-icons">add</i></a>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -59,8 +60,10 @@
                 @Html.DisplayFor(modelItem => item.AccountType.Name)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-toolbar btn-sm"><i class="material-icons">edit</i></a>
-                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-toolbar btn-sm"><i class="material-icons">delete</i></a>
+                <div class="btn-toolbar float-right">
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm"><i class="material-icons">edit</i></a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm"><i class="material-icons">delete</i></a>
+                </div>
             </td>
         </tr>
 }
