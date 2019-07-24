@@ -24,6 +24,13 @@ namespace ExpenseManager.WebApp.Extensions
         {
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<ExpenseManagerDbContext>();
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                options.LoginPath = "/Auth/Login";
+                options.AccessDeniedPath = "/Auth/Login";
+                options.SlidingExpiration = true;
+            });
         }
         public static void ConfigureDataManagers(this IServiceCollection services)
         {

@@ -30,7 +30,8 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+
+                <div class="navbar-collapse collapse d-sm-inline-flex">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
@@ -52,8 +53,22 @@
                             </div>
                         </li>
                     </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        
+                    <form class="form-inline" method="post" asp-controller="Auth" asp-action="Logout">
+                        <span class="navbar-text mr-3">@User.Identity.Name</span>
+                        <input class="btn btn-outline-secondary btn-sm" type="submit" value="Logout" />
+                    </form>
+                    }
+                    else
+                    {
+                        <a class="navbar-text mr-3" asp-controller="Auth" asp-action="Login">Login</a>
+                        <a class="navbar-text" asp-controller="Auth" asp-action="Register">Register</a>
+                    }
+
                 </div>
-            </div>
+            </div>            
         </nav>
     </header>
     <div class="container">
