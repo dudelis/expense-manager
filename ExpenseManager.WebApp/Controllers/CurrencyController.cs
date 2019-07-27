@@ -31,13 +31,13 @@ namespace ExpenseManager.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Code, Name")] CurrencyViewModel currency)
+        public IActionResult Create([Bind("Id, Name")] CurrencyViewModel currency)
         {
             if (ModelState.IsValid)
             {
                 _service.Create(new Currency()
                 {
-                    Code = currency.Code,
+                    Id = currency.Id,
                     Name = currency.Name
                 });
                 _service.SaveChanges();
@@ -57,16 +57,16 @@ namespace ExpenseManager.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("Code, Name")] CurrencyViewModel currency)
+        public IActionResult Edit(string id, [Bind("Id, Name")] CurrencyViewModel currency)
         {
-            if (id != currency.Code)
+            if (id != currency.Id)
                 return NotFound();
             if (ModelState.IsValid)
             {
                 try
                 {
                     _service.Update(new Currency() {
-                        Code = currency.Code,
+                        Id = currency.Id,
                         Name = currency.Name
                     });
                     _service.SaveChanges();

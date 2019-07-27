@@ -15,27 +15,27 @@ namespace ExpenseManager.WebApp
             {
                 new Currency()
                 {
-                    Code = "USD",
+                    Id  = "USD",
                     Name = "US Dollar"
                 },
                 new Currency()
                 {
-                    Code = "EUR",
+                    Id = "EUR",
                     Name = "Euro"
                 },
                 new Currency()
                 {
-                    Code = "UAH",
+                    Id = "UAH",
                     Name = "Ukrainian Hryvnya"
                 },
                 new Currency()
                 {
-                    Code = "RUB",
+                    Id  = "RUB",
                     Name = "Russian Rubbles"
                 },
                 new Currency()
                 {
-                    Code = "CHF",
+                    Id = "CHF",
                     Name = "Swiss Frank"
                 }
 

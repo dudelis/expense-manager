@@ -30,14 +30,14 @@ namespace ExpenseManager.Business.Concrete
             return this._repository.Currency.GetList();
         }
 
-        public Currency GetById(string code)
+        public Currency GetById(string id)
         {
-            return this._repository.Currency.Get(x => x.Code == code);
+            return this._repository.Currency.Get(x => x.Id == id);
         }
 
-        public bool ItemExists(string code)
+        public bool ItemExists(string id)
         {
-            return this._repository.Currency.ItemExists(x => x.Code == code);
+            return this._repository.Currency.ItemExists(x => x.Id == id);
         }
 
         public void Update(Currency currency)

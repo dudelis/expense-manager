@@ -11,7 +11,8 @@ namespace ExpenseManager.WebApp.Models
     {
         [Required]
         [MaxLength(3)]
-        public string Code { get; set; }
+        public string Id { get; set; }
+
         [Required]
         public string Name { get; set; }
 
@@ -23,7 +24,7 @@ namespace ExpenseManager.WebApp.Models
         {
             if (currency != null)
             {
-                Code = currency.Code;
+                Id = currency.Id;
                 Name = currency.Name;
 
                 Accounts = currency.Accounts;

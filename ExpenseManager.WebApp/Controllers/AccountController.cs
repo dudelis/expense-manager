@@ -64,7 +64,7 @@ namespace ExpenseManager.WebApp.Controllers
             }
             account.ListOfAccountTypes = _accountTypeService.GetAll();
             account.ListOfCurrencies = _currencyService.GetAll();
-            return View(account);
+            return View("CreateEdit", account);
         }
         [HttpGet]
         public IActionResult Edit(int? id)

@@ -3,17 +3,23 @@ using ExpenseManager.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Web;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
     public class ExpenseManagerDbContext: IdentityDbContext
     {
-        public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options): base(options)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+
+        public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
-            Database.Migrate();
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DbSet<Account> Accounts { get; set; }
@@ -128,23 +134,37 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             AddTimeStamps();
             return base.SaveChanges();
         }
-
+        
         private void AddTimeStamps()
         {
             //Added values
-            var addedEntities = ChangeTracker.Entries().Where(x => x.Entity is IHasCreationTime && x.State == EntityState.Added);
+            var addedEntities = ChangeTracker.Entries().Where(x => x.State == EntityState.Added);
             foreach (var entity in addedEntities)
             {
-                entity.Property("CreatedTime").CurrentValue = DateTime.UtcNow;
+                if (entity.Entity is IHasCreationTime)
+                    entity.Property("CreatedTime").CurrentValue = DateTime.UtcNow;
+                if (entity.Entity is IHasModificationTime)
+                    entity.Property("ModifiedTime").CurrentValue = DateTime.UtcNow;
+                if (entity.Entity is ICreationAudited)
+                    entity.Property("CreatorUserId").CurrentValue = _httpContextAccessor.HttpContext.User.Identity.Name;
+                if (entity.Entity is IModificationAudited)
+                    entity.Property("LastModifiedUserId").CurrentValue = _httpContextAccessor.HttpContext.User.Identity.Name;                
             }
-
-            //Changed values
-            var modifiedEntities = ChangeTracker.Entries().Where(x => x.Entity is IHasModificationTime && x.State == EntityState.Modified);
+            var modifiedEntities = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
             foreach (var entity in modifiedEntities)
             {
-                entity.Property("ModifiedTime").CurrentValue = DateTime.UtcNow;
-            }
-            
+                if (entity.Entity is IHasModificationTime)
+                {
+                    entity.Property("ModifiedTime").CurrentValue = DateTime.UtcNow;
+                }
+                    
+                if (entity.Entity is IModificationAudited)
+                {
+                    entity.Property("LastModifiedUserId").CurrentValue = _httpContextAccessor.HttpContext.User.Identity.Name;
+                }
+                    
+            }                        
         }
+
     }
 }
