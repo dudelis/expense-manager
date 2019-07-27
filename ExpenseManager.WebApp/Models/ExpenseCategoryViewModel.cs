@@ -27,8 +27,8 @@ namespace ExpenseManager.WebApp.Models
         public ExpenseCategoryViewModel(ExpenseCategory category)
         {
             Id = category.Id;
-            CreatedOn = category.CreatedOn;
-            UpdatedOn = category.UpdatedOn;
+            CreatedTime = category.CreatedTime;
+            ModifiedTime = category.ModifiedTime;
             Name = category.Name;
             ParentCategoryId = category.ParentCategoryId;
             ParentCategory = category.ParentCategory;

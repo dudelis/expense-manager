@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class Payee : BaseEntity, IEntity
+    public class Payee : BaseEntity<int>
     {
         public string Name { get; set; }
         public string AccountNumber { get; set; }

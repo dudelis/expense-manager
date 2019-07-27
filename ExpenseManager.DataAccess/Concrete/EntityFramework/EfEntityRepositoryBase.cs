@@ -8,8 +8,8 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-        where TEntity : class, IEntity, new()
+    public class EfEntityRepositoryBase<TEntity, TPrimaryKey, TContext> : IEntityRepository<TEntity, TPrimaryKey>
+        where TEntity: class, IEntity<TPrimaryKey>, new()
         where TContext : DbContext
     {
         private TContext _context;

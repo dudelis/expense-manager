@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface IAccountService: IServiceBase<Account>
+    public interface IAccountService: IServiceBase<Account, int>
     {
         List<Account> GetAllByAccountType(int AccountTypeId);
     }

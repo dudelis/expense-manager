@@ -48,8 +48,8 @@ namespace ExpenseManager.WebApp.Models
         public ExpenseViewModel(Expense e)
         {
             Id = e.Id;
-            CreatedOn = e.CreatedOn;
-            UpdatedOn = e.UpdatedOn;
+            CreatedTime = e.CreatedTime;
+            ModifiedTime = e.ModifiedTime;
             ExpenseDate = e.ExpenseDate;
             Amount = e.Amount;
             Notes = e.Notes;

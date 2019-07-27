@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntity<TPrimaryKey>
+    public interface ICreationAudited: IHasCreationTime
     {
-        TPrimaryKey Id { get; set; }
+        string CreatorUserId { get; set; }
     }
 }

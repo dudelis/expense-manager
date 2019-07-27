@@ -41,8 +41,8 @@ namespace ExpenseManager.WebApp.Models
         public AccountViewModel(Account a)
         {
             Id = a.Id;
-            CreatedOn = a.CreatedOn;
-            UpdatedOn = a.UpdatedOn;
+            CreatedTime = a.CreatedTime;
+            ModifiedTime = a.ModifiedTime;
             Name = a.Name;
             IconCode = a.IconCode;
             CurrencyCode = a.CurrencyCode;

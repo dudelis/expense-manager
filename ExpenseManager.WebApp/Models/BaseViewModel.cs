@@ -8,7 +8,7 @@ namespace ExpenseManager.WebApp.Models
     public abstract class BaseViewModel
     {
         public int Id { get; set; }
-        public DateTime CreatedOn { get; set; }
-        public DateTime UpdatedOn { get; set; }
+        public DateTime CreatedTime { get; set; }
+        public DateTime ModifiedTime { get; set; }
     }
 }

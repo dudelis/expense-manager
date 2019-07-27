@@ -26,8 +26,8 @@ namespace ExpenseManager.WebApp.Models
         public PayeeViewModel(Payee payee)
         {
             Id = payee.Id;
-            CreatedOn = payee.CreatedOn;
-            UpdatedOn = payee.UpdatedOn;
+            CreatedTime = payee.CreatedTime;
+            ModifiedTime = payee.ModifiedTime;
             Name = payee.Name;
             AccountNumber = payee.AccountNumber;
             PhoneNumber = payee.PhoneNumber;

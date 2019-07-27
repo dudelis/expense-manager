@@ -53,21 +53,20 @@
                             </div>
                         </li>
                     </ul>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+
                     <form class="form-inline" method="post" asp-controller="Auth" asp-action="Logout">
                         <span class="navbar-text mr-3">@User.Identity.Name</span>
                         <input class="btn btn-outline-secondary btn-sm" type="submit" value="Logout" />
                     </form>
-                    }
-                    else
-                    {
-                        <a class="navbar-text mr-3" asp-controller="Auth" asp-action="Login">Login</a>
-                        <a class="navbar-text" asp-controller="Auth" asp-action="Register">Register</a>
-                    }
-
-                </div>
+                }
+                else
+                {
+                    <a class="btn btn-secondary btn-sm mr-3" asp-controller="Auth" asp-action="Login">Login</a>
+                    <a class="btn btn-primary btn-sm" asp-controller="Auth" asp-action="Register">Sign Up</a>
+                }
             </div>            
         </nav>
     </header>

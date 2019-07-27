@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntity<TPrimaryKey>
+    public interface IModificationAudited: IHasModificationTime
     {
-        TPrimaryKey Id { get; set; }
+        string LastModifiedUserId { get; set; }
     }
 }

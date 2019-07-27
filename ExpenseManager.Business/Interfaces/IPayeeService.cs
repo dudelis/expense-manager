@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface IPayeeService: IServiceBase<Payee>
+    public interface IPayeeService: IServiceBase<Payee, int>
     {
     }
 }

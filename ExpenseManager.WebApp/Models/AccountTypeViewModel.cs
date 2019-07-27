@@ -23,8 +23,8 @@ namespace ExpenseManager.WebApp.Models
             if (source != null)
             {
                 Id = source.Id;
-                CreatedOn = source.CreatedOn;
-                UpdatedOn = source.UpdatedOn;
+                CreatedTime = source.CreatedTime;
+                ModifiedTime = source.ModifiedTime;
                 Name = source.Name;
                 Accounts = AccountViewModel.Convert(source.Accounts);
             }

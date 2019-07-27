@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class ExpenseCategory : BaseEntity, IEntity
+    public class ExpenseCategory : BaseEntity<int>
     {
         public string Name { get; set; }
         public int? ParentCategoryId { get; set; }

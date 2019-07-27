@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class EfCurrencyRepository: EfEntityRepositoryBase<Currency, ExpenseManagerDbContext>, ICurrencyRepository
+    public class EfCurrencyRepository: EfEntityRepositoryBase<Currency, string, ExpenseManagerDbContext>, ICurrencyRepository
     {
         public EfCurrencyRepository(ExpenseManagerDbContext context): base(context)
         {

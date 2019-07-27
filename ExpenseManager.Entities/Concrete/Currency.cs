@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class Currency : IEntity
+    public class Currency : BaseEntity<string>
     {
         public string Code { get; set; }
         public string Name { get; set; }

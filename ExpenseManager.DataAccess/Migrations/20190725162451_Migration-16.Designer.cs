@@ -4,14 +4,16 @@ using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ExpenseManager.DataAccess.Migrations
 {
     [DbContext(typeof(ExpenseManagerDbContext))]
-    partial class ExpenseManagerDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190725162451_Migration-16")]
+    partial class Migration16
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,17 +97,13 @@ namespace ExpenseManager.DataAccess.Migrations
 
                     b.Property<string>("Code");
 
-                    b.Property<DateTime>("CreatedTime")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    b.Property<DateTime>("CreatedTime");
 
                     b.Property<string>("CreatorUserId");
 
                     b.Property<string>("LastModifiedUserId");
 
-                    b.Property<DateTime>("ModifiedTime")
-                        .ValueGeneratedOnAdd()
-                        .HasDefaultValueSql("GETUTCDATE()");
+                    b.Property<DateTime>("ModifiedTime");
 
                     b.Property<string>("Name")
                         .HasMaxLength(25);

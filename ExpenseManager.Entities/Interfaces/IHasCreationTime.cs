@@ -4,8 +4,8 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntity<TPrimaryKey>
+    public interface IHasCreationTime
     {
-        TPrimaryKey Id { get; set; }
+        DateTime CreatedTime { get; set;  }
     }
 }

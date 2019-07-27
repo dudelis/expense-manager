@@ -4,8 +4,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntity<TPrimaryKey>
+    public interface IAudited: ICreationAudited, IModificationAudited
     {
-        TPrimaryKey Id { get; set; }
     }
 }

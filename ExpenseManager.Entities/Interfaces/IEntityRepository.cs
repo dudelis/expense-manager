@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntityRepository<T> where T: class, IEntity, new()
+    public interface IEntityRepository<T, TPrimaryKey> where T: class, IEntity<TPrimaryKey>, new()
     {
         List<T> GetList(Expression<Func<T, bool>> filter = null);
         T Get(Expression<Func<T, bool>> filter);

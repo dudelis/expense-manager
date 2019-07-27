@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Interfaces
 {
-    public interface IExpenseCategoryRepository: IEntityRepository<ExpenseCategory>
+    public interface IExpenseCategoryRepository: IEntityRepository<ExpenseCategory, int>
     {
     }
 }
