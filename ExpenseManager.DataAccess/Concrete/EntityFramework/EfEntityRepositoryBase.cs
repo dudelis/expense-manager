@@ -8,8 +8,8 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class EfEntityRepositoryBase<TEntity, TPrimaryKey, TContext> : IEntityRepository<TEntity, TPrimaryKey>
-        where TEntity: class, IEntity<TPrimaryKey>, new()
+    public abstract class EfEntityRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
+        where TEntity: class, IEntity, new()
         where TContext : DbContext
     {
         private TContext _context;
@@ -43,6 +43,53 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 
                 //                 return filter == null ? this._context.Set<TEntity>().ToList() :
                 //this._context.Set<TEntity>().Where(filter).ToList();
+        }
+
+        public bool ItemExists(Expression<Func<TEntity, bool>> filter)
+        {
+            return this._context.Set<TEntity>().Any(filter);
+        }
+
+        public void Update(TEntity entity)
+        {
+            this._context.Set<TEntity>().Update(entity);
+        }
+    }
+    public abstract class EfEntityRepositoryBase<TEntity, TKey, TContext> : IEntityRepository<TEntity, TKey>
+        where TEntity : class, IEntity<TKey>, new()
+        where TContext : DbContext
+    {
+        private TContext _context;
+
+        public EfEntityRepositoryBase(TContext context)
+        {
+            this._context = context;
+        }
+
+        public void Create(TEntity entity)
+        {
+            this._context.Set<TEntity>().Add(entity);
+        }
+
+        public void Delete(TEntity entity)
+        {
+            this._context.Set<TEntity>().Remove(entity);
+        }
+
+        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        {
+            return this._context.Set<TEntity>().Where(filter).FirstOrDefault();
+        }
+
+        public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
+        {
+            var query = this._context.Set<TEntity>().Include(_context.GetIncludePaths(typeof(TEntity)));
+            if (filter != null)
+                query = query.Where(filter);
+            return query.ToList();
+
+            //                 return filter == null ? this._context.Set<TEntity>().ToList() :
+            //this._context.Set<TEntity>().Where(filter).ToList();
         }
 
         public bool ItemExists(Expression<Func<TEntity, bool>> filter)

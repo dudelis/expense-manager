@@ -46,13 +46,14 @@ namespace ExpenseManager.WebApp.Controllers
             return RedirectToAction("Login");
         }
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Login(string returnUrl = "")
         {
-            return View(new LoginViewModel());
+            var model = new LoginViewModel { ReturnUrl = returnUrl };
+            return View(model);
         }
-        [HttpPost]
+        [HttpPost()]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginViewModel login, string returnUrl = null)
+        public async Task<IActionResult> Login(LoginViewModel login, string ReturnUrl)
         {
             if (!ModelState.IsValid)
                 return View();
@@ -64,10 +65,10 @@ namespace ExpenseManager.WebApp.Controllers
                 ModelState.AddModelError("", "Login error!");
                 return View();
             }
-            if (string.IsNullOrWhiteSpace(returnUrl))
+            if (string.IsNullOrWhiteSpace(ReturnUrl))
                 return RedirectToAction("Index", "Home");
 
-            return Redirect(returnUrl);               
+            return Redirect(ReturnUrl);               
         }
         [HttpPost]
         public async Task<IActionResult> Logout(string returnUrl = null)

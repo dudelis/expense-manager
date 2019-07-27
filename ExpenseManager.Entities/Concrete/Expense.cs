@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class Expense : BaseEntity<int>
+    public class Expense : BaseEntity
     {
         public string Name { get; set; }
         public DateTime ExpenseDate { get; set; }

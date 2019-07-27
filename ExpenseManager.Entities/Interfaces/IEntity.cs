@@ -4,8 +4,13 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntity<TPrimaryKey>
+    public interface IEntity
     {
-        TPrimaryKey Id { get; set; }
+        int Id { get; set; }
     }
+    public interface IEntity<TKey>
+    {
+        TKey Id { get; set; }
+    }
+    
 }

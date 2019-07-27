@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface IExpenseService: IServiceBase<Expense, int>
+    public interface IExpenseService: IServiceBase<Expense>
     {
         List<Expense> GetByExpenseDate(DateTime epenseDate);
         List<Expense> GetByAccount(int payFromAccountId);

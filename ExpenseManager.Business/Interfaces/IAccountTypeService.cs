@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface IAccountTypeService: IServiceBase<AccountType, int>
+    public interface IAccountTypeService: IServiceBase<AccountType>
     {
         bool ItemExists(string name);
         
