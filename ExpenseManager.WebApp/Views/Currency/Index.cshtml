@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<CurrencyViewModel>
 
-<h4>Currencies</h4>
-<p>
-    <a asp-action="Create" class="btn btn-primary btn-sm">New Currency</a>
-</p>
+<div class="d-flex justify-content-between align-items-center">
+    <h4>Currencies</h4>
+    <a class="btn btn-primary btn-circle shadow btn-lg" asp-action="Create"><i class="material-icons">add</i></a>
+</div>
 <table class="table">
     <thead>
         <tr>

@@ -33,15 +33,12 @@ namespace ExpenseManager.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-
             var account = new AccountViewModel() {
                 BalanceDate = DateTime.Now,
                 ListOfCurrencies = _currencyService.GetAll(),
                 ListOfAccountTypes = _accountTypeService.GetAll()
-        };
-            ViewData["AspAction"] = "Create";
-            ViewData["Title"] = "New Account";
-            return View("CreateEdit", account);
+            };
+            return View(account);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,7 +61,8 @@ namespace ExpenseManager.WebApp.Controllers
             }
             account.ListOfAccountTypes = _accountTypeService.GetAll();
             account.ListOfCurrencies = _currencyService.GetAll();
-            return View("CreateEdit", account);
+
+            return View(account);
         }
         [HttpGet]
         public IActionResult Edit(int? id)
@@ -74,12 +72,12 @@ namespace ExpenseManager.WebApp.Controllers
             var account = _accountService.GetById(Convert.ToInt32(id));
             if (account == null)
                 return NotFound();
-            var accountModel = new AccountViewModel(account);
-            accountModel.ListOfAccountTypes = _accountTypeService.GetAll();
-            accountModel.ListOfCurrencies = _currencyService.GetAll();
-            ViewData["AspAction"] = "Edit";
-            ViewData["Title"] = "Edit Account";
-            return View("CreateEdit", accountModel);
+            var accountModel = new AccountViewModel(account)
+            {
+                ListOfAccountTypes = _accountTypeService.GetAll(),
+                ListOfCurrencies = _currencyService.GetAll()
+            };
+            return View(accountModel);
             
         }
         [HttpPost]
@@ -92,6 +90,7 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 accountModel.ListOfAccountTypes = _accountTypeService.GetAll();
                 accountModel.ListOfCurrencies = _currencyService.GetAll();
+
                 return View(accountModel);
             }
             try
@@ -103,6 +102,7 @@ namespace ExpenseManager.WebApp.Controllers
                     IconCode = accountModel.IconCode,
                     CurrencyCode = accountModel.CurrencyCode,
                     Balance = accountModel.Balance,
+                    BalanceDate = accountModel.BalanceDate,
                     AccountTypeId = Convert.ToInt32(accountModel.AccountTypeId),
                     IncludeInTotals = accountModel.IncludeInTotals
                 };

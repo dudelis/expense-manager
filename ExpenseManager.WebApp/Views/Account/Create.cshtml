@@ -1,0 +1,11 @@
+﻿@model AccountViewModel
+
+@{ 
+    ViewData["Title"] = "Create Account";
+    ViewData["FormAction"] = "Create";
+}
+
+@await Html.PartialAsync("_ItemEdit", Model, ViewData)
+
+
+

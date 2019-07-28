@@ -9,6 +9,13 @@ namespace ExpenseManager.WebApp.Models
     public class RegisterViewModel
     {
         [Required]
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
+        [Required]
+        [Display(Name = "Last Name")]
+        public string LastName { get; set; }
+
+        [Required]
         [EmailAddress, MaxLength(500)]
         [Display(Name = "Email Address")]
         public string EmailAddress { get; set; }

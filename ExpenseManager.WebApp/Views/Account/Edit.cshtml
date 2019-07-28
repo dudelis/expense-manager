@@ -1,7 +1,11 @@
-﻿@model CurrencyViewModel
+﻿@model AccountViewModel
 
 @{
-    ViewData["Title"] = "Edit Currency";
+    ViewData["Title"] = "Edit Account";
     ViewData["FormAction"] = "Edit";
 }
+
 @await Html.PartialAsync("_ItemEdit", Model, ViewData)
+
+
+

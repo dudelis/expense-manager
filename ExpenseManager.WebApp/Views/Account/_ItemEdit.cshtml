@@ -2,7 +2,7 @@
 
 <div class="row">
     <div class="col-md-10">
-        <form asp-action="@ViewData["AspAction"]">
+        <form asp-action="@ViewData["FormAction"]">
             <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center">
                 <button value="Save" class="btn btn-primary btn-sm"><i class="material-icons">save</i></button>
                 <span class="font-weight-bold text">@ViewData["Title"]</span>
@@ -33,7 +33,7 @@
                 @*<input asp-for="CurrencyCode" class="form-control" />*@
                 @Html.DropDownListFor(
                         m => m.CurrencyCode,
-                        new SelectList(Model.ListOfCurrencies, "Code", "Code"),
+                        new SelectList(Model.ListOfCurrencies, "Id", "Name"),
                         "Select Currency",
                         new { @class = "form-control" })
                 <span asp-validation-for="CurrencyCode" class="text-danger"></span>
@@ -57,4 +57,3 @@
         </form>
     </div>
 </div>
-

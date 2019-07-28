@@ -9,10 +9,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using ExpenseManager.Auth.Concrete;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class ExpenseManagerDbContext: IdentityDbContext
+    public class ExpenseManagerDbContext: IdentityDbContext<ApplicationUser>
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
 
@@ -30,8 +31,8 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public DbSet<Payee> Payees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
-
         {
+            base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Account>(entity =>
             {
                 entity.HasKey(p => p.Id);
@@ -126,8 +127,6 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.Property(p => p.Name).IsRequired();
 
             });
-            base.OnModelCreating(modelBuilder);
-
         }
         public override int SaveChanges()
         {

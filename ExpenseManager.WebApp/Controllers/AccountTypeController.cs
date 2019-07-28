@@ -41,7 +41,7 @@ namespace ExpenseManager.WebApp.Controllers
                 _accountTypeService.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View();
+            return View(accountType);
         }
         [HttpGet]
         public IActionResult Edit(int? id)
@@ -52,7 +52,7 @@ namespace ExpenseManager.WebApp.Controllers
             var accountType = _accountTypeService.GetById(Convert.ToInt32(id));
             if (accountType == null)
                 return NotFound();
-            
+
             return View(new AccountTypeViewModel(accountType));
         }
         [HttpPost]
@@ -62,7 +62,8 @@ namespace ExpenseManager.WebApp.Controllers
             if (id != type.Id)
                 return NotFound();
             if (!ModelState.IsValid)
-                return View(type);           
+                return View(type);
+
             try
             {
                 _accountTypeService.Update(new AccountType() { Id=type.Id, Name = type.Name });

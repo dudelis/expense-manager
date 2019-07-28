@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<ExpenseManager.WebApp.Models.ExpenseViewModel>
 
-<h4>Expenses</h4>
-<p>
-    <a asp-action="Create" class="btn btn-primary btn-sm">New Expense</a>
-</p>
+<div class="d-flex justify-content-between align-items-center">
+    <h4>Expenses</h4>
+    <a class="btn btn-primary btn-circle shadow btn-lg" asp-action="Create"><i class="material-icons">add</i></a>
+</div>
 <table class="table">
     <thead>
         <tr>

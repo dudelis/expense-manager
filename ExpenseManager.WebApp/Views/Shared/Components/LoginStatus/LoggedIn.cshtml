@@ -1,0 +1,8 @@
+﻿@model ExpenseManager.Auth.Concrete.ApplicationUser
+
+<form class="navbar-right" method="post" asp-controller="Auth" asp-action="Logout">
+    <ul class="nav navbar-nav navbar-right">
+        <li><span class="navbar-text mr-3">@Model.UserName</span></li>
+        <li><button type="submit" class="btn btn-link navbar-btn nav-link">Log off</button></li>
+    </ul>
+</form>

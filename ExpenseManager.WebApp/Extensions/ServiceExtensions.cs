@@ -1,4 +1,5 @@
-﻿using ExpenseManager.Business.Concrete;
+﻿using ExpenseManager.Auth.Concrete;
+using ExpenseManager.Business.Concrete;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
@@ -22,7 +23,7 @@ namespace ExpenseManager.WebApp.Extensions
         }
         public static void ConfigureIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ExpenseManagerDbContext>();
             services.ConfigureApplicationCookie(options => {
                 options.Cookie.HttpOnly = true;

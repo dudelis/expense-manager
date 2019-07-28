@@ -1,4 +1,4 @@
-﻿@model ExpenseManager.WebApp.Models.ExpenseCategoryViewModel
+﻿@model AccountTypeViewModel
 
 <div class="row">
     <div class="col-md-10">
@@ -14,18 +14,6 @@
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ParentCategoryId" class="control-label"></label>
-                @Html.DropDownListFor(
-                    p => p.ParentCategoryId,
-                    new SelectList(Model.ListOfExpenseCategories.Where(c => c.Id != Model.Id), "Id", "Name"),
-                    "Select Category",
-                    new { @class = "form-control"})
-                <span asp-validation-for="ParentCategoryId" class="text-danger"></span>
-            </div>        
         </form>
     </div>
 </div>
-
-
-

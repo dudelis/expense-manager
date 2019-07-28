@@ -26,9 +26,13 @@ namespace ExpenseManager.WebApp.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new ExpenseCategoryViewModel();
-            model.ListOfExpenseCategories = _service.GetAll();
-            return View(model);
+            var model = new ExpenseCategoryViewModel
+            {
+                ListOfExpenseCategories = _service.GetAll()
+            };
+            ViewData["AspAction"] = "Create";
+            ViewData["Title"] = "Create Expense Category";
+            return View("Edit", model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -37,7 +41,9 @@ namespace ExpenseManager.WebApp.Controllers
             if (!ModelState.IsValid)
             {
                 category.ListOfExpenseCategories = _service.GetAll();
-                return View(category);
+                ViewData["AspAction"] = "Create";
+                ViewData["Title"] = "Create Expense Category";
+                return View("Edit", category);
             }
             _service.Create(new ExpenseCategory() {
                 Name = category.Name,
@@ -52,9 +58,13 @@ namespace ExpenseManager.WebApp.Controllers
             if (id == null)
                 return NotFound();
             var category = _service.GetById(Convert.ToInt32(id));
-            var model = new ExpenseCategoryViewModel(category);
-            model.ListOfExpenseCategories = _service.GetAll();
-            return View(model);
+            var model = new ExpenseCategoryViewModel(category)
+            {
+                ListOfExpenseCategories = _service.GetAll()
+            };
+            ViewData["AspAction"] = "Edit";
+            ViewData["Title"] = "Edit Expense Category";
+            return View("Edit", model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -65,7 +75,9 @@ namespace ExpenseManager.WebApp.Controllers
             if (!ModelState.IsValid)
             {
                 model.ListOfExpenseCategories = _service.GetAll();
-                return View(model);
+                ViewData["AspAction"] = "Edit";
+                ViewData["Title"] = "Edit Expense Category";
+                return View("Edit", model);
             }
             try
             {

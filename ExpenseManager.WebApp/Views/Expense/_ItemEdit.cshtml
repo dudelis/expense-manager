@@ -1,14 +1,11 @@
 ﻿@model ExpenseManager.WebApp.Models.ExpenseViewModel
 
-@{
-    ViewData["Title"] = "New Expense";
-}
 <div class="row">
     <div class="col-md-10">
-        <form asp-action="Create">
+        <form asp-action="@ViewData["FormAction"]">
             <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center">
                 <button value="Save" class="btn btn-primary btn-sm"><i class="material-icons">save</i></button>
-                <span class="font-weight-bold text">@ViewData["Title"]</span>
+                <span class="font-weight-bold text-uppercase">@ViewData["Title"]</span>
                 <a asp-action="Index" class="btn btn-secondary btn-sm"><i class="material-icons">cancel</i></a>
             </div>
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -36,7 +33,7 @@
                     <div class="input-group-append">
                         @Html.DropDownListFor(
                             p => p.CurrencyCode,
-                            new SelectList(Model.ListOfCurrencies, "Code", "Code"),
+                            new SelectList(Model.ListOfCurrencies, "Id", "Id"),
                             "Currency",
                             new { @class = "form-control"})
                     </div>

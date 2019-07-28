@@ -22,11 +22,13 @@ namespace ExpenseManager.WebApp.Controllers
         {
             var currencies = _service.GetAll();
             var currencyDtos = CurrencyViewModel.Convert(currencies);
+
             return View(currencyDtos);
         }
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            return View(new CurrencyViewModel());
         }
 
         [HttpPost]
@@ -43,7 +45,8 @@ namespace ExpenseManager.WebApp.Controllers
                 _service.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View();
+
+            return View(currency);
         }
         public IActionResult Edit(string id)
         {
@@ -53,6 +56,7 @@ namespace ExpenseManager.WebApp.Controllers
             var currency = _service.GetById(id);
             if (currency == null)
                 return NotFound();
+
             return View(new CurrencyViewModel(currency));
         }
         [HttpPost]
@@ -79,6 +83,7 @@ namespace ExpenseManager.WebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+
             return View(currency);
         }
     }
