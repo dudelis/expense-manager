@@ -30,9 +30,7 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 ListOfExpenseCategories = _service.GetAll()
             };
-            ViewData["AspAction"] = "Create";
-            ViewData["Title"] = "Create Expense Category";
-            return View("Edit", model);
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -41,9 +39,8 @@ namespace ExpenseManager.WebApp.Controllers
             if (!ModelState.IsValid)
             {
                 category.ListOfExpenseCategories = _service.GetAll();
-                ViewData["AspAction"] = "Create";
-                ViewData["Title"] = "Create Expense Category";
-                return View("Edit", category);
+
+                return View(category);
             }
             _service.Create(new ExpenseCategory() {
                 Name = category.Name,
@@ -62,9 +59,7 @@ namespace ExpenseManager.WebApp.Controllers
             {
                 ListOfExpenseCategories = _service.GetAll()
             };
-            ViewData["AspAction"] = "Edit";
-            ViewData["Title"] = "Edit Expense Category";
-            return View("Edit", model);
+            return View( model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -75,9 +70,7 @@ namespace ExpenseManager.WebApp.Controllers
             if (!ModelState.IsValid)
             {
                 model.ListOfExpenseCategories = _service.GetAll();
-                ViewData["AspAction"] = "Edit";
-                ViewData["Title"] = "Edit Expense Category";
-                return View("Edit", model);
+                return View(model);
             }
             try
             {

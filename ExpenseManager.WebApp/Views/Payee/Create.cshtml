@@ -1,43 +1,8 @@
 ﻿@model PayeeViewModel
 
-@{ 
-    ViewData["Title"] = "New Payee";
+@{
+    ViewData["Title"] = "Create Payee";
+    ViewData["FormAction"] = "Create";
 }
-<div class="row">
-    <div class="col-md-10">
-        <form asp-action="Create">
-            <div class="form-group d-flex flex-row-reverse justify-content-between align-items-center">
-                <button value="Save" class="btn btn-primary btn-sm"><i class="material-icons">save</i></button>
-                <span class="font-weight-bold text-uppercase">@ViewData["Title"]</span>
-                <a asp-action="Index" class="btn btn-secondary btn-sm"><i class="material-icons">cancel</i></a>
-            </div>
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AccountNumber" class="control-label"></label>
-                <input asp-for="AccountNumber" class="form-control" />
-                <span asp-validation-for="AccountNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
-                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="WebSite" class="control-label"></label>
-                <input asp-for="WebSite" class="form-control" />
-                <span asp-validation-for="WebSite" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Notes" class="control-label"></label>
-                <textarea asp-for="Notes" class="form-control"></textarea>
-                <span asp-validation-for="Notes" class="text-danger"></span>
-            </div>
-         </form>
-</div>
-</div>
+@await Html.PartialAsync("_ItemEdit", Model, ViewData)
 

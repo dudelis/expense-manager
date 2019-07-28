@@ -47,9 +47,8 @@ namespace ExpenseManager.WebApp.Controllers
                 ListOfCurrencies = _currencyService.GetAll(),
                 ListOfPayees = _payeeService.GetAll()
             };
-            ViewData["AspAction"] = "Create";
-            ViewData["Title"] = "Create Expense";
-            return View("Edit", expense);
+
+            return View(expense);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -61,9 +60,8 @@ namespace ExpenseManager.WebApp.Controllers
                 model.ListOfCategories = _categoryService.GetAll();
                 model.ListOfCurrencies = _currencyService.GetAll();
                 model.ListOfPayees = _payeeService.GetAll();
-                ViewData["AspAction"] = "Create";
-                ViewData["Title"] = "Create Expense";
-                return View("Edit", model);
+
+                return View(model);
             }
             var expense = new Expense()
             {
@@ -94,9 +92,8 @@ namespace ExpenseManager.WebApp.Controllers
                 ListOfCurrencies = _currencyService.GetAll(),
                 ListOfPayees = _payeeService.GetAll()
             };
-            ViewData["AspAction"] = "Edit";
-            ViewData["Title"] = "Edit Expense";
-            return View("Edit", model);
+
+            return View(model);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -110,9 +107,8 @@ namespace ExpenseManager.WebApp.Controllers
                 model.ListOfCategories = _categoryService.GetAll();
                 model.ListOfCurrencies = _currencyService.GetAll();
                 model.ListOfPayees = _payeeService.GetAll();
-                ViewData["AspAction"] = "Edit";
-                ViewData["Title"] = "Edit Expense";
-                return View("Edit", model);
+
+                return View(model);
             }
             var expense = new Expense()
             {
