@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExpenseManager.Auth.Concrete;
+using ExpenseManager.Business.Interfaces;
+using ExpenseManager.Entities.Concrete;
 using ExpenseManager.WebApp.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,11 +15,20 @@ namespace ExpenseManager.WebApp.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signinManager;
+        private readonly IProfileService _profileManager;
+        private readonly IProfileMemberService _profileMemberManager;
+        //private readonly IProfileManager profileManager;
 
-        public AuthController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AuthController(
+            UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager,
+            IProfileService profile,
+            IProfileMemberService profileMember)
         {
             _userManager = userManager;
             _signinManager = signInManager;
+            _profileManager = profile;
+            _profileMemberManager = profileMember;
         }
 
         public IActionResult Register()
@@ -46,6 +57,24 @@ namespace ExpenseManager.WebApp.Controllers
                 }
                 return View();
             }
+            if (!_profileMemberManager.ItemExists(newUser.UserName))
+            {
+                var profile = new Profile()
+                {
+                    Name = $"Profile for {newUser.UserName}",
+                    ProfileOwner = newUser.UserName,
+                    ProfileMembers = new List<ProfileMember>()
+                    {
+                        new ProfileMember()
+                        {
+                            UserId = newUser.UserName
+                        }
+                    }
+                };
+                _profileManager.Create(profile);
+                _profileManager.SaveChanges();
+            }
+
             return RedirectToAction("Login");
         }
         [HttpGet]

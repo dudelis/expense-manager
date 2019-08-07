@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManager.WebApi", "Ex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManager.WebApp", "ExpenseManager.WebApp\ExpenseManager.WebApp.csproj", "{89322516-7FB7-4AB4-B78C-40EDB520B747}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Auth", "ExpenseManager.Auth\ExpenseManager.Auth.csproj", "{4F69AEE2-F4C9-4F98-9D94-5672FE5738BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManager.Auth", "ExpenseManager.Auth\ExpenseManager.Auth.csproj", "{4F69AEE2-F4C9-4F98-9D94-5672FE5738BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Web.Core", "ExpenseManager.Web.Core\ExpenseManager.Web.Core.csproj", "{D50399FB-92A1-4372-B68F-8EF6417E7ED4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{4F69AEE2-F4C9-4F98-9D94-5672FE5738BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4F69AEE2-F4C9-4F98-9D94-5672FE5738BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4F69AEE2-F4C9-4F98-9D94-5672FE5738BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D50399FB-92A1-4372-B68F-8EF6417E7ED4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D50399FB-92A1-4372-B68F-8EF6417E7ED4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D50399FB-92A1-4372-B68F-8EF6417E7ED4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D50399FB-92A1-4372-B68F-8EF6417E7ED4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

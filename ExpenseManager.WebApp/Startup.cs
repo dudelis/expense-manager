@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
-using ExpenseManager.WebApp.Extensions;
+using ExpenseManager.Web.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -38,7 +39,7 @@ namespace ExpenseManager.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });           
 
-
+            services.AddAutoMapper(typeof(Startup));
             services
                 .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -50,6 +51,8 @@ namespace ExpenseManager.WebApp
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                SeedData.SeedUsers(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
+                //SeedData.SeedCurrency(app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope().ServiceProvider);
             }
             else
             {
@@ -62,7 +65,6 @@ namespace ExpenseManager.WebApp
             app.UseStaticFiles();
             app.UseCookiePolicy();
             app.UseAuthentication();
-            //context.SeedData();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

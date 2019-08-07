@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class AccountType : BaseEntity
+    public class AccountType : BaseEntity, IProfileDependent
     {
         public string Name { get; set; }
         

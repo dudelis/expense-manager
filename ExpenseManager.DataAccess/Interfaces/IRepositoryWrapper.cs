@@ -12,6 +12,8 @@ namespace ExpenseManager.DataAccess.Interfaces
         IExpenseRepository Expense { get; }
         IExpenseCategoryRepository ExpenseCategory { get; }
         IPayeeRepository Payee { get; }
+        IProfileRepository Profile { get; }
+        IProfileMemberRepository ProfileMember { get; }
         void Save();
     }
 }

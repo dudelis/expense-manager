@@ -4,34 +4,37 @@
     <h4>Currencies</h4>
     <a class="btn btn-primary btn-circle shadow btn-lg" asp-action="Create"><i class="material-icons">add</i></a>
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Id)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                <div class="btn-toolbar float-right">
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm"><i class="material-icons">edit</i></a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm"><i class="material-icons">delete</i></a>
-                </div>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="table-responsive-sm">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Id)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <div class="btn-toolbar float-right">
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm"><i class="material-icons">edit</i></a>
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm"><i class="material-icons">delete</i></a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

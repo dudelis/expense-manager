@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class Expense : BaseEntity
+    public class Expense : BaseEntity, IProfileDependent
     {
         public string Name { get; set; }
         public DateTime ExpenseDate { get; set; }
@@ -24,6 +24,7 @@ namespace ExpenseManager.Entities.Concrete
 
         public int? PayeeId { get; set; }
         public virtual Payee Payee { get; set; }
+
 
     }
 }

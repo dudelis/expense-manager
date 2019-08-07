@@ -14,6 +14,8 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         private IExpenseRepository _expense;
         private IExpenseCategoryRepository _expenseCategory;
         private IPayeeRepository _payee;
+        private IProfileRepository _profile;
+        private IProfileMemberRepository _profileMember;
 
         public EfRepositoryWrapper(ExpenseManagerDbContext context)
         {
@@ -86,6 +88,29 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     _payee = new EfPayeeRepository(_context);
                 }
                 return _payee;
+            }
+        }
+        public IProfileRepository Profile
+        {
+            get
+            {
+                if (_profile == null)
+                {
+                    _profile = new EfProfileRepository(_context);
+                }
+                return _profile;
+            }
+        }
+
+        public IProfileMemberRepository ProfileMember
+        {
+            get
+            {
+                if(_profileMember == null)
+                {
+                    _profileMember = new EfProfileMemberRepository(_context);
+                }
+                return _profileMember;
             }
         }
 

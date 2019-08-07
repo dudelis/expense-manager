@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using ExpenseManager.WebApp.Models;
@@ -13,17 +14,20 @@ namespace ExpenseManager.WebApp.Controllers
     public class AccountTypeController : Controller
     {
         private readonly IAccountTypeService _accountTypeService;
+        private readonly IMapper _mapper;
 
-        public AccountTypeController(IAccountTypeService service)
+        public AccountTypeController(IAccountTypeService service, IMapper mapper)
         {
             this._accountTypeService = service;
+            this._mapper = mapper;
         }
 
         public IActionResult Index()
         {
-            var types = _accountTypeService.GetAll();
-            var typesDto = AccountTypeViewModel.Convert(types);
-            return View(typesDto);
+            var accountTypes = _accountTypeService.GetAll();
+            var accountTypeViewModels = _mapper.Map<List<AccountType>, List<AccountTypeViewModel>>(accountTypes);
+            //var typesDto = AccountTypeViewModel.Convert(types);
+            return View(accountTypeViewModels);
         }
         
         [HttpGet]
@@ -33,15 +37,16 @@ namespace ExpenseManager.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([Bind("Name")] AccountTypeViewModel accountType)
+        public IActionResult Create([Bind("Name")] AccountTypeViewModel model)
         {
             if (ModelState.IsValid)
             {
-                _accountTypeService.Create(new AccountType() {Name = accountType.Name});
+                var accountType = _mapper.Map<AccountType>(model);
+                _accountTypeService.Create(accountType);
                 _accountTypeService.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            return View(accountType);
+            return View(model);
         }
         [HttpGet]
         public IActionResult Edit(int? id)

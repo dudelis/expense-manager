@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class Account : BaseEntity
+    public class Account : BaseEntity, IProfileDependent
     {
         public string Name { get; set; }
         public string IconCode { get; set; }
@@ -21,9 +21,6 @@ namespace ExpenseManager.Entities.Concrete
 
         public bool IncludeInTotals { get; set; }
 
-
         public virtual ICollection<Expense> Expenses { get; set; }
-
-
     }
 }
