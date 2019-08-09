@@ -12,20 +12,19 @@ using Microsoft.AspNetCore.Http;
 using ExpenseManager.Auth.Concrete;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Security.Claims;
+using ExpenseManager.Auth.Interfaces;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
     public class ExpenseManagerDbContext: IdentityDbContext<ApplicationUser>
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
         private int _userProfileId;
         private string _userId;
 
 
-        public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
+        public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options, IGetClaimsProvider claimsProvider) : base(options)
         {
-            _httpContextAccessor = httpContextAccessor;
-            _userId = GetUserIdFromClaims(httpContextAccessor);
+            _userId = claimsProvider.UserId;
             if (!string.IsNullOrEmpty(_userId))
             {
                 _userProfileId = this.Set<ProfileMember>().Where(x => x.UserId == _userId).Select(p => p.ProfileId).FirstOrDefault();
@@ -174,9 +173,9 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 if (entity.Entity is IHasModificationTime)
                     entity.Property("ModifiedTime").CurrentValue = DateTime.UtcNow;
                 if (entity.Entity is ICreationAudited)
-                    entity.Property("CreatorUserId").CurrentValue = _httpContextAccessor.HttpContext.User.Identity.Name;
+                    entity.Property("CreatorUserId").CurrentValue = _userId;
                 if (entity.Entity is IModificationAudited)
-                    entity.Property("LastModifiedUserId").CurrentValue = _httpContextAccessor.HttpContext.User.Identity.Name;                
+                    entity.Property("LastModifiedUserId").CurrentValue = _userId;                
             }
             var modifiedEntities = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
             foreach (var entity in modifiedEntities)
@@ -187,7 +186,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 }                    
                 if (entity.Entity is IModificationAudited)
                 {
-                    entity.Property("LastModifiedUserId").CurrentValue = _httpContextAccessor.HttpContext.User.Identity.Name;
+                    entity.Property("LastModifiedUserId").CurrentValue = _userId;
                 }                    
             }                        
         }

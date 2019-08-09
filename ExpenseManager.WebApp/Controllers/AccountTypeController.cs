@@ -6,11 +6,13 @@ using AutoMapper;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using ExpenseManager.WebApp.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ExpenseManager.WebApp.Controllers
 {
+    [Authorize]
     public class AccountTypeController : Controller
     {
         private readonly IAccountTypeService _accountTypeService;

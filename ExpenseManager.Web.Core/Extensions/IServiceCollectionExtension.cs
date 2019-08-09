@@ -41,6 +41,7 @@ namespace ExpenseManager.Web.Core.Extensions
                 options.SlidingExpiration = true;
             });
         }
+
         public static void ConfigureSqlContext(this IServiceCollection services, IConfiguration config)
         {
             var connectionString = config["connectionStrings:expenseManagerDbConnectionString"];

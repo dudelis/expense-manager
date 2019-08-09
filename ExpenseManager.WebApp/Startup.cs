@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using ExpenseManager.Auth.Concrete;
+using ExpenseManager.Auth.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.Web.Core.Extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -28,10 +32,21 @@ namespace ExpenseManager.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            services.ConfigureSqlContext(Configuration);
-            services.ConfigureIdentityServices(Configuration);
-            services.ConfigureDataManagers();
+            var connectionString = Configuration["connectionStrings:expenseManagerDbConnectionString"];
+            services.AddDbContext<ExpenseManagerDbContext>(c => c.UseSqlServer(connectionString));
 
+            services.AddDefaultIdentity<ApplicationUser>()
+                .AddEntityFrameworkStores<ExpenseManagerDbContext>();
+            services.ConfigureApplicationCookie(options => {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                options.LoginPath = "/Auth/Login";
+                options.AccessDeniedPath = "/Auth/Login";
+                options.SlidingExpiration = true;
+            });
+
+            services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+            services.ConfigureDataManagers();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -40,8 +55,8 @@ namespace ExpenseManager.WebApp
             });           
 
             services.AddAutoMapper(typeof(Startup));
-            services
-                .AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
+            services.AddMvc()
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
                 .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
