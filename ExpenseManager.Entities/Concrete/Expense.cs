@@ -20,10 +20,17 @@ namespace ExpenseManager.Entities.Concrete
         public virtual ExpenseCategory Category { get; set; }
 
         public string CurrencyCode { get; set; }
-        public virtual Currency Currency { get; set; }
 
         public int? PayeeId { get; set; }
         public virtual Payee Payee { get; set; }
+
+        public Guid ProfileId { get; private set; }
+        public Profile Profile { get; private set; }
+
+        public void SetProfileId(Guid profileGuid)
+        {
+            ProfileId = profileGuid;
+        }
 
 
     }

@@ -13,5 +13,13 @@ namespace ExpenseManager.Entities.Concrete
 
         public virtual ICollection<ExpenseCategory> ChildCategories { get; set; }
         public virtual ICollection<Expense> Expenses { get; set; }
+
+        public Guid ProfileId { get; private set; }
+        public Profile Profile { get; private set; }
+
+        public void SetProfileId(Guid profileGuid)
+        {
+            ProfileId = profileGuid;
+        }
     }
 }

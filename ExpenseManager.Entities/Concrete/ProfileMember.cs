@@ -10,8 +10,7 @@ namespace ExpenseManager.Entities.Concrete
     {
         public int Id { get; set; }        
         public string UserId { get; set; }
-        public int ProfileId { get; set; }
-        public Profile Profile { get; set; }
-        
+        public Guid ProfileId { get; set; }
+        public Profile Profile { get; set; }        
     }
 }

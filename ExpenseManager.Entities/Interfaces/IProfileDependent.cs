@@ -7,9 +7,9 @@ namespace ExpenseManager.Entities.Interfaces
 {
     public interface IProfileDependent
     {
-        int ProfileId { get; }
+        Guid ProfileId { get; }
         Profile Profile { get; }
 
-        void SetProfileId(int id);
+        void SetProfileId(Guid id);
     }
 }

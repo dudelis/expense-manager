@@ -33,7 +33,7 @@
                 @*<input asp-for="CurrencyCode" class="form-control" />*@
                 @Html.DropDownListFor(
                         m => m.CurrencyCode,
-                        new SelectList(Model.ListOfCurrencies, "Id", "Name"),
+                        new SelectList(ViewBag.ListOfCurrencies, "Id", "Name"),
                         "Select Currency",
                         new { @class = "form-control" })
                 <span asp-validation-for="CurrencyCode" class="text-danger"></span>

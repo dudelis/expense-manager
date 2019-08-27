@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace ExpenseManager.DataAccess.Migrations
 {
-    public partial class Migration01 : Migration
+    public partial class migration01 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,9 +40,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    AccessFailedCount = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -50,11 +48,26 @@ namespace ExpenseManager.DataAccess.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Currencies",
+                columns: table => new
+                {
+                    Id = table.Column<string>(fixedLength: true, maxLength: 3, nullable: false),
+                    CreatorUserId = table.Column<string>(nullable: false),
+                    CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    LastModifiedUserId = table.Column<string>(nullable: false),
+                    ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
+                    Name = table.Column<string>(maxLength: 25, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Currencies", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Profiles",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     ProfileOwner = table.Column<string>(nullable: true)
                 },
@@ -109,8 +122,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 name: "AspNetUserLogins",
                 columns: table => new
                 {
-                    LoginProvider = table.Column<string>(nullable: false),
-                    ProviderKey = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    ProviderKey = table.Column<string>(maxLength: 128, nullable: false),
                     ProviderDisplayName = table.Column<string>(nullable: true),
                     UserId = table.Column<string>(nullable: false)
                 },
@@ -154,8 +167,8 @@ namespace ExpenseManager.DataAccess.Migrations
                 columns: table => new
                 {
                     UserId = table.Column<string>(nullable: false),
-                    LoginProvider = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(nullable: false),
+                    LoginProvider = table.Column<string>(maxLength: 128, nullable: false),
+                    Name = table.Column<string>(maxLength: 128, nullable: false),
                     Value = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -179,37 +192,14 @@ namespace ExpenseManager.DataAccess.Migrations
                     CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedUserId = table.Column<string>(nullable: false),
                     ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AccountTypes", x => x.Id);
                     table.ForeignKey(
                         name: "FK_AccountTypes_Profiles_ProfileId",
-                        column: x => x.ProfileId,
-                        principalTable: "Profiles",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Currencies",
-                columns: table => new
-                {
-                    Id = table.Column<string>(fixedLength: true, maxLength: 3, nullable: false),
-                    CreatorUserId = table.Column<string>(nullable: false),
-                    CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    LastModifiedUserId = table.Column<string>(nullable: false),
-                    ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(maxLength: 25, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Currencies", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Currencies_Profiles_ProfileId",
                         column: x => x.ProfileId,
                         principalTable: "Profiles",
                         principalColumn: "Id",
@@ -226,9 +216,9 @@ namespace ExpenseManager.DataAccess.Migrations
                     CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedUserId = table.Column<string>(nullable: false),
                     ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    ParentCategoryId = table.Column<int>(nullable: true)
+                    ParentCategoryId = table.Column<int>(nullable: true),
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -257,12 +247,12 @@ namespace ExpenseManager.DataAccess.Migrations
                     CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedUserId = table.Column<string>(nullable: false),
                     ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: false),
                     AccountNumber = table.Column<string>(nullable: true),
                     PhoneNumber = table.Column<string>(nullable: true),
                     WebSite = table.Column<string>(nullable: true),
-                    Notes = table.Column<string>(nullable: true)
+                    Notes = table.Column<string>(nullable: true),
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -285,9 +275,9 @@ namespace ExpenseManager.DataAccess.Migrations
                     CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedUserId = table.Column<string>(nullable: false),
                     ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
                     MonthStartDay = table.Column<int>(nullable: false),
-                    DefaultCurrency = table.Column<string>(nullable: true)
+                    DefaultCurrency = table.Column<string>(nullable: true),
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -307,7 +297,7 @@ namespace ExpenseManager.DataAccess.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserId = table.Column<string>(nullable: false),
-                    ProfileId = table.Column<int>(nullable: false)
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -330,14 +320,14 @@ namespace ExpenseManager.DataAccess.Migrations
                     CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedUserId = table.Column<string>(nullable: false),
                     ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     IconCode = table.Column<string>(nullable: true),
                     CurrencyCode = table.Column<string>(nullable: true),
                     Balance = table.Column<decimal>(nullable: false),
                     BalanceDate = table.Column<DateTime>(nullable: false),
                     AccountTypeId = table.Column<int>(nullable: false),
-                    IncludeInTotals = table.Column<bool>(nullable: false)
+                    IncludeInTotals = table.Column<bool>(nullable: false),
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -346,12 +336,6 @@ namespace ExpenseManager.DataAccess.Migrations
                         name: "FK_Accounts_AccountTypes_AccountTypeId",
                         column: x => x.AccountTypeId,
                         principalTable: "AccountTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Accounts_Currencies_CurrencyCode",
-                        column: x => x.CurrencyCode,
-                        principalTable: "Currencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -372,7 +356,6 @@ namespace ExpenseManager.DataAccess.Migrations
                     CreatedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
                     LastModifiedUserId = table.Column<string>(nullable: false),
                     ModifiedTime = table.Column<DateTime>(nullable: false, defaultValueSql: "GETUTCDATE()"),
-                    ProfileId = table.Column<int>(nullable: false),
                     Name = table.Column<string>(nullable: true),
                     ExpenseDate = table.Column<DateTime>(nullable: false),
                     Amount = table.Column<decimal>(nullable: false),
@@ -380,7 +363,8 @@ namespace ExpenseManager.DataAccess.Migrations
                     PayFromAccountId = table.Column<int>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
                     CurrencyCode = table.Column<string>(nullable: true),
-                    PayeeId = table.Column<int>(nullable: true)
+                    PayeeId = table.Column<int>(nullable: true),
+                    ProfileId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -389,12 +373,6 @@ namespace ExpenseManager.DataAccess.Migrations
                         name: "FK_Expenses_ExpenseCategories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "ExpenseCategories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Expenses_Currencies_CurrencyCode",
-                        column: x => x.CurrencyCode,
-                        principalTable: "Currencies",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -421,11 +399,6 @@ namespace ExpenseManager.DataAccess.Migrations
                 name: "IX_Accounts_AccountTypeId",
                 table: "Accounts",
                 column: "AccountTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Accounts_CurrencyCode",
-                table: "Accounts",
-                column: "CurrencyCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accounts_ProfileId",
@@ -477,11 +450,6 @@ namespace ExpenseManager.DataAccess.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Currencies_ProfileId",
-                table: "Currencies",
-                column: "ProfileId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ExpenseCategories_ParentCategoryId",
                 table: "ExpenseCategories",
                 column: "ParentCategoryId");
@@ -495,11 +463,6 @@ namespace ExpenseManager.DataAccess.Migrations
                 name: "IX_Expenses_CategoryId",
                 table: "Expenses",
                 column: "CategoryId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Expenses_CurrencyCode",
-                table: "Expenses",
-                column: "CurrencyCode");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Expenses_PayFromAccountId",
@@ -551,6 +514,9 @@ namespace ExpenseManager.DataAccess.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Currencies");
+
+            migrationBuilder.DropTable(
                 name: "Expenses");
 
             migrationBuilder.DropTable(
@@ -576,9 +542,6 @@ namespace ExpenseManager.DataAccess.Migrations
 
             migrationBuilder.DropTable(
                 name: "AccountTypes");
-
-            migrationBuilder.DropTable(
-                name: "Currencies");
 
             migrationBuilder.DropTable(
                 name: "Profiles");

@@ -3,7 +3,6 @@ using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
@@ -31,12 +30,12 @@ namespace ExpenseManager.Business.Concrete
             return _wrapper.Profile.GetList();
         }
 
-        public Profile GetById(int id)
+        public Profile GetById(Guid id)
         {
             return _wrapper.Profile.Get(x => x.Id == id);
         }
 
-        public bool ItemExists(int id)
+        public bool ItemExists(Guid id)
         {
             return _wrapper.Profile.ItemExists(x => x.Id == id);
         }

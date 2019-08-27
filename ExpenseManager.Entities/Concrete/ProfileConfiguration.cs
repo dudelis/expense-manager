@@ -6,10 +6,18 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class ProfileConfiguration: BaseEntity
+    public class ProfileConfiguration: BaseEntity, IProfileDependent
     {
         public int MonthStartDay { get; set; }
         public string DefaultCurrency { get; set; }
-        
+
+        public Guid ProfileId { get; private set; }
+        public Profile Profile { get; private set; }
+
+        public void SetProfileId(Guid profileGuid)
+        {
+            ProfileId = profileGuid;
+        }
+
     }
 }

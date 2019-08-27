@@ -58,7 +58,6 @@ namespace ExpenseManager.WebApp.Models
             CategoryId = e.CategoryId;
             Category = e.Category;
             CurrencyCode = e.CurrencyCode;
-            Currency = e.Currency;
             PayeeId = e.PayeeId;
             Payee = e.Payee;
         }

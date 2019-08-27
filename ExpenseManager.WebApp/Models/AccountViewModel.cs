@@ -46,7 +46,6 @@ namespace ExpenseManager.WebApp.Models
             Name = a.Name;
             IconCode = a.IconCode;
             CurrencyCode = a.CurrencyCode;
-            Currency = a.Currency;
             Balance = a.Balance;
             BalanceDate = a.BalanceDate;
             AccountTypeId = a.AccountTypeId;

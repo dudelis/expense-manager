@@ -3,6 +3,7 @@ using ExpenseManager.Business.Concrete;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,13 +32,29 @@ namespace ExpenseManager.Web.Core.Extensions
         }
         public static void ConfigureIdentityServices(this IServiceCollection services, IConfiguration config)
         {
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ExpenseManagerDbContext>();
-            services.ConfigureApplicationCookie(options => {
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExpenseManagerDbContext>();
+            
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
                 options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-                options.LoginPath = "/Auth/Login";
-                options.AccessDeniedPath = "/Auth/Login";
+                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/Login";
                 options.SlidingExpiration = true;
             });
         }

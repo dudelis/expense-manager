@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Interfaces
 {
-    public interface IProfileRepository: IEntityRepository<Profile>
+    public interface IProfileRepository: IEntityRepository<Profile, Guid>
     {
     }
 }

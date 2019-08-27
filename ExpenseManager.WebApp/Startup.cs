@@ -32,18 +32,8 @@ namespace ExpenseManager.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddHttpContextAccessor();
-            var connectionString = Configuration["connectionStrings:expenseManagerDbConnectionString"];
-            services.AddDbContext<ExpenseManagerDbContext>(c => c.UseSqlServer(connectionString));
-
-            services.AddDefaultIdentity<ApplicationUser>()
-                .AddEntityFrameworkStores<ExpenseManagerDbContext>();
-            services.ConfigureApplicationCookie(options => {
-                options.Cookie.HttpOnly = true;
-                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-                options.LoginPath = "/Auth/Login";
-                options.AccessDeniedPath = "/Auth/Login";
-                options.SlidingExpiration = true;
-            });
+            services.ConfigureSqlContext(Configuration);
+            services.ConfigureIdentityServices(Configuration);
 
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
             services.ConfigureDataManagers();
@@ -56,8 +46,8 @@ namespace ExpenseManager.WebApp
 
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc()
-                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2)
-                .AddJsonOptions(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -82,6 +72,10 @@ namespace ExpenseManager.WebApp
             app.UseAuthentication();
             app.UseMvc(routes =>
             {
+                routes.MapRoute(
+                    name: "profile-dependent",
+                    template: "profile/{profileId}/{controller=Home}/{action=Index}/{id?}");
+
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");

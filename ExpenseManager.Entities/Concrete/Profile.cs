@@ -5,9 +5,9 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class Profile: IEntity
+    public class Profile: IEntity<Guid>
     {
-        public int Id { get; set;}        
+        public Guid Id { get; set;}        
         public string Name { get; set; }
         public string ProfileOwner { get; set; }
 

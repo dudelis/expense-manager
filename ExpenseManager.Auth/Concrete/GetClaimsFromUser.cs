@@ -12,13 +12,17 @@ namespace ExpenseManager.Auth.Concrete
     {
         private IHttpContextAccessor _accessor;
 
-        public string UserId { get; private set; }
+        public string UserId
+        {
+            get
+            {
+                return _accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            }
+        }
 
         public GetClaimsFromUser(IHttpContextAccessor accessor)
         {
             _accessor = accessor;
-            UserId = accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;            
         }
-
     }
 }

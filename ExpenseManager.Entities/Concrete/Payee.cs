@@ -14,5 +14,13 @@ namespace ExpenseManager.Entities.Concrete
         public string Notes { get; set; }
 
         public ICollection<Expense> Expenses { get; set; }
+
+        public Guid ProfileId { get; private set; }
+        public Profile Profile { get; private set; }
+
+        public void SetProfileId(Guid profileGuid)
+        {
+            ProfileId = profileGuid;
+        }
     }
 }

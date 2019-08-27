@@ -11,7 +11,6 @@ namespace ExpenseManager.Entities.Concrete
         public string IconCode { get; set; }
 
         public string CurrencyCode { get; set; }
-        public Currency Currency { get; set; }
 
         public decimal Balance { get; set; }
         public DateTime BalanceDate { get; set; }
@@ -22,5 +21,12 @@ namespace ExpenseManager.Entities.Concrete
         public bool IncludeInTotals { get; set; }
 
         public virtual ICollection<Expense> Expenses { get; set; }
+        public Guid ProfileId { get; private set; }
+        public Profile Profile { get; private set; }
+
+        public void SetProfileId(Guid profileGuid)
+        {
+            ProfileId = profileGuid;
+        }
     }
 }

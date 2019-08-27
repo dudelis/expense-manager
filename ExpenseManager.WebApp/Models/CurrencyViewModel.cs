@@ -26,9 +26,6 @@ namespace ExpenseManager.WebApp.Models
             {
                 Id = currency.Id;
                 Name = currency.Name;
-
-                Accounts = currency.Accounts;
-                Expenses = currency.Expenses;
             }
             
         }

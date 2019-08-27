@@ -4,11 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace ExpenseManager.Web.Core
+namespace ExpenseManager.Web.Core.Models
 {
     public class Profile
     {
-        public int Id { get; set; }
+        public int Guid { get; set; }
         [Required]
         public string Name { get; set; }
         public string ProfileOwner { get; set; }

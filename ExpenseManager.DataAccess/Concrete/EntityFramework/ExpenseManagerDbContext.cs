@@ -13,24 +13,18 @@ using ExpenseManager.Auth.Concrete;
 using Microsoft.EntityFrameworkCore.Metadata;
 using System.Security.Claims;
 using ExpenseManager.Auth.Interfaces;
+using Microsoft.AspNetCore.Identity;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class ExpenseManagerDbContext: IdentityDbContext<ApplicationUser>
+    public class ExpenseManagerDbContext: IdentityDbContext<IdentityUser>
     {
-        private int _userProfileId;
-        private string _userId;
-
+        private readonly IGetClaimsProvider _claimsProvider;
 
         public ExpenseManagerDbContext(DbContextOptions<ExpenseManagerDbContext> options, IGetClaimsProvider claimsProvider) : base(options)
         {
-            _userId = claimsProvider.UserId;
-            if (!string.IsNullOrEmpty(_userId))
-            {
-                _userProfileId = this.Set<ProfileMember>().Where(x => x.UserId == _userId).Select(p => p.ProfileId).FirstOrDefault();
-            }
+            _claimsProvider = claimsProvider;
         }
-
         public DbSet<Account> Accounts { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
@@ -64,7 +58,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 //Created User
                 entity.Property(nameof(ICreationAudited.CreatorUserId))
                     .IsRequired()
-                    .Metadata.AfterSaveBehavior = PropertySaveBehavior.Ignore;
+                    .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
             }
             //IModificationAudited
             foreach (var entityOwnedBy in modelBuilder.Model.GetEntityTypes().Where(x => x.ClrType.GetInterface(nameof(IModificationAudited)) != null))
@@ -84,25 +78,17 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 var entity = modelBuilder.Entity(entityOwnedBy.ClrType);
                 entity.Property(nameof(IProfileDependent.ProfileId))
                     .IsRequired()
-                    .Metadata.AfterSaveBehavior = PropertySaveBehavior.Ignore;
+                    .Metadata.SetAfterSaveBehavior(PropertySaveBehavior.Ignore);
                 entity.HasIndex(nameof(IProfileDependent.ProfileId));
             }
 
-
             modelBuilder.Entity<Account>(entity =>
             {
-                entity
-                    .HasOne(p => p.Currency)
-                    .WithMany(p => p.Accounts)
-                    .HasForeignKey(p => p.CurrencyCode)
-                    .OnDelete(DeleteBehavior.Restrict);
-
                 entity
                     .HasOne(p => p.AccountType)
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(p => p.AccountTypeId)
                     .OnDelete(DeleteBehavior.Restrict);
-
             });
             modelBuilder.Entity<AccountType>(entity =>
             {
@@ -119,7 +105,6 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.HasOne(p => p.Category).WithMany(p => p.Expenses).HasForeignKey(p => p.CategoryId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(p => p.PayFromAccount).WithMany(p => p.Expenses).HasForeignKey(p => p.PayFromAccountId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(p => p.Payee).WithMany(p => p.Expenses).HasForeignKey(p => p.PayeeId).OnDelete(DeleteBehavior.Restrict);
-                entity.HasOne(p => p.Currency).WithMany(p => p.Expenses).HasForeignKey(p => p.CurrencyCode).OnDelete(DeleteBehavior.Restrict);
 
             });
             modelBuilder.Entity<ExpenseCategory>(entity =>
@@ -146,9 +131,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<ProfileMember>(entity =>
             {
                 entity.HasKey(p => p.Id);
-
                 entity.Property(p => p.UserId).IsRequired();
-
                 entity.HasOne(p => p.Profile)
                     .WithMany(p => p.ProfileMembers)
                     .HasForeignKey(p => p.ProfileId)
@@ -173,9 +156,9 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 if (entity.Entity is IHasModificationTime)
                     entity.Property("ModifiedTime").CurrentValue = DateTime.UtcNow;
                 if (entity.Entity is ICreationAudited)
-                    entity.Property("CreatorUserId").CurrentValue = _userId;
+                    entity.Property("CreatorUserId").CurrentValue = _claimsProvider.UserId;
                 if (entity.Entity is IModificationAudited)
-                    entity.Property("LastModifiedUserId").CurrentValue = _userId;                
+                    entity.Property("LastModifiedUserId").CurrentValue = _claimsProvider.UserId;                
             }
             var modifiedEntities = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
             foreach (var entity in modifiedEntities)
@@ -186,18 +169,9 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 }                    
                 if (entity.Entity is IModificationAudited)
                 {
-                    entity.Property("LastModifiedUserId").CurrentValue = _userId;
+                    entity.Property("LastModifiedUserId").CurrentValue = _claimsProvider.UserId;
                 }                    
             }                        
         }
-        private static string GetUserIdFromClaims(IHttpContextAccessor accessor)
-        {
-            var upn = accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Upn)?.Value;
-            if (!string.IsNullOrEmpty(upn))
-                return upn;
-
-            return accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
-        }
-
     }
 }
