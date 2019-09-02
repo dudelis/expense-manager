@@ -40,6 +40,11 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             this._context.Set<TEntity>().Remove(entity);
         }
 
+        public void DeleteRange(IEnumerable<TEntity> entities)
+        {
+            this._context.Set<TEntity>().RemoveRange(entities);
+        }
+
         public TEntity Get(Expression<Func<TEntity, bool>> filter)
         {
             return this._context.Set<TEntity>().Where(filter).FirstOrDefault();
@@ -51,14 +56,14 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 
         public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
         {
-            var query = this._context.Set<TEntity>().Include(_context.GetIncludePaths(typeof(TEntity)));
+            var query = this._context.Set<TEntity>().AsNoTracking().Include(_context.GetIncludePaths(typeof(TEntity)));
             if (filter != null)
                 query = query.Where(filter);
             return query.ToList();
         }
         public Task<List<TEntity>> GetListAsync(Expression<Func<TEntity, bool>> filter = null)
         {
-            var query = this._context.Set<TEntity>().Include(_context.GetIncludePaths(typeof(TEntity)));
+            var query = this._context.Set<TEntity>().AsNoTracking().Include(_context.GetIncludePaths(typeof(TEntity)));
             if (filter != null)
                 query = query.Where(filter);
             return query.ToListAsync();

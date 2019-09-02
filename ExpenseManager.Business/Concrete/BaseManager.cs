@@ -2,6 +2,7 @@
 using ExpenseManager.Entities.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Business.Concrete
 {
@@ -51,10 +52,18 @@ namespace ExpenseManager.Business.Concrete
         {
             Repository.Delete(entity);
         }
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            Repository.DeleteRange(entities);
+        }
 
         public void SaveChanges()
         {
             Repository.Save();
+        }
+        public Task SaveChangesAsync()
+        {
+            return Repository.SaveAsync();
         }
     }
 }

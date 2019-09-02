@@ -1,5 +1,5 @@
 ﻿<div class="top-row pl-4 navbar navbar-dark">
-    <a class="navbar-brand" href="">ExpenseManager.Blazor</a>
+    <a class="navbar-brand" href="">Expense Manager</a>
     <button class="navbar-toggler" @onclick="ToggleNavMenu">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -11,10 +11,10 @@
             <BSNavLink Href="">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
             </BSNavLink>
-            <hr style="border-bottom: 1px solid #fff; display:block" />
         </BSNavItem>
+        <hr class="sidebar-divider">
         <BSNavItem Class="px-3">
-            <BSNavLink  Href="expenses">
+            <BSNavLink Href="expenses">
                 <span class="oi oi-account-logout" aria-hidden="true"></span> Expenses
             </BSNavLink>
         </BSNavItem>
@@ -27,8 +27,8 @@
             <BSNavLink Href="accounts">
                 <span class="oi oi-euro" aria-hidden="true"></span> Accounts
             </BSNavLink>
-            <hr style="border-bottom: 1px solid #fff; display:block" />
         </BSNavItem>
+        <hr class="sidebar-divider">
         <BSNavItem Class="px-3">
             <BSNavLink Href="">
                 <span class="oi oi-bar-chart" aria-hidden="true"></span> Reports

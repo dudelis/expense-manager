@@ -16,5 +16,7 @@ namespace ExpenseManager.Web.Core.Models
         [Required]
         public string Name { get; set; }
         public string Symbol { get; set; }
+
+        public bool Selected { get; set; }
     }
 }

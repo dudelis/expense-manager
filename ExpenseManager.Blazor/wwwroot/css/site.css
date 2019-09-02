@@ -14,6 +14,7 @@ a, .btn-link {
   border-color: #1861ac;
 }
 
+
 app {
     position: relative;
     display: flex;
@@ -57,6 +58,12 @@ app {
     font-size: 1.1rem;
     vertical-align: text-top;
     top: -2px;
+}
+.sidebar-divider {
+    border-top: 1px solid rgba(255,255,255,.15);
+}
+.sidebar hr.sidebar-divider {
+    margin: 0 1rem 1rem;
 }
 
 .nav-item {

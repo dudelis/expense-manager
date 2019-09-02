@@ -59,7 +59,7 @@
 
     private string FormName => string.IsNullOrWhiteSpace(Code) ? "Add New Currency" : "Edit Currency";
     private CurrencyViewModel currencyDto = new CurrencyViewModel();
-    private Currency currency;
+    private Currency currency = new Currency();
 
     protected override void OnInitialized()
     {

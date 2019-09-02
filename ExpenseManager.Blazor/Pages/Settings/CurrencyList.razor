@@ -2,22 +2,25 @@
 
 @inject ICurrencyService CurrencyManager
 @inject IUriHelper UriHelper
+@inject IMapper _mapper;
 
-<BSContainer IsFluid="true" >
+<BSContainer IsFluid="true">
     <BSRow>
         <BSCol>
             <h2 class="text-black-50">
                 Currencies
             </h2>
         </BSCol>
-        <BSCol>
-            <BSButton Class="float-right" ButtonType="ButtonType.Button" Color="Color.Info" @onclick="NavigateToNewPage" >
-            <span class="oi oi-plus"></span>
-            </BSButton>
+        <BSCol Class="d-flex justify-content-end">
+            <a class="btn btn-info btn-circle" href="settings/currencies/new"><span class="oi oi-plus"></span></a>
+            @if (currencyDtos.Any(x => x.Selected))
+            {
+                <a class="btn btn-danger btn-circle ml-2" @onclick="Modal_ShowConfirmModal"><span class="oi oi-trash"></span></a>
+            }
         </BSCol>
     </BSRow>
     <BSRow>
-        @if (currencies == null)
+        @if (currencyDtos == null)
         {
             <p><em>Loading...</em></p>
         }
@@ -26,6 +29,7 @@
             <BSTable IsHovarable="true">
                 <thead>
                     <tr>
+                        <th></th>
                         <th>Code</th>
                         <th>Name</th>
                         <th>Symbol</th>
@@ -33,34 +37,37 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach(var currency in currencies)
+                    @foreach (var currency in currencyDtos)
                     {
-                <tr>
-                    <td>@currency.Id</td>
-                    <td>@currency.Name</td>
-                    <td>@currency.Symbol</td>
-                    <td>
-                        <a class="btn btn-sm" href="settings/currencies/edit/@currency.Id"><span class="oi oi-pencil"></span></a>
-                        <a class="btn btn-sm" @onclick="@(() => ShowDeleteConfirmModal(currency))"><span class="oi oi-trash"></span></a>
-                    </td>
-                </tr>
+                        <tr class="@(currency.Selected ? "table-active": null)">
+                            <td scope="row" class="text-center">
+                                <input type="checkbox" class="form-check-input" @bind-value="currency.Selected" />
+                            </td>
+                            <td>@currency.Id</td>
+                            <td>@currency.Name</td>
+                            <td>@currency.Symbol</td>
+                            <td class="float-right w-100">
+                                <a class="btn btn-sm mr-4" href="settings/currencies/edit/@currency.Id"><span class="oi oi-pencil"></span></a>
+                                @*<a class="btn btn-sm" @onclick="@(() => ShowDeleteConfirmModal(currency))"><span class="oi oi-trash"></span></a>*@
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </BSTable>
         }
     </BSRow>
 </BSContainer>
-<ModalDeleteConfirm
-                    @ref="modalDeleteConfirm" 
+<ModalDeleteConfirm @ref="modalDeleteConfirm"
                     @ref:suppressField
                     ModalHeader="@ModalHeader"
                     ModalBody="@ModalBody"
-                    OnSubmitClick="DeleteCurrency">
+                    OnSubmitClick="Modal_DeleteSelectedCurrencies">
 </ModalDeleteConfirm>
 
 
 @code{
-    IEnumerable<Currency> currencies;
+    ICollection<Currency> currencies;
+    ICollection<CurrencyViewModel> currencyDtos;
     ModalDeleteConfirm modalDeleteConfirm;
     string ModalHeader;
     string ModalBody;
@@ -74,21 +81,26 @@
     {
         UriHelper.NavigateTo("settings/currencies/new");
     }
-    void ShowDeleteConfirmModal(Currency currency)
-    {
-        ModalHeader = $"Delete {currency.Id}";
-        ModalBody = $"Are you sure you would like to delete the currency with Code {currency.Id}?";
-        itemToDelete = currency;
-        modalDeleteConfirm.Toggle();
-    }
     void ListRefresh()
     {
         currencies = CurrencyManager.GetAll();
+        currencyDtos = _mapper.Map<ICollection<CurrencyViewModel>>(currencies);
     }
-    void DeleteCurrency()
+
+    //Modal Section
+    void Modal_ShowConfirmModal()
     {
-        CurrencyManager.Delete(itemToDelete);
-        CurrencyManager.SaveChanges();
+        ModalHeader = $"Delete currencies";
+        ModalBody = $"Are you sure you would like to delete the selected currencies?";
+        modalDeleteConfirm.Toggle();
+    }
+
+    async Task Modal_DeleteSelectedCurrencies()
+    {
+        var currencyDtoToDelete = currencyDtos.Where(x => x.Selected).ToList();
+        var currenciesToDelete = _mapper.Map<ICollection<Currency>>(currencyDtoToDelete);
+        CurrencyManager.DeleteRange(currenciesToDelete);
+        await CurrencyManager.SaveChangesAsync();
         this.ListRefresh();
     }
 }
