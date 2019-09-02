@@ -7,47 +7,10 @@ using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class PayeeManager: IPayeeService
+    public class PayeeManager: BaseManager<Payee, IPayeeRepository>, IPayeeService
     {
-        private IRepositoryWrapper _repository;
-        public PayeeManager(IRepositoryWrapper wrapper)
+        public PayeeManager(IPayeeRepository repository): base(repository)
         {
-            _repository = wrapper;
-        }
-
-        public void Create(Payee entity)
-        {
-            _repository.Payee.Create(entity);
-        }
-
-        public void Delete(Payee entity)
-        {
-            _repository.Payee.Delete(entity);
-        }
-
-        public List<Payee> GetAll()
-        {
-            return _repository.Payee.GetList();
-        }
-
-        public Payee GetById(int id)
-        {
-            return _repository.Payee.Get(x => x.Id == id);
-        }
-
-        public bool ItemExists(int id)
-        {
-            return _repository.Payee.ItemExists(x => x.Id == id);
-        }
-
-        public void SaveChanges()
-        {
-            _repository.Save();
-        }
-
-        public void Update(Payee entity)
-        {
-            _repository.Payee.Update(entity);
         }
     }
 }

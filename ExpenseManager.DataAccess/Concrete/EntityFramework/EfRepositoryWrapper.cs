@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
@@ -117,6 +118,10 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public void Save()
         {
             _context.SaveChanges();
+        }
+        public Task SaveAsync()
+        {
+            return _context.SaveChangesAsync();
         }
     }
 }

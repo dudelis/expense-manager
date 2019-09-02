@@ -7,51 +7,11 @@ using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class AccountTypeManager : IAccountTypeService
+    public class AccountTypeManager : BaseManager<AccountType, IAccountTypeRepository>, IAccountTypeService
     {
-        private IRepositoryWrapper _repository;
+        public AccountTypeManager(IAccountTypeRepository repository) : base(repository)
+        {
 
-        public AccountTypeManager(IRepositoryWrapper repository)
-        {
-            this._repository = repository;
-        }
-        public void Create(AccountType entity)
-        {
-            this._repository.AccountType.Create(entity);
-        }
-
-        public void Delete(AccountType entity)
-        {
-            this._repository.AccountType.Delete(entity);
-        }
-
-        public List<AccountType> GetAll()
-        {
-            return this._repository.AccountType.GetList();
-        }
-
-        public AccountType GetById(int id)
-        {
-            return this._repository.AccountType.Get(e => e.Id == id);
-        }
-
-        public void SaveChanges()
-        {
-            this._repository.Save();
-        }
-
-        public void Update(AccountType entity)
-        {
-            this._repository.AccountType.Update(entity);
-        }
-        public bool ItemExists(int id)
-        {
-            return this._repository.AccountType.ItemExists(a => a.Id == id);
-        }
-
-        public bool ItemExists(string name)
-        {
-            return this._repository.AccountType.ItemExists(a => a.Name == name);
         }
     }
 }

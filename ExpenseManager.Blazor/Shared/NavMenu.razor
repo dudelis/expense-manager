@@ -6,32 +6,92 @@
 </div>
 
 <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
-    <ul class="nav flex-column">
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+    <BSNav IsList="true" Class="flex-column">
+        <BSNavItem Class="px-3">
+            <BSNavLink Href="">
                 <span class="oi oi-home" aria-hidden="true"></span> Home
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="counter">
-                <span class="oi oi-plus" aria-hidden="true"></span> Counter
-            </NavLink>
-        </li>
-        <li class="nav-item px-3">
-            <NavLink class="nav-link" href="fetchdata">
-                <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
-            </NavLink>
-        </li>
-    </ul>
+            </BSNavLink>
+            <hr style="border-bottom: 1px solid #fff; display:block" />
+        </BSNavItem>
+        <BSNavItem Class="px-3">
+            <BSNavLink  Href="expenses">
+                <span class="oi oi-account-logout" aria-hidden="true"></span> Expenses
+            </BSNavLink>
+        </BSNavItem>
+        <BSNavItem Class="px-3">
+            <BSNavLink Href="income">
+                <span class="oi oi-account-login" aria-hidden="true"></span> Income
+            </BSNavLink>
+        </BSNavItem>
+        <BSNavItem Class="px-3">
+            <BSNavLink Href="accounts">
+                <span class="oi oi-euro" aria-hidden="true"></span> Accounts
+            </BSNavLink>
+            <hr style="border-bottom: 1px solid #fff; display:block" />
+        </BSNavItem>
+        <BSNavItem Class="px-3">
+            <BSNavLink Href="">
+                <span class="oi oi-bar-chart" aria-hidden="true"></span> Reports
+            </BSNavLink>
+        </BSNavItem>
+        <BSNavItem Class="px-3">
+            <a class="nav-link dropdown-toggle" @onclick="onSettingsLinkClick" href="#">
+                <span class="oi oi-wrench" aria-hidden="true"></span> Settings
+            </a>
+            <ul class="list-unstyled sub-menu @SubMenuCssClass" id="pageSubmenu">
+                <li>
+                    <a class="nav-link pl-5" href="settings/currencies">Currencies</a>
+                </li>
+                <li>
+                    <a class="nav-link pl-5" href="settings/labels">Labels</a>
+                </li>
+                <li>
+                    <a class="nav-link pl-5" href="settings/expensecategories">Expense Categories</a>
+                </li>
+                <li>
+                    <a class="nav-link pl-5" href="settings/incomecategories">Income Categories</a>
+                </li>
+                <li>
+                    <a class="nav-link pl-5" href="settings/accounttypes">Account Types</a>
+                </li>
+                <li>
+                    <a class="nav-link pl-5" href="settings/userprofile">User Profile</a>
+                </li>
+            </ul>
+        </BSNavItem>
+    </BSNav>
 </div>
 
 @code {
     bool collapseNavMenu = true;
+    bool collapseSubMenuCssClass = true;
 
     string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+    string SubMenuCssClass => collapseSubMenuCssClass ? "d-none" : null;
 
     void ToggleNavMenu()
     {
         collapseNavMenu = !collapseNavMenu;
+    }
+
+    bool IsOpen2 { get; set; } = true;
+    void onclick2()
+    {
+        IsOpen2 = !IsOpen2;
+        StateHasChanged();
+
+    }
+    void onSettingsLinkClick()
+    {
+        collapseSubMenuCssClass = !collapseSubMenuCssClass;
+        StateHasChanged();
+    }
+    void onSettingsLinkMouseOver()
+    {
+        collapseSubMenuCssClass = false;
+    }
+    void onSettingsLinkMouseout()
+    {
+        collapseSubMenuCssClass = true;
     }
 }

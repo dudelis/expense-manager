@@ -1,0 +1,37 @@
+﻿@using System.Globalization
+<div class="container">
+    <div class="row d-flex justify-content-around align-items-center">
+        <button type="button" @onclick="GetPreviousMonth" class="btn btn-secondary" aria-haspopup="true" aria-expanded="false">
+            <span class="oi oi-chevron-left" aria-hidden="true"></span>
+        </button>        
+        <span class="mr-3 ml-3 text-danger">
+            @currentDate.ToString("MMM", CultureInfo.InvariantCulture) @currentDate.Year
+        </span>
+        <button type="button" @onclick="GetNextMonth" class="btn btn-secondary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="oi oi-chevron-right" aria-hidden="true"></span>
+        </button>
+    </div>    
+</div>
+
+
+@code {
+    [Parameter]
+    public int MonthStartDay { get; set; }
+
+    [Parameter]
+    public EventCallback<DateTime> OnChange { get; set; }
+
+    private DateTime currentDate = DateTime.Now;
+
+    
+    public void GetNextMonth()
+    {
+        currentDate = currentDate.AddMonths(1);
+        OnChange.InvokeAsync(currentDate);
+    }
+    public void GetPreviousMonth()
+    {
+        currentDate = currentDate.AddMonths(-1);
+        OnChange.InvokeAsync(currentDate);
+    }
+}

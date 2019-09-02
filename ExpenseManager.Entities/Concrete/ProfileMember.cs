@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.Entities.Concrete
 {
-    public class ProfileMember: IEntity
+    public class ProfileMember: IEntity<int>
     {
         public int Id { get; set; }        
         public string UserId { get; set; }

@@ -1,0 +1,77 @@
+﻿@page "/expenses"
+
+@using ExpenseManager.Business.Concrete
+@inject  IExpenseService ExpenseManager
+
+<BSContainer IsFluid="true" >
+    <BSRow>
+        <BSCol>
+            <h2 class="text-danger">
+                Expenses
+            </h2>
+        </BSCol>
+        <BSCol>
+            <MonthSelectorComponent OnChange="DateChanged"></MonthSelectorComponent>
+        </BSCol>
+        <BSCol>
+            <BSButton Class="float-right" ButtonType="ButtonType.Button" Color="Color.Danger">
+                <span class="oi oi-plus"></span>
+            </BSButton>
+        </BSCol>
+    </BSRow>
+    <BSRow>
+        @if (expenses == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <BSTable IsHovarable="true" IsSmall="true">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="text-danger">
+                        <td>TOTAL:</td>
+                        <td>@totalAmount</td>
+                    </tr>
+                    @foreach(var expense in expenses)
+                    {
+                <tr>
+                    <td>@expense.Name</td>
+                    <td>@expense.Amount</td>
+                </tr>
+                    }
+                </tbody>
+            </BSTable>
+
+        }
+    </BSRow>
+</BSContainer>
+
+
+@code{
+    DateTime currentDate;
+    decimal totalAmount;
+
+    IEnumerable<Expense> expenses;
+
+
+    void DateChanged(DateTime date)
+    {
+        currentDate = date;
+        GetExpenses(date);
+    }
+    void GetExpenses(DateTime date)
+    {
+        expenses = ExpenseManager.GetExpenseForMonth(date);
+    }
+
+    protected override void OnInitialized()
+    {
+        GetExpenses(DateTime.Now);
+    }
+}

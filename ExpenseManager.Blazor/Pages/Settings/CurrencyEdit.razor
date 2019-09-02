@@ -1,0 +1,89 @@
+﻿@page "/settings/currencies/new"
+@page "/settings/currencies/edit/{Code}"
+
+@inject ICurrencyService _currencyManager
+@inject ICurrencyRepository _currencyRepository
+@inject IMapper _mapper;
+@inject IUriHelper UriHelper
+
+<BSContainer IsFluid="true">
+    <BSRow>
+        <BSCol>
+            <div class="card">
+                <h5 class="card-header">@FormName</h5>
+                <div class="card-body">
+                    <BSForm Model="@currencyDto" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <BSRow Class="form-row">
+                            <BSCol MD="6">
+                                <BSFormGroup>
+                                    <BSLabel For="Id">Currency Code</BSLabel>
+                                    <BSInput Id="Id" InputType="InputType.Text" PlaceHolder="Enter Curency Code" @bind-Value="currencyDto.Id"></BSInput>
+                                    <BSFormFeedback For="@(() => currencyDto.Id)" />
+                                </BSFormGroup>
+                            </BSCol>
+                            <BSCol MD="6">
+                                <BSFormGroup>
+                                    <BSLabel For="Symbol">Symbol</BSLabel>
+                                    <BSInput Id="Symbol" InputType="InputType.Text" PlaceHolder="Enter Curency Symbol" @bind-Value="currencyDto.Symbol"></BSInput>
+                                    <BSFormFeedback For="@(() => currencyDto.Symbol)" />
+                                </BSFormGroup>
+                            </BSCol>
+                        </BSRow>
+                        <BSRow Class="form-row">
+                            <BSCol>
+                                <BSFormGroup>
+                                    <BSLabel For="Name">Name</BSLabel>
+                                    <BSInput Id="Name" InputType="InputType.Text" PlaceHolder="Enter Curency Name" @bind-Value="currencyDto.Name"></BSInput>
+                                    <BSFormFeedback For="@(() => currencyDto.Name)" />
+                                </BSFormGroup>
+                            </BSCol>
+                        </BSRow>
+                        <BSRow Class="form-row">
+                            <BSCol Class="d-flex justify-content-around">
+                                <BSButton ButtonType="ButtonType.Submit">Save</BSButton>
+                                <BSButton IsOutline="true" Color="Color.Secondary" @onclick="@(()=> UriHelper.NavigateTo("settings/currencies"))">Cancel</BSButton>
+                            </BSCol>
+                        </BSRow>
+                    </BSForm>
+                </div>
+            </div>
+        </BSCol>
+    </BSRow>
+</BSContainer>
+
+
+@code{
+    [Parameter]
+    public string Code { get; set; }
+
+    private string FormName => string.IsNullOrWhiteSpace(Code) ? "Add New Currency" : "Edit Currency";
+    private CurrencyViewModel currencyDto = new CurrencyViewModel();
+    private Currency currency;
+
+    protected override void OnInitialized()
+    {
+        if (!string.IsNullOrEmpty(Code))
+        {
+            currency = _currencyManager.GetById(Code);
+            currencyDto = _mapper.Map<CurrencyViewModel>(currency);
+        }
+    }
+
+    void HandleValidSubmit()
+    {
+        _mapper.Map<CurrencyViewModel, Currency>(currencyDto, currency);
+        if (string.IsNullOrWhiteSpace(Code))
+        {
+            _currencyManager.Create(currency);
+            _currencyManager.SaveChanges();
+            UriHelper.NavigateTo("settings/currencies");
+        }
+        else
+        {
+            _currencyRepository.Update(currency);
+            _currencyRepository.Save();
+            UriHelper.NavigateTo("settings/currencies");
+        }
+    }
+}

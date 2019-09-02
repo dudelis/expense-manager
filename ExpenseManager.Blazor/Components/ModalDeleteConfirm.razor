@@ -1,0 +1,33 @@
+﻿<BSModal @ref="ConfirmDelete" @ref:suppressField >
+    <BSModalHeader OnClick="@(() => ConfirmDelete.Hide())">@ModalHeader</BSModalHeader>
+    <BSModalBody><p>@ModalBody</p></BSModalBody>
+    <BSModalFooter>
+        <BSButton Color="Color.Primary" @onclick="HandleSubmitClick">Ok</BSButton>
+        <BSButton Color="Color.Secondary" @onclick="HandleCancelClick">Cancel</BSButton>
+    </BSModalFooter>
+</BSModal>
+@code {
+    [Parameter]
+    public string ModalHeader { get; set; }
+    [Parameter]
+    public string ModalBody { get; set; }
+    [Parameter]
+    public EventCallback<UIMouseEventArgs> OnSubmitClick { get; set; }
+
+    BSModal ConfirmDelete;
+
+    async Task HandleSubmitClick(UIMouseEventArgs args)
+    {
+        await OnSubmitClick.InvokeAsync(args);
+        ConfirmDelete.Hide();
+    }
+    void HandleCancelClick()
+    {
+        ConfirmDelete.Hide();
+    }
+    public void Toggle()
+    {
+        ConfirmDelete.Toggle();
+    }
+
+}

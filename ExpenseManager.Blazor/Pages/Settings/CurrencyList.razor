@@ -1,0 +1,94 @@
+﻿@page "/settings/currencies"
+
+@inject ICurrencyService CurrencyManager
+@inject IUriHelper UriHelper
+
+<BSContainer IsFluid="true" >
+    <BSRow>
+        <BSCol>
+            <h2 class="text-black-50">
+                Currencies
+            </h2>
+        </BSCol>
+        <BSCol>
+            <BSButton Class="float-right" ButtonType="ButtonType.Button" Color="Color.Info" @onclick="NavigateToNewPage" >
+            <span class="oi oi-plus"></span>
+            </BSButton>
+        </BSCol>
+    </BSRow>
+    <BSRow>
+        @if (currencies == null)
+        {
+            <p><em>Loading...</em></p>
+        }
+        else
+        {
+            <BSTable IsHovarable="true">
+                <thead>
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Symbol</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var currency in currencies)
+                    {
+                <tr>
+                    <td>@currency.Id</td>
+                    <td>@currency.Name</td>
+                    <td>@currency.Symbol</td>
+                    <td>
+                        <a class="btn btn-sm" href="settings/currencies/edit/@currency.Id"><span class="oi oi-pencil"></span></a>
+                        <a class="btn btn-sm" @onclick="@(() => ShowDeleteConfirmModal(currency))"><span class="oi oi-trash"></span></a>
+                    </td>
+                </tr>
+                    }
+                </tbody>
+            </BSTable>
+        }
+    </BSRow>
+</BSContainer>
+<ModalDeleteConfirm
+                    @ref="modalDeleteConfirm" 
+                    @ref:suppressField
+                    ModalHeader="@ModalHeader"
+                    ModalBody="@ModalBody"
+                    OnSubmitClick="DeleteCurrency">
+</ModalDeleteConfirm>
+
+
+@code{
+    IEnumerable<Currency> currencies;
+    ModalDeleteConfirm modalDeleteConfirm;
+    string ModalHeader;
+    string ModalBody;
+    Currency itemToDelete;
+
+    protected override void OnInitialized()
+    {
+        this.ListRefresh();
+    }
+    private void NavigateToNewPage()
+    {
+        UriHelper.NavigateTo("settings/currencies/new");
+    }
+    void ShowDeleteConfirmModal(Currency currency)
+    {
+        ModalHeader = $"Delete {currency.Id}";
+        ModalBody = $"Are you sure you would like to delete the currency with Code {currency.Id}?";
+        itemToDelete = currency;
+        modalDeleteConfirm.Toggle();
+    }
+    void ListRefresh()
+    {
+        currencies = CurrencyManager.GetAll();
+    }
+    void DeleteCurrency()
+    {
+        CurrencyManager.Delete(itemToDelete);
+        CurrencyManager.SaveChanges();
+        this.ListRefresh();
+    }
+}

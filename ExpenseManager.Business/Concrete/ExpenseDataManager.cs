@@ -7,66 +7,32 @@ using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class ExpenseDataManager : IExpenseService
+    public class ExpenseDataManager : BaseManager<Expense, IExpenseRepository>, IExpenseService
     {
-        private IRepositoryWrapper _repository;
-
-        public ExpenseDataManager(IRepositoryWrapper repository)
+        
+        public ExpenseDataManager(IExpenseRepository repository): base(repository)
         {
-            this._repository = repository;
         }
-        public void Create(Expense entity)
-        {
-            this._repository.Expense.Create(entity);
-        }
-
-        public void Delete(Expense entity)
-        {
-            this._repository.Expense.Delete(entity);
-        }
-
-        public List<Expense> GetAll()
-        {
-            return this._repository.Expense.GetList();
-        }
+        
 
         public List<Expense> GetByAccount(int payFromAccountId)
         {
-            return this._repository.Expense.GetList(e => e.PayFromAccountId == payFromAccountId);
+            return this.Repository.GetList(e => e.PayFromAccountId == payFromAccountId);
         }
 
         public List<Expense> GetByCategory(int expenseCategoryId)
         {
-            return this._repository.Expense.GetList(e => e.CategoryId == expenseCategoryId);
+            return this.Repository.GetList(e => e.CategoryId == expenseCategoryId);
         }
 
-        public List<Expense> GetByExpenseDate(DateTime epenseDate)
+        public List<Expense> GetExpenseForMonth(DateTime expenseDate)
         {
-            throw new NotImplementedException();
-        }
-
-        public Expense GetById(int id)
-        {
-            return this._repository.Expense.Get(e => e.Id == id);
+            return this.Repository.GetList(e => e.ExpenseDate.Year == expenseDate.Year && e.ExpenseDate.Month == expenseDate.Month);            
         }
 
         public List<Expense> GetByPayee(int payeeId)
         {
-            return this._repository.Expense.GetList(e => e.PayeeId == payeeId);
-        }
-
-        public void SaveChanges()
-        {
-            this._repository.Save();
-        }
-
-        public void Update(Expense entity)
-        {
-            this._repository.Expense.Update(entity);
-        }
-        public bool ItemExists(int id)
-        {
-            return this._repository.Expense.ItemExists(a => a.Id == id);
+            return this.Repository.GetList(e => e.PayeeId == payeeId);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.DataAccess.Interfaces
 {
@@ -15,5 +16,6 @@ namespace ExpenseManager.DataAccess.Interfaces
         IProfileRepository Profile { get; }
         IProfileMemberRepository ProfileMember { get; }
         void Save();
+        Task SaveAsync();
     }
 }

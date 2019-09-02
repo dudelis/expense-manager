@@ -8,5 +8,6 @@ namespace ExpenseManager.Entities.Concrete
     public class Currency : BaseEntity<string>
     {
         public string Name { get; set; }
+        public string Symbol { get; set; }
     }
 }

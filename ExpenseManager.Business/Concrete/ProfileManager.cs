@@ -6,48 +6,10 @@ using System.Collections.Generic;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class ProfileManager : IProfileService
+    public class ProfileManager : BaseManager<Profile, Guid, IProfileRepository>, IProfileService
     {
-        private readonly IRepositoryWrapper _wrapper;
-
-        public ProfileManager(IRepositoryWrapper wrapper)
+        public ProfileManager(IProfileRepository repository) : base(repository)
         {
-            _wrapper = wrapper;
-        }
-
-        public void Create(Profile entity)
-        {
-            _wrapper.Profile.Create(entity);
-        }
-
-        public void Delete(Profile entity)
-        {
-            _wrapper.Profile.Delete(entity);
-        }
-
-        public List<Profile> GetAll()
-        {
-            return _wrapper.Profile.GetList();
-        }
-
-        public Profile GetById(Guid id)
-        {
-            return _wrapper.Profile.Get(x => x.Id == id);
-        }
-
-        public bool ItemExists(Guid id)
-        {
-            return _wrapper.Profile.ItemExists(x => x.Id == id);
-        }
-
-        public void SaveChanges()
-        {
-            _wrapper.Save();
-        }
-
-        public void Update(Profile entity)
-        {
-            _wrapper.Profile.Update(entity);
         }
     }
 }

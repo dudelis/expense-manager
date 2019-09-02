@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManager.Auth", "Expe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManager.Web.Core", "ExpenseManager.Web.Core\ExpenseManager.Web.Core.csproj", "{D50399FB-92A1-4372-B68F-8EF6417E7ED4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpenseManager.Blazor", "ExpenseManager.Blazor\ExpenseManager.Blazor.csproj", "{BE293A8D-D1FE-43F4-8946-BA6B609D3163}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ExpenseManager.Blazor", "ExpenseManager.Blazor\ExpenseManager.Blazor.csproj", "{BE293A8D-D1FE-43F4-8946-BA6B609D3163}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

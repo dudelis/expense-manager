@@ -19,7 +19,14 @@ namespace ExpenseManager.Web.Core.Extensions
         public static void ConfigureDataManagers(this IServiceCollection services)
         {
             //Adding Data Access for Repository - SQL Implementation
-            services.AddScoped<IRepositoryWrapper, EfRepositoryWrapper>();
+            services.AddScoped<IAccountRepository, EfAccountRepository>();
+            services.AddScoped<IAccountTypeRepository, EfAccountTypeRepository>();
+            services.AddScoped<ICurrencyRepository, EfCurrencyRepository>();
+            services.AddScoped<IExpenseRepository, EfExpenseRepository>();
+            services.AddScoped<IExpenseCategoryRepository, EfExpenseCategoryRepository>();
+            services.AddScoped<IPayeeRepository, EfPayeeRepository>();
+            services.AddScoped<IProfileRepository, EfProfileRepository>();
+            services.AddScoped<IProfileMemberRepository, EfProfileMemberRepository>();
             //Adding all the Entity managers, which are to be used in the Controllers
             services.AddScoped<IAccountService, AccountManager>();
             services.AddScoped<IAccountTypeService, AccountTypeManager>();

@@ -10,30 +10,11 @@ namespace ExpenseManager.Web.Core.Models
     public class CurrencyViewModel
     {
         [Required]
-        [MaxLength(3)]
+        [StringLength(3, ErrorMessage = "String should not contain more than 3 characters")]
         public string Id { get; set; }
-
+        
         [Required]
         public string Name { get; set; }
-
-        public ICollection<Account> Accounts { get; set; }
-        public ICollection<Expense> Expenses { get; set; }
-
-        public CurrencyViewModel(){}
-        public CurrencyViewModel(Currency currency)
-        {
-            if (currency != null)
-            {
-                Id = currency.Id;
-                Name = currency.Name;
-            }
-            
-        }
-        public static ICollection<CurrencyViewModel> Convert (ICollection<Currency> currencies)
-        {
-            if (currencies == null)
-                return null;
-            return currencies.Select(x => new CurrencyViewModel(x)).ToList();
-        }
+        public string Symbol { get; set; }
     }
 }

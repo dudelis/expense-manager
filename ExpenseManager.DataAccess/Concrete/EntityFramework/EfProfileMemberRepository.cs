@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class EfProfileMemberRepository: EfEntityRepositoryBase<ProfileMember, ExpenseManagerDbContext>, IProfileMemberRepository
+    public class EfProfileMemberRepository: EfEntityRepositoryBase<ProfileMember, int, ExpenseManagerDbContext>, IProfileMemberRepository
     {
         public EfProfileMemberRepository(ExpenseManagerDbContext context): base(context)
         {

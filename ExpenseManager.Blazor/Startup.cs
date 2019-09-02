@@ -17,6 +17,8 @@ using ExpenseManager.Blazor.Data;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.Auth.Concrete;
 using ExpenseManager.Auth.Interfaces;
+using ExpenseManager.Web.Core.Extensions;
+using AutoMapper;
 
 namespace ExpenseManager.Blazor
 {
@@ -33,14 +35,17 @@ namespace ExpenseManager.Blazor
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ExpenseManagerDbContext>(options =>
-                options.UseSqlServer(Configuration["connectionStrings:expenseManagerDbConnectionString"]));
+            services.AddAutoMapper(typeof(Startup));
+            services.ConfigureSqlContext(Configuration);
+            //services.AddDbContext<ExpenseManagerDbContext>(options =>
+            //    options.UseSqlServer(Configuration["connectionStrings:expenseManagerDbConnectionString"]));
             services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<ExpenseManagerDbContext>();
             services.AddRazorPages();
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+            services.ConfigureDataManagers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

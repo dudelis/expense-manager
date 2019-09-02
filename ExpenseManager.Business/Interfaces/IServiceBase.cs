@@ -1,25 +1,25 @@
 ﻿using ExpenseManager.Entities.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface IServiceBase<T> where T: class, IEntity, new()
+    public interface IServiceBase<T, TRepo>: IServiceBase<T, int, TRepo>
+        where T: class, IEntity<int>, new()
+        where TRepo : class, IEntityRepository<T>
     {
-        List<T> GetAll();
-        T GetById(int id);
-        bool ItemExists(int id);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-        void SaveChanges();
+
     }
-    public interface IServiceBase<T, TPrimaryKey> where T : class, IEntity<TPrimaryKey>, new()
+        public interface IServiceBase<T, TKey, TRepo>
+            where T : class, IEntity<TKey>, new()
+            where TRepo: class, IEntityRepository<T, TKey>
     {
         List<T> GetAll();
-        T GetById(TPrimaryKey id);
-        bool ItemExists(TPrimaryKey id);
+        T GetById(TKey id);
+        bool ItemExists(TKey id);
         void Create(T entity);
         void Update(T entity);
         void Delete(T entity);
