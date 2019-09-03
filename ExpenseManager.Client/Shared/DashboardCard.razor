@@ -1,0 +1,34 @@
+﻿<BSCard Class="@CardClass">
+    <div class="card-body">
+        <BSRow class="no-gutters align-items-center">
+            <BSCol class="mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">@HeaderText</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">@MainText</div>
+            </BSCol>
+            <BSCol class="col-auto">
+                @CardIconHtml
+            </BSCol>
+        </BSRow>
+    </div>
+</BSCard>
+
+@code {
+    [Parameter]
+    public string HeaderText { get; set; }
+    [Parameter]
+    public string MainText { get; set; }
+    [Parameter]
+    public string FontAwesomeIconName { get; set; }
+    [Parameter]
+    public BlazorStrap.Color LeftBodyColor { get; set; }
+    [Parameter]
+    public RenderFragment CardIconHtml { get; set; }
+
+    string CardClass;
+
+    protected override void OnParametersSet()
+    {
+        CardClass = $"border-left-{LeftBodyColor.ToString().ToLower()} border-left-primary shadow h-100 py-2";
+    }   
+
+}

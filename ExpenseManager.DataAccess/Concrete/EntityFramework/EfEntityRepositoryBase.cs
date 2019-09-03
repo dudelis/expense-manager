@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,6 +34,10 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public void Create(TEntity entity)
         {
             this._context.Set<TEntity>().Add(entity);
+        }
+        public ValueTask<EntityEntry<TEntity>> CreateAsync(TEntity entity)
+        {
+            return this._context.Set<TEntity>().AddAsync(entity);
         }
 
         public void Delete(TEntity entity)

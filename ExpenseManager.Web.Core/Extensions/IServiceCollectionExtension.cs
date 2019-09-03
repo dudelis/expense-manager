@@ -59,7 +59,7 @@ namespace ExpenseManager.Web.Core.Extensions
             services.ConfigureApplicationCookie(options =>
             {
                 options.Cookie.HttpOnly = true;
-                options.Cookie.Expiration = TimeSpan.FromDays(150);
+                options.ExpireTimeSpan = TimeSpan.FromDays(150);
                 options.LoginPath = "/Login";
                 options.AccessDeniedPath = "/Login";
                 options.SlidingExpiration = true;

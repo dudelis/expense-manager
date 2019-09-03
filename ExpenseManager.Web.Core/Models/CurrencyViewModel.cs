@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.Web.Core.Models
 {
-    public class CurrencyViewModel
+    public class CurrencyViewModel: BaseViewModel
     {
         [Required]
-        [StringLength(3, ErrorMessage = "String should not contain more than 3 characters")]
-        public string Id { get; set; }
-        
+        [StringLength(3, ErrorMessage = "Code should not contain more than 3 characters")]
+        public string Code { get; set; }
+
         [Required]
         public string Name { get; set; }
         public string Symbol { get; set; }

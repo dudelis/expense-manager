@@ -1,0 +1,47 @@
+﻿@page "/"
+
+<BSContainer IsFluid="true">
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    </div>
+    <BSRow>
+        <BSCol XL="3" MD="6" Class="mb-4">
+            <DashboardCard HeaderText="Expenses (Monthly)"
+                           MainText="$100,000"
+                           LeftBodyColor="Color.Danger">
+                <CardIconHtml>
+                    <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                </CardIconHtml>
+            </DashboardCard>
+        </BSCol>
+        <BSCol XL="3" MD="6" Class="mb-4">
+            <DashboardCard HeaderText="Income (Monthly)"
+                           MainText="$100,000"
+                           LeftBodyColor="Color.Primary">
+                <CardIconHtml>
+                    <i class="fas fa-coins fa-2x text-gray-300"></i>
+                </CardIconHtml>
+            </DashboardCard>
+        </BSCol>
+        <BSCol XL="3" MD="6" Class="mb-4">
+            <DashboardCard HeaderText="Accounts"
+                           MainText="$100,000"
+                           LeftBodyColor="Color.Secondary">
+                <CardIconHtml>
+                    <i class="fas fa-university fa-2x text-gray-300"></i>
+                </CardIconHtml>
+            </DashboardCard>
+        </BSCol>
+            <BSCol XL="3" MD="6" Class="mb-4">
+                <DashboardCard HeaderText="Expenses (Monthly)"
+                               MainText="$100,000"
+                               LeftBodyColor="Color.Danger">
+                    <CardIconHtml>
+                        <i class="fas fa-wallet fa-2x text-gray-300"></i>
+                    </CardIconHtml>
+                </DashboardCard>
+            </BSCol>
+    </BSRow>
+</BSContainer>
+
+

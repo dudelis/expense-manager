@@ -12,10 +12,10 @@
             </h2>
         </BSCol>
         <BSCol Class="d-flex justify-content-end">
-            <a class="btn btn-info btn-circle" href="settings/currencies/new"><span class="oi oi-plus"></span></a>
+            <a class="btn btn-info btn-lg btn-circle" href="settings/currencies/new"><span class="oi oi-plus"></span></a>
             @if (currencyDtos.Any(x => x.Selected))
             {
-                <a class="btn btn-danger btn-circle ml-2" @onclick="Modal_ShowConfirmModal"><span class="oi oi-trash"></span></a>
+                <a class="btn btn-danger btn-lg btn-circle ml-4 text-white" @onclick="Modal_ShowConfirmModal"><span class="oi oi-trash"></span></a>
             }
         </BSCol>
     </BSRow>
@@ -41,14 +41,13 @@
                     {
                         <tr class="@(currency.Selected ? "table-active": null)">
                             <td scope="row" class="text-center">
-                                <input type="checkbox" class="form-check-input" @bind-value="currency.Selected" />
+                                <input type="checkbox" class="form-check-input" @bind="currency.Selected" />
                             </td>
-                            <td>@currency.Id</td>
+                            <td>@currency.Code</td>
                             <td>@currency.Name</td>
                             <td>@currency.Symbol</td>
-                            <td class="float-right w-100">
-                                <a class="btn btn-sm mr-4" href="settings/currencies/edit/@currency.Id"><span class="oi oi-pencil"></span></a>
-                                @*<a class="btn btn-sm" @onclick="@(() => ShowDeleteConfirmModal(currency))"><span class="oi oi-trash"></span></a>*@
+                            <td>
+                                <a class="btn btn-sm float-right" href="settings/currencies/edit/@currency.Id"><span class="oi oi-pencil"></span></a>
                             </td>
                         </tr>
                     }
@@ -66,24 +65,24 @@
 
 
 @code{
-    ICollection<Currency> currencies;
-    ICollection<CurrencyViewModel> currencyDtos;
+    ICollection<Currency> currencies = new List<Currency>();
+    ICollection<CurrencyViewModel> currencyDtos = new List<CurrencyViewModel>();
     ModalDeleteConfirm modalDeleteConfirm;
     string ModalHeader;
     string ModalBody;
     Currency itemToDelete;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        this.ListRefresh();
+        await this.ListRefreshAsync();
     }
     private void NavigateToNewPage()
     {
         UriHelper.NavigateTo("settings/currencies/new");
     }
-    void ListRefresh()
+    async Task ListRefreshAsync()
     {
-        currencies = CurrencyManager.GetAll();
+        currencies = await CurrencyManager.GetAllAsync();
         currencyDtos = _mapper.Map<ICollection<CurrencyViewModel>>(currencies);
     }
 
@@ -101,6 +100,6 @@
         var currenciesToDelete = _mapper.Map<ICollection<Currency>>(currencyDtoToDelete);
         CurrencyManager.DeleteRange(currenciesToDelete);
         await CurrencyManager.SaveChangesAsync();
-        this.ListRefresh();
+        await this.ListRefreshAsync();
     }
 }

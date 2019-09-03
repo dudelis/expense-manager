@@ -35,6 +35,7 @@ namespace ExpenseManager.WebApp
             services.ConfigureSqlContext(Configuration);
             services.ConfigureIdentityServices(Configuration);
 
+
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
             services.ConfigureDataManagers();
             services.Configure<CookiePolicyOptions>(options =>

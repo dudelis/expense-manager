@@ -1,0 +1,72 @@
+﻿<ul Class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+        <div class="sidebar-brand-icon rotate-n-15">
+            <i class="fas fa-laugh-wink"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Expense Manager</div>
+    </a>
+    <hr class="sidebar-divider my-0">
+    <li class="nav-item">
+        <a class="nav-link" href="/">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <div class="sidebar-heading">Finances</div>
+    <li class="nav-item">
+        <a class="nav-link" href="/expenses">
+            <i class="fas fa-fw fa-wallet"></i>
+            <span>Expenses</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/incomes">
+            <i class="fas fa-fw fa-coins"></i>
+            <span>Income</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="/accounts">
+            <i class="fas fa-fw fa-university"></i>
+            <span>Accounts</span>
+        </a>
+    </li>
+    <hr class="sidebar-divider">
+    <li class="nav-item">
+        <a class="nav-link @(isSettingsCollapsed ? null: "collapsed")" data-toggle="collapse" data-target="#collapseSettings" aria-controls="collapseSettings" @onclick="ToggleSettingsMenu">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Settings</span>
+        </a>
+        <div id="collapseSettings" class="collapse @(isSettingsCollapsed ? "show": null)" aria-labelledby="headingPages" data-parent="#accordionSidebar" style="">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="settings/accounttypes">Account Types</a>
+                <a class="collapse-item" href="settings/currencies">Currencies</a>
+                <a class="collapse-item" href="settings/expensecategories">Expense Categories</a>
+                <a class="collapse-item" href="settings/incomecategories">Income Categories</a>
+                <a class="collapse-item" href="settings/labels">Labels</a>                
+                <a class="collapse-item" href="settings/userprofile">User Profile</a>
+            </div>
+        </div>
+    </li>
+</ul>
+
+
+
+@code {
+    private bool isSettingsCollapsed = false;
+
+    void ToggleSettingsMenu()
+    {
+        isSettingsCollapsed = !isSettingsCollapsed;
+    }
+
+    bool collapseNavMenu = true;
+
+    string NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}

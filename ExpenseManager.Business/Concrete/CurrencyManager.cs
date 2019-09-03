@@ -7,11 +7,10 @@ using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class CurrencyManager : BaseManager<Currency, string, ICurrencyRepository>, ICurrencyService
+    public class CurrencyManager : BaseManager<Currency, ICurrencyRepository>, ICurrencyService
     {
         public CurrencyManager(ICurrencyRepository repository): base(repository)
         {
         }
-
     }
 }

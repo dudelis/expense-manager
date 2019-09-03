@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.DataAccess.Interfaces
 {
-    public interface ICurrencyRepository: IEntityRepository<Currency, string>
+    public interface ICurrencyRepository: IEntityRepository<Currency>
     {
     }
 }

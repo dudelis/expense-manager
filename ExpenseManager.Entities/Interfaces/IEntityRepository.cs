@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
@@ -20,6 +21,7 @@ namespace ExpenseManager.Entities.Interfaces
         bool ItemExists(Expression<Func<T, bool>> filter);
         Task<bool> ItemExistsAsync(Expression<Func<T, bool>> filter);
         void Create(T entity);
+        ValueTask<EntityEntry<T>> CreateAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> entities);

@@ -48,7 +48,7 @@ namespace ExpenseManager.WebApp.Controllers
 
             return View(currency);
         }
-        public IActionResult Edit(string id)
+        public IActionResult Edit(int id)
         {
             if (id == null)
                 return NotFound();
@@ -61,7 +61,7 @@ namespace ExpenseManager.WebApp.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(string id, [Bind("Id, Name")] CurrencyViewModel currency)
+        public IActionResult Edit(int id, [Bind("Id, Name")] CurrencyViewModel currency)
         {
             if (id != currency.Id)
                 return NotFound();

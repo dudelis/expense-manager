@@ -86,11 +86,11 @@ namespace ExpenseManager.WebApp.Controllers
         }
 
         [AcceptVerbs("Get", "Post")]
-        public IActionResult VerifyNameUnique (string name)
+        public IActionResult VerifyNameUnique (int id)
         {
-            if (_accountTypeService.ItemExists(name))
+            if (_accountTypeService.ItemExists(id))
             {
-                return Json($"Account type with name {name} already exists!");
+                return Json($"Account type with name {id} already exists!");
             }
             return Json(true);
         }

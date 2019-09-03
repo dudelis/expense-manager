@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using System.Security.Claims;
 using ExpenseManager.Auth.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using System.Threading;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
@@ -97,8 +98,13 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 
             modelBuilder.Entity<Currency>(entity =>
             {
-                entity.Property(p => p.Id).HasMaxLength(3).IsFixedLength();
-                entity.Property(p => p.Name).HasMaxLength(25);
+                entity.Property(p => p.Code)
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .IsFixedLength();
+                entity.Property(p => p.Name)
+                    .HasMaxLength(25)
+                    .IsRequired();
 
             });
             modelBuilder.Entity<Expense>(entity => {
@@ -144,7 +150,13 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             AddTimeStamps();
             return base.SaveChanges();
         }
-        
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken token)
+        {
+            AddTimeStamps();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, token);
+        }
+
         private void AddTimeStamps()
         {
             //Added values

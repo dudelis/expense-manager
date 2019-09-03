@@ -1,5 +1,5 @@
 ﻿@page "/settings/currencies/new"
-@page "/settings/currencies/edit/{Code}"
+@page "/settings/currencies/edit/{id:int}"
 
 @inject ICurrencyService _currencyManager
 @inject ICurrencyRepository _currencyRepository
@@ -17,9 +17,9 @@
                         <BSRow Class="form-row">
                             <BSCol MD="6">
                                 <BSFormGroup>
-                                    <BSLabel For="Id">Currency Code</BSLabel>
-                                    <BSInput Id="Id" InputType="InputType.Text" PlaceHolder="Enter Curency Code" @bind-Value="currencyDto.Id"></BSInput>
-                                    <BSFormFeedback For="@(() => currencyDto.Id)" />
+                                    <BSLabel For="Code">Currency Code</BSLabel>
+                                    <BSInput Id="Code" InputType="InputType.Text" PlaceHolder="Enter Curency Code" @bind-Value="currencyDto.Code"></BSInput>
+                                    <BSFormFeedback For="@(() => currencyDto.Code)" />
                                 </BSFormGroup>
                             </BSCol>
                             <BSCol MD="6">
@@ -55,35 +55,38 @@
 
 @code{
     [Parameter]
-    public string Code { get; set; }
+    public int? Id { get; set; }
 
-    private string FormName => string.IsNullOrWhiteSpace(Code) ? "Add New Currency" : "Edit Currency";
+    private string FormName => Id.HasValue ? "Edit Currency" : "Add New Currency";
     private CurrencyViewModel currencyDto = new CurrencyViewModel();
     private Currency currency = new Currency();
 
     protected override void OnInitialized()
     {
-        if (!string.IsNullOrEmpty(Code))
+        if (Id.HasValue)
         {
-            currency = _currencyManager.GetById(Code);
+            currency = _currencyManager.GetById(Id.Value);
             currencyDto = _mapper.Map<CurrencyViewModel>(currency);
         }
     }
 
-    void HandleValidSubmit()
+    async Task HandleValidSubmit()
     {
         _mapper.Map<CurrencyViewModel, Currency>(currencyDto, currency);
-        if (string.IsNullOrWhiteSpace(Code))
+        if (!Id.HasValue)
         {
+            //await _currencyManager.CreateAsync(currency);
+            //await _currencyManager.SaveChangesAsync();
             _currencyManager.Create(currency);
             _currencyManager.SaveChanges();
+
             UriHelper.NavigateTo("settings/currencies");
         }
         else
         {
             _currencyRepository.Update(currency);
-            _currencyRepository.Save();
-            UriHelper.NavigateTo("settings/currencies");
+            await _currencyManager.SaveChangesAsync();
+            UriHelper.NavigateTo("settings/currencies", true);
         }
     }
 }

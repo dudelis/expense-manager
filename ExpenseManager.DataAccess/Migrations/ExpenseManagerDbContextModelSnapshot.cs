@@ -118,7 +118,13 @@ namespace ExpenseManager.DataAccess.Migrations
 
             modelBuilder.Entity("ExpenseManager.Entities.Concrete.Currency", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
                         .HasColumnType("nchar(3)")
                         .IsFixedLength(true)
                         .HasMaxLength(3);
@@ -142,13 +148,19 @@ namespace ExpenseManager.DataAccess.Migrations
                         .HasDefaultValueSql("GETUTCDATE()");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(25)")
                         .HasMaxLength(25);
+
+                    b.Property<Guid>("ProfileId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Symbol")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Currencies");
                 });
@@ -608,6 +620,15 @@ namespace ExpenseManager.DataAccess.Migrations
                 });
 
             modelBuilder.Entity("ExpenseManager.Entities.Concrete.AccountType", b =>
+                {
+                    b.HasOne("ExpenseManager.Entities.Concrete.Profile", "Profile")
+                        .WithMany()
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ExpenseManager.Entities.Concrete.Currency", b =>
                 {
                     b.HasOne("ExpenseManager.Entities.Concrete.Profile", "Profile")
                         .WithMany()

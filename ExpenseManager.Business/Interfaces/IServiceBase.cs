@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.Entities.Interfaces;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -18,9 +19,11 @@ namespace ExpenseManager.Business.Interfaces
             where TRepo: class, IEntityRepository<T, TKey>
     {
         List<T> GetAll();
+        Task<List<T>> GetAllAsync();
         T GetById(TKey id);
         bool ItemExists(TKey id);
         void Create(T entity);
+        ValueTask<EntityEntry<T>> CreateAsync(T entity);
         void Update(T entity);
         void Delete(T entity);
         void DeleteRange(IEnumerable<T> entities);

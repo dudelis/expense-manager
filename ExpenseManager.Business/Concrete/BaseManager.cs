@@ -1,5 +1,6 @@
 ﻿using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Interfaces;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,6 +28,10 @@ namespace ExpenseManager.Business.Concrete
         {
             return Repository.GetList();
         }
+        public Task<List<T>> GetAllAsync()
+        {
+            return Repository.GetListAsync();
+        }
 
         public T GetById(TKey id)
         {
@@ -41,6 +46,11 @@ namespace ExpenseManager.Business.Concrete
         public void Create(T entity)
         {
             Repository.Create(entity);
+        }
+
+        public ValueTask<EntityEntry<T>> CreateAsync(T entity)
+        {
+            return Repository.CreateAsync(entity);
         }
 
         public void Update(T entity)

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface ICurrencyService: IServiceBase<Currency, string, ICurrencyRepository>
+    public interface ICurrencyService: IServiceBase<Currency, ICurrencyRepository>
     {
 
 
