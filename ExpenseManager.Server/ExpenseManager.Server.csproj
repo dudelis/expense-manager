@@ -2,14 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+    <UserSecretsId>14a33383-4f99-4064-9880-7b724a4f7ac3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="9.0.0" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.0.0-preview8.19405.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview8.19405.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0-preview8.19405.11">
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Server" Version="3.0.0-preview9.19424.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.0.0-preview9.19424.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.0.0-preview9.19423.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -21,7 +23,7 @@
     <ProjectReference Include="..\ExpenseManager.Client\ExpenseManager.Client.csproj" />
     <ProjectReference Include="..\ExpenseManager.DataAccess\ExpenseManager.DataAccess.csproj" />
     <ProjectReference Include="..\ExpenseManager.Entities\ExpenseManager.Entities.csproj" />
-    <ProjectReference Include="..\ExpenseManager.Web.Core\ExpenseManager.Web.Core.csproj" />
+    <ProjectReference Include="..\ExpenseManager.Shared\ExpenseManager.Shared.csproj" />
   </ItemGroup>
 
 </Project>

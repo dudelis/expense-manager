@@ -37,10 +37,18 @@ namespace ExpenseManager.Business.Concrete
         {
             return Repository.Get(p => EqualityComparer<TKey>.Default.Equals(id, p.Id));
         }
+        public Task<T> GetByIdAsync(TKey id)
+        {
+            return Repository.GetAsync(p => EqualityComparer<TKey>.Default.Equals(id, p.Id));
+        }
 
         public bool ItemExists(TKey id)
         {
             return Repository.ItemExists(p => EqualityComparer<TKey>.Default.Equals(id, p.Id));
+        }
+        public Task<bool> ItemExistsAsync(TKey id)
+        {
+            return Repository.ItemExistsAsync(p => EqualityComparer<TKey>.Default.Equals(id, p.Id));
         }
 
         public void Create(T entity)

@@ -6,13 +6,19 @@ using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Auth.Concrete;
 using ExpenseManager.Auth.Interfaces;
-using ExpenseManager.Web.Core.Extensions;
+using ExpenseManager.Business.Concrete;
+using ExpenseManager.Business.Interfaces;
+using ExpenseManager.DataAccess.Concrete.EntityFramework;
+using ExpenseManager.DataAccess.Interfaces;
+using ExpenseManager.Server.ActionFilters;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -31,19 +37,70 @@ namespace ExpenseManager.Server
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddScoped<ValidateModelActionFilter>();
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc().AddNewtonsoftJson();
             services.AddControllers();
-            services.ConfigureSqlContext(Configuration);
+
+
+
+            services.AddDbContext<ExpenseManagerDbContext>(
+                c => c.UseSqlServer(Configuration["connectionStrings:expenseManagerDbConnectionString"]));
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExpenseManagerDbContext>();
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.Password.RequiredLength = 6;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireUppercase = true;
+                options.Password.RequireLowercase = false;
+                options.Password.RequiredUniqueChars = 6;
+                // Lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                options.Lockout.MaxFailedAccessAttempts = 10;
+                options.Lockout.AllowedForNewUsers = true;
+                // User settings
+                options.User.RequireUniqueEmail = true;
+            });
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.ExpireTimeSpan = TimeSpan.FromDays(150);
+                options.LoginPath = "/Login";
+                options.AccessDeniedPath = "/Login";
+                options.SlidingExpiration = true;
+                options.Events.OnRedirectToLogin = context =>
+                {
+                    context.Response.StatusCode = 401;
+                    return Task.CompletedTask;
+                };
+            });
+
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+
+            services.AddScoped<IAccountRepository, EfAccountRepository>();
+            services.AddScoped<IAccountTypeRepository, EfAccountTypeRepository>();
+            services.AddScoped<ICurrencyRepository, EfCurrencyRepository>();
+            services.AddScoped<IExpenseRepository, EfExpenseRepository>();
+            services.AddScoped<IExpenseCategoryRepository, EfExpenseCategoryRepository>();
+            services.AddScoped<IPayeeRepository, EfPayeeRepository>();
+            services.AddScoped<IProfileRepository, EfProfileRepository>();
+            services.AddScoped<IProfileMemberRepository, EfProfileMemberRepository>();
+            //Adding all the Entity managers, which are to be used in the Controllers
+            services.AddScoped<IAccountService, AccountManager>();
+            services.AddScoped<IAccountTypeService, AccountTypeManager>();
+            services.AddScoped<ICurrencyService, CurrencyManager>();
+            services.AddScoped<IExpenseService, ExpenseDataManager>();
+            services.AddScoped<IExpenseCategoryService, ExpenseCategoryManager>();
+            services.AddScoped<IPayeeService, PayeeManager>();
+            services.AddScoped<IProfileService, ProfileManager>();
+            services.AddScoped<IProfileMemberService, ProfileMemberManager>();
+
             services.AddResponseCompression(options =>
             {
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
                     new[] { MediaTypeNames.Application.Octet });
             });
-            services.ConfigureIdentityServices(Configuration);
-            services.ConfigureDataManagers();
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +110,7 @@ namespace ExpenseManager.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseBlazorDebugging();
             }
             app.UseStaticFiles();
             app.UseRouting();

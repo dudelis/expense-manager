@@ -1,4 +1,6 @@
-using Microsoft.AspNetCore.Components;
+using ExpenseManager.Client.Services.Concrete;
+using ExpenseManager.Client.Services.Interfaces;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +13,9 @@ namespace ExpenseManager.Client
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthorizationCore();
-            services.AddScoped<AuthenticationStateProvider, ServerAuthenticationStateProvider>();
+            services.AddScoped<IdentityAuthenticationStateProvider>();
+            services.AddScoped<AuthenticationStateProvider, IdentityAuthenticationStateProvider>();
+            services.AddScoped<IAuthorizeApi, AuthorizeApi>();
         }
 
         public void Configure(IComponentsApplicationBuilder app)

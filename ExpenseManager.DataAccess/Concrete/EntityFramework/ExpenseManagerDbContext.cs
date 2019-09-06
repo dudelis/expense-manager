@@ -18,7 +18,7 @@ using System.Threading;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class ExpenseManagerDbContext: IdentityDbContext<IdentityUser>
+    public class ExpenseManagerDbContext: IdentityDbContext<ApplicationUser>
     {
         private readonly IGetClaimsProvider _claimsProvider;
 

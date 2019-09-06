@@ -21,7 +21,9 @@ namespace ExpenseManager.Business.Interfaces
         List<T> GetAll();
         Task<List<T>> GetAllAsync();
         T GetById(TKey id);
+        Task<T> GetByIdAsync(TKey id);
         bool ItemExists(TKey id);
+        Task<bool> ItemExistsAsync(TKey id);
         void Create(T entity);
         ValueTask<EntityEntry<T>> CreateAsync(T entity);
         void Update(T entity);

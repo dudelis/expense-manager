@@ -1,17 +1,14 @@
 ﻿<CascadingAuthenticationState>
-    <Router AppAssembly="typeof(Program).Assembly">
-        <NotFoundContent>Page not found</NotFoundContent>
-
-        <NotAuthorizedContent>
-            <div class="main">
-                <h2>You're signed out</h2>
-                <p>To continue, please sign in.</p>
-                <a class="btn btn-danger" href="user/signin">Sign in</a>
-            </div>
-        </NotAuthorizedContent>
-
-        <AuthorizingContent>
-            Please wait...
-        </AuthorizingContent>
+    <Router AppAssembly="@typeof(Program).Assembly">
+        <Found  Context="routeData">
+            <RouteView RouteData="routeData" DefaultLayout="typeof(MainLayout)" />
+        </Found>
+        <NotFound>
+            <CascadingAuthenticationState>
+                <LayoutView Layout="@typeof(MainLayout)">
+                    <p>Sorry, there's nothing at this address.</p>
+                </LayoutView>
+            </CascadingAuthenticationState>
+        </NotFound>
     </Router>
 </CascadingAuthenticationState>

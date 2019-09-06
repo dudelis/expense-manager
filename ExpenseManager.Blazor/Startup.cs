@@ -44,7 +44,7 @@ namespace ExpenseManager.Blazor
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingAuthenticationStateProvider<IdentityUser>>();
             services.AddSingleton<WeatherForecastService>();
-            services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+            //services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
             services.ConfigureDataManagers();
         }
 

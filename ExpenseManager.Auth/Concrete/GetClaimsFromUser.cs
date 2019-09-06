@@ -16,7 +16,8 @@ namespace ExpenseManager.Auth.Concrete
         {
             get
             {
-                return _accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+                return "testing user";
+                //return _accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
             }
         }
 

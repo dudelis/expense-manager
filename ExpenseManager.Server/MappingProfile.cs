@@ -1,5 +1,5 @@
 ﻿using ExpenseManager.Entities.Concrete;
-using ExpenseManager.Web.Core.Models;
+using ExpenseManager.Shared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +11,8 @@ namespace ExpenseManager.Server
     {
         public MappingProfile()
         {
-            CreateMap<Currency, CurrencyViewModel>();
-            CreateMap<CurrencyViewModel, Currency>();
+            CreateMap<Currency, CurrencyModel>();
+            CreateMap<CurrencyModel, Currency>();
         }
     }
 }
