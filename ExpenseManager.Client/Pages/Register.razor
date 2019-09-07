@@ -1,0 +1,87 @@
+﻿@page "/register"
+@layout LoginLayout
+
+@inject NavigationManager navigationManager
+@inject IdentityAuthenticationStateProvider authStateProvider
+
+<div class="container">
+
+    <div class="card o-hidden border-0 shadow-lg my-5">
+        <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+                <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                <div class="col-lg-7">
+                    <div class="p-5">
+                        <div class="text-center">
+                            <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+                        </div>
+                        <BSForm Model="model" Class="user" OnValidSubmit="OnSubmit">
+                            <BSFormGroup class="row">
+                                <BSCol SM="6" Class="mb-3 mb-sm-0">
+                                    <BSInput type="text" class="form-control-user" id="exampleFirstName" placeholder="First Name" @bind-Value="model.FirstName"/>
+                                </BSCol>
+                                <BSCol SM="6">
+                                    <BSInput type="text" class="form-control-user" id="exampleLastName" placeholder="Last Name" @bind-Value="model.LastName" />
+                                </BSCol>
+                            </BSFormGroup>
+                            <BSFormGroup>
+                                <BSCol SM="12">
+                                    <BSInput  InputType="InputType.Email" placeholder="Enter email" Class="form-control-user" @bind-Value="model.UserName" />
+                                </BSCol>                                
+                            </BSFormGroup>
+                            <BSFormGroup Class="row">
+                                <BSCol SM="6" class="mb-3 mb-sm-0">
+                                    <BSInput InputType="InputType.Password" class="form-control-user" id="exampleInputPassword" placeholder="Password" @bind-Value="model.Password"/>
+                                </BSCol>
+                                <BSCol SM="6">
+                                    <BSInput InputType="InputType.Password" class="form-control-user" placeholder="Repeat Password" @bind-Value="model.PasswordConfirm"/>
+                                </BSCol>
+                            </BSFormGroup>
+                            <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary" Class="btn-user btn-block">
+                                Register Account
+                            </BSButton>
+                            <hr>
+                            <a href="index.html" class="btn btn-google btn-user btn-block">
+                                <i class="fab fa-google fa-fw"></i> Register with Google
+                            </a>
+                            <a href="index.html" class="btn btn-facebook btn-user btn-block">
+                                <i class="fab fa-facebook-f fa-fw"></i> Register with Facebook
+                            </a>
+                        </BSForm>
+                        <hr>
+                        <div class="text-center">
+                            <a class="small" href="forgot-password.html">Forgot Password?</a>
+                        </div>
+                        <div class="text-center">
+                            <a class="small" href="/login">Already have an account? Login!</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+@code {
+    RegisterModel model { get; set; } = new RegisterModel();
+    string error { get; set; }
+
+    async Task OnSubmit()
+    {
+        error = null;
+        try
+        {
+            await authStateProvider.Register(model);
+            navigationManager.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            error = ex.Message;
+            Console.Write(error);
+        }
+    }
+
+
+}
