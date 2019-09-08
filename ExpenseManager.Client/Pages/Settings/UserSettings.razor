@@ -1,0 +1,70 @@
+﻿@page "/settings/usersettings"
+
+@inject NavigationManager navigationManager;
+@inject HttpClient HttpClient
+
+
+<BSContainer IsFluid="true">
+    <BSRow>
+        <BSCol>
+            <div class="card">
+                <h5 class="card-header">Edit user settings for @currentUserName</h5>
+                <div class="card-body">
+                    <BSForm Model="@userSettings" OnValidSubmit="@HandleValidSubmit">
+                        <DataAnnotationsValidator />
+                        <BSRow Class="form-row">
+                            <BSCol>
+                                <BSFormGroup>
+                                    <BSLabel For="Code">Default Profile</BSLabel>
+                                    <select Id="ProfileId" class="form-control" PlaceHolder="Select the default profile for the current user" @bind="userSettings.DefaultProfileId">
+                                        @foreach (var profile in profiles) {
+                                            <option value="@profile.Id">@profile.Name</option>                                        
+                                        }
+                                    </select>
+
+                                    <BSFormFeedback For="@(() => userSettings.DefaultProfileId)" />
+                                </BSFormGroup>
+                            </BSCol>
+                        </BSRow>
+                        <BSRow Class="form-row">
+                            <BSCol Class="d-flex justify-content-around">
+                                <BSButton ButtonType="ButtonType.Submit" Value="Save"></BSButton>
+                                <BSButton IsOutline="true" Color="Color.Secondary" @onclick="@(()=> navigationManager.NavigateTo("/"))">Cancel</BSButton>
+                            </BSCol>
+                        </BSRow>
+                    </BSForm>
+                </div>
+            </div>
+        </BSCol>
+    </BSRow>
+</BSContainer>
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+    UserSettingsModel userSettings { get; set; } = new UserSettingsModel();
+    string currentUserName { get; set; }
+    List<ProfileModel> profiles = new List<ProfileModel>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+        currentUserName = user.Identity.Name;
+        profiles = await HttpClient.GetJsonAsync<List<ProfileModel>>("/api/profile");
+        userSettings = await HttpClient.GetJsonAsync<UserSettingsModel>("/api/usersettings");
+
+    }
+
+
+    async Task HandleValidSubmit()
+    {
+        Console.WriteLine(userSettings.Id);
+        Console.WriteLine(userSettings);
+        await HttpClient.PutJsonAsync($"/api/usersettings/{userSettings.Id}", userSettings);
+        await HttpClient.PostJsonAsync("/api/authorize/RefreshLogin", null);
+        navigationManager.NavigateTo("/");
+    }
+
+
+}

@@ -74,7 +74,7 @@ namespace ExpenseManager.Server.Controllers
         public async Task<IActionResult> Update(int id, [FromBody] CurrencyModel dto)
         {
             if (id != dto.Id) return BadRequest(ModelState);
-            if (await _currencyService.ItemExistsAsync(id)) return NotFound();
+            if (!await _currencyService.ItemExistsAsync(id)) return NotFound();
             var currency = _mapper.Map<Currency>(dto);
             _currencyService.Update(currency);
             await _currencyService.SaveChangesAsync();

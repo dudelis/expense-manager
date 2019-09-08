@@ -42,6 +42,7 @@ namespace ExpenseManager.Server
             services.AddAutoMapper(typeof(Startup));
             services.AddMvc().AddNewtonsoftJson();
             services.AddControllers();
+            services.AddHttpContextAccessor();
 
 
 

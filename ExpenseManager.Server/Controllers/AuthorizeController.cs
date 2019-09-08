@@ -91,6 +91,17 @@ namespace ExpenseManager.Server.Controllers
             await _signInManager.SignOutAsync();
             return Ok();
         }
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> RefreshLogin()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (_signInManager.IsSignedIn(HttpContext.User))
+            {
+                await _signInManager.RefreshSignInAsync(user);
+            }
+            return Ok();
+        }
         [HttpGet]
         public UserInfoModel UserInfo()
         {

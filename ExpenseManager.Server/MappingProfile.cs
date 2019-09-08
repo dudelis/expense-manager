@@ -13,6 +13,11 @@ namespace ExpenseManager.Server
         {
             CreateMap<Currency, CurrencyModel>();
             CreateMap<CurrencyModel, Currency>();
+
+            CreateMap<Profile, ProfileModel>();
+            CreateMap<ProfileModel, Profile>();
+            CreateMap<UserSettings, UserSettingsModel>();
+            CreateMap<UserSettingsModel, UserSettings>();
         }
     }
 }
