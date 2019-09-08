@@ -4,14 +4,14 @@
             <a class="sign-in" href="/login">Sign in</a>
         </Authorizing>
         <Authorized>
-                <a class="nav-link dropdown-toggle @settingsMenuCssClass" href="#" id="userDropdown" role="button" data-toggle="dropdown" @onclick="ToggleSettingsMenu">
+                <a class="nav-link dropdown-toggle @settingsMenuCssClass" id="userDropdown" role="button" data-toggle="dropdown" @onclick="ToggleSettingsMenu">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">@context.User.Identity.Name</span>
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in @settingsMenuCssClass" aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="#">
+                    <a class="dropdown-item" href="settings/usersettings">
                         <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
+                        User Settings
                     </a>
                     <a class="dropdown-item" href="#">
                         <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>

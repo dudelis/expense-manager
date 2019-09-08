@@ -2,6 +2,7 @@
 
 @inject NavigationManager navigationManager;
 @inject HttpClient HttpClient
+@inject IdentityAuthenticationStateProvider authStateProvider
 
 
 <BSContainer IsFluid="true">
@@ -15,10 +16,12 @@
                         <BSRow Class="form-row">
                             <BSCol>
                                 <BSFormGroup>
-                                    <BSLabel For="Code">Default Profile</BSLabel>
+                                    <BSLabel For="Code">Default User Profile</BSLabel>
                                     <select Id="ProfileId" class="form-control" PlaceHolder="Select the default profile for the current user" @bind="userSettings.DefaultProfileId">
-                                        @foreach (var profile in profiles) {
-                                            <option value="@profile.Id">@profile.Name</option>                                        
+                                        @foreach (var profile in profiles)
+                                        {
+                                            <option value="@profile.Id">@profile.Name</option>
+
                                         }
                                     </select>
 
@@ -53,7 +56,6 @@
         currentUserName = user.Identity.Name;
         profiles = await HttpClient.GetJsonAsync<List<ProfileModel>>("/api/profile");
         userSettings = await HttpClient.GetJsonAsync<UserSettingsModel>("/api/usersettings");
-
     }
 
 
@@ -62,7 +64,7 @@
         Console.WriteLine(userSettings.Id);
         Console.WriteLine(userSettings);
         await HttpClient.PutJsonAsync($"/api/usersettings/{userSettings.Id}", userSettings);
-        await HttpClient.PostJsonAsync("/api/authorize/RefreshLogin", null);
+        await authStateProvider.RefreshLogin();
         navigationManager.NavigateTo("/");
     }
 

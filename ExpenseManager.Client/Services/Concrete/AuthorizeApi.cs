@@ -43,5 +43,10 @@ namespace ExpenseManager.Client.Services.Concrete
             if (result.StatusCode == System.Net.HttpStatusCode.BadRequest) throw new Exception(await result.Content.ReadAsStringAsync());
             result.EnsureSuccessStatusCode();
         }
+
+        public async Task RefreshLogin()
+        {
+            await _httpClient.PostAsync("/api/authorize/refreshlogin", null);
+        }
     }
 }

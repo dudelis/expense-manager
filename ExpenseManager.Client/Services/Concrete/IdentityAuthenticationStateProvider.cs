@@ -29,6 +29,11 @@ namespace ExpenseManager.Client
             await _authorizeApi.Login(model);
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
+        public async Task RefreshLogin()
+        {
+            await _authorizeApi.RefreshLogin();
+            NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
+        }
 
         public async Task Register(RegisterModel model)
         {
