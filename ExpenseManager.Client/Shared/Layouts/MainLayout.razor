@@ -1,13 +1,14 @@
 ﻿@inherits LayoutComponentBase
 
+@inject NavigationManager navigationManager
 
 
 <div id="wrapper">
-    <SidebarMenu/>
+    <SidebarMenu />
     <div id="content-wrapper" class="d-flex flex-column">
         <div id="content">
             <HeaderMenu />
-            @Body            
+            @Body
         </div>
         <footer class="sticky-footer bg-white">
             <div class="container my-auto">
@@ -22,3 +23,19 @@
 <a class="scroll-to-top rounded" href="#page-top" style="display: none;">
     <i class="fas fa-angle-up"></i>
 </a>
+
+@code{
+    [CascadingParameter]
+    private Task<AuthenticationState> authenticationStateTask { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await authenticationStateTask;
+        var user = authState.User;
+
+        if (!user.Identity.IsAuthenticated)
+        {
+            navigationManager.NavigateTo("/login");
+        }
+    }
+}
