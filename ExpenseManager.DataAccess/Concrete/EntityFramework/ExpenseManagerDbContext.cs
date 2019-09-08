@@ -35,6 +35,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<ProfileMember> ProfileMembers { get; set; }
         public DbSet<ProfileConfiguration> ProfileConfigurations { get; set; }
+        public DbSet<UserSettings> UserSettings { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -144,6 +145,17 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     .OnDelete(DeleteBehavior.Cascade);
 
             });
+            modelBuilder.Entity<UserSettings>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.HasAlternateKey(a => a.UserId);
+                entity.Property(p => p.UserId).IsRequired();
+                entity.HasOne(p => p.DefaultProfile)
+                    .WithMany(p => p.UserSettings)
+                    .HasForeignKey(p => p.DefaultProfileId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
+
         }
         public override int SaveChanges()
         {

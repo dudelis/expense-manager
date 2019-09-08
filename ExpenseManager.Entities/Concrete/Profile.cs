@@ -13,6 +13,7 @@ namespace ExpenseManager.Entities.Concrete
 
         public ProfileConfiguration ProfileConfiguration { get; set; }
         public ICollection<ProfileMember> ProfileMembers { get; set; }
+        public ICollection<UserSettings> UserSettings { get; set; }
         
     }
 }

@@ -11,6 +11,7 @@ using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Server.ActionFilters;
+using ExpenseManager.Server.CustomMiddlewares;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -86,6 +87,7 @@ namespace ExpenseManager.Server
             services.AddScoped<IPayeeRepository, EfPayeeRepository>();
             services.AddScoped<IProfileRepository, EfProfileRepository>();
             services.AddScoped<IProfileMemberRepository, EfProfileMemberRepository>();
+            services.AddScoped<IUserSettingsRepository, EfUserSettingsRepository>();
             //Adding all the Entity managers, which are to be used in the Controllers
             services.AddScoped<IAccountService, AccountManager>();
             services.AddScoped<IAccountTypeService, AccountTypeManager>();
@@ -95,6 +97,7 @@ namespace ExpenseManager.Server
             services.AddScoped<IPayeeService, PayeeManager>();
             services.AddScoped<IProfileService, ProfileManager>();
             services.AddScoped<IProfileMemberService, ProfileMemberManager>();
+            services.AddScoped<IUserSettingsService, UserSettingsManager>();
 
             services.AddResponseCompression(options =>
             {
@@ -106,6 +109,7 @@ namespace ExpenseManager.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseMiddleware<ExceptionMiddleware>();
             app.UseResponseCompression();
             if (env.IsDevelopment())
             {

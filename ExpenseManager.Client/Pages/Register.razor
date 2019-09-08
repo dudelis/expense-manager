@@ -17,27 +17,34 @@
                             <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                         </div>
                         <BSForm Model="model" Class="user" OnValidSubmit="OnSubmit">
-                            <BSFormGroup class="row">
+                            <DataAnnotationsValidator />
+                            <BSFormGroup Class="row">
                                 <BSCol SM="6" Class="mb-3 mb-sm-0">
-                                    <BSInput type="text" class="form-control-user" id="exampleFirstName" placeholder="First Name" @bind-Value="model.FirstName"/>
+                                    <BSInput type="text" class="form-control-user" id="exampleFirstName" placeholder="First Name" @bind-Value="model.FirstName" />
+                                    <BSFormFeedback For="@(()=> model.FirstName)"></BSFormFeedback>
                                 </BSCol>
                                 <BSCol SM="6">
                                     <BSInput type="text" class="form-control-user" id="exampleLastName" placeholder="Last Name" @bind-Value="model.LastName" />
+                                    <BSFormFeedback For="@(()=> model.LastName)"></BSFormFeedback>
                                 </BSCol>
                             </BSFormGroup>
-                            <BSFormGroup>
+                            <BSFormGroup Class="row">
                                 <BSCol SM="12">
-                                    <BSInput  InputType="InputType.Email" placeholder="Enter email" Class="form-control-user" @bind-Value="model.UserName" />
-                                </BSCol>                                
+                                    <BSInput InputType="InputType.Email" placeholder="Enter email" Class="form-control-user" @bind-Value="model.UserName" />
+                                    <BSFormFeedback For="@(()=> model.UserName)"></BSFormFeedback>
+                                </BSCol>
                             </BSFormGroup>
                             <BSFormGroup Class="row">
                                 <BSCol SM="6" class="mb-3 mb-sm-0">
-                                    <BSInput InputType="InputType.Password" class="form-control-user" id="exampleInputPassword" placeholder="Password" @bind-Value="model.Password"/>
+                                    <BSInput InputType="InputType.Password" class="form-control-user" id="exampleInputPassword" placeholder="Password" @bind-Value="model.Password" />
+                                    <BSFormFeedback For="@(()=> model.Password)"></BSFormFeedback>
                                 </BSCol>
                                 <BSCol SM="6">
-                                    <BSInput InputType="InputType.Password" class="form-control-user" placeholder="Repeat Password" @bind-Value="model.PasswordConfirm"/>
+                                    <BSInput InputType="InputType.Password" class="form-control-user" placeholder="Repeat Password" @bind-Value="model.PasswordConfirm" />
+                                    <BSFormFeedback For="@(()=> model.PasswordConfirm)"></BSFormFeedback>
                                 </BSCol>
                             </BSFormGroup>
+                            <BSLabel Class="text-danger">@error</BSLabel>
                             <BSButton ButtonType="ButtonType.Submit" Color="Color.Primary" Class="btn-user btn-block">
                                 Register Account
                             </BSButton>
@@ -74,12 +81,13 @@
         try
         {
             await authStateProvider.Register(model);
-            navigationManager.NavigateTo("/");
+            await authStateProvider.Logout();
+            navigationManager.NavigateTo("/login", true);
         }
         catch (Exception ex)
         {
             error = ex.Message;
-            Console.Write(error);
+            Console.WriteLine(error);
         }
     }
 

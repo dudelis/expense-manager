@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ExpenseManager.Auth.Concrete;
+using ExpenseManager.Business.Interfaces;
+using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Server.ActionFilters;
 using ExpenseManager.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -18,11 +20,15 @@ namespace ExpenseManager.Server.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUserSettingsService _userSettingsManager;
+        private readonly IProfileService _profileServiceManager;
 
-        public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        public AuthorizeController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, IUserSettingsService userService, IProfileService profileService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userSettingsManager = userService;
+            _profileServiceManager = profileService;
         }
         [HttpPost]
         [ServiceFilter(typeof(ValidateModelActionFilter))]
@@ -49,17 +55,34 @@ namespace ExpenseManager.Server.Controllers
             user.UserName = model.UserName;
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-            {
-                foreach (var error in result.Errors)
-                    ModelState.AddModelError("errors", error.Description);
-                return BadRequest(ModelState);
-            }
+                return BadRequest(result.Errors.FirstOrDefault()?.Description);
             ///TODO: Return Success to redirect to Login page.
-            return await Login(new LoginModel
+            ///
+
+            var profile = new Profile()
             {
-                UserName = model.UserName,
-                Password = model.Password
-            });
+                Name = $"Default profile for {user.UserName}",
+                ProfileOwner = user.UserName,
+                ProfileMembers = new List<ProfileMember>()
+                {
+                    new ProfileMember()
+                    {
+                        UserId = user.UserName
+                    }
+                },
+                ProfileConfiguration = new ProfileConfiguration(),
+                UserSettings = new List<UserSettings>()
+                {
+                    new UserSettings()
+                    {
+                        UserId = user.UserName
+                    }
+                }
+                
+            };
+            await _profileServiceManager.CreateAsync(profile);
+            await _profileServiceManager.SaveChangesAsync();
+            return Ok();
         }
         [Authorize]
         [HttpPost]
@@ -67,6 +90,21 @@ namespace ExpenseManager.Server.Controllers
         {
             await _signInManager.SignOutAsync();
             return Ok();
+        }
+        [HttpGet]
+        public UserInfoModel UserInfo()
+        {
+            var model = new UserInfoModel()
+            {
+                IsAuthenticated = User.Identity.IsAuthenticated,
+                UserName = User.Identity.Name,
+                ExposedClaims = User.Claims
+                    //Optionally: filter the claims you want to expose to the client
+                    //.Where(c => c.Type == "test-claim")
+                    .ToDictionary(c => c.Type, c => c.Value)
+            };
+
+            return model;
         }
     }
 }
