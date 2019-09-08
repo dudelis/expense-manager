@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace ExpenseManager.Server.CustomMiddlewares
+namespace ExpenseManager.Server.Extensions
 {
     public class ExceptionMiddleware
     {

@@ -4,6 +4,7 @@ using ExpenseManager.Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Business.Concrete
 {
@@ -12,5 +13,6 @@ namespace ExpenseManager.Business.Concrete
         public UserSettingsManager(IUserSettingsRepository repository): base(repository)
         {
         }
+
     }
 }

@@ -34,7 +34,7 @@ namespace ExpenseManager.Server.Controllers
         [ServiceFilter(typeof(ValidateModelActionFilter))]
         public async Task<IActionResult> Get()
         {
-            var currencies = await _currencyService.GetAllAsync();
+            var currencies = await _currencyService.GetListAsync();
             var dtos = _mapper.Map<List<CurrencyModel>>(currencies);
             return Ok(dtos);
         }

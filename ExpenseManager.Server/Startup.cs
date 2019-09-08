@@ -11,7 +11,7 @@ using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Server.ActionFilters;
-using ExpenseManager.Server.CustomMiddlewares;
+using ExpenseManager.Server.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -77,8 +77,12 @@ namespace ExpenseManager.Server
                 };
             });
 
+            
+            
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
+            services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
 
+            //Add Data
             services.AddScoped<IAccountRepository, EfAccountRepository>();
             services.AddScoped<IAccountTypeRepository, EfAccountTypeRepository>();
             services.AddScoped<ICurrencyRepository, EfCurrencyRepository>();

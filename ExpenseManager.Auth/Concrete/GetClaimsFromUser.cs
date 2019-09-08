@@ -1,4 +1,5 @@
 ﻿using ExpenseManager.Auth.Interfaces;
+using ExpenseManager.Shared.Constants;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -16,8 +17,15 @@ namespace ExpenseManager.Auth.Concrete
         {
             get
             {
-                return "testing user";
-                //return _accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+                return _accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == ClaimTypes.Name)?.Value;
+            }
+        }
+        public Guid UserProfileId
+        {
+            get
+            {
+                var guid = Guid.Parse(_accessor.HttpContext?.User.Claims.SingleOrDefault(x => x.Type == CustomClaimTypes.DefaultProfileGuid)?.Value);
+                return guid;
             }
         }
 

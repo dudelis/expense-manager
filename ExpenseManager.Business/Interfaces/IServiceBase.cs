@@ -18,8 +18,13 @@ namespace ExpenseManager.Business.Interfaces
             where T : class, IEntity<TKey>, new()
             where TRepo: class, IEntityRepository<T, TKey>
     {
-        List<T> GetAll();
-        Task<List<T>> GetAllAsync();
+
+        T Get(Expression<Func<T, bool>> filter);
+        Task<T> GetAsync(Expression<Func<T, bool>> filter);
+
+        List<T> GetList(Expression<Func<T, bool>> filter = null);
+        Task<List<T>> GetListAsync(Expression<Func<T, bool>> filter = null);
+        
         T GetById(TKey id);
         Task<T> GetByIdAsync(TKey id);
         bool ItemExists(TKey id);

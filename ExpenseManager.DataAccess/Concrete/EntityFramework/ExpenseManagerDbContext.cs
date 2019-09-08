@@ -155,6 +155,15 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     .HasForeignKey(p => p.DefaultProfileId)
                     .OnDelete(DeleteBehavior.Cascade);
             });
+            modelBuilder.Entity<Account>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<AccountType>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<Currency>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<Expense>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<ExpenseCategory>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<Payee>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<Profile>().HasQueryFilter(x => x.ProfileMembers.Any(p => p.UserId == _claimsProvider.UserId));
+            modelBuilder.Entity<ProfileConfiguration>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<UserSettings>().HasQueryFilter(x => x.UserId == _claimsProvider.UserId);
 
         }
         public override int SaveChanges()

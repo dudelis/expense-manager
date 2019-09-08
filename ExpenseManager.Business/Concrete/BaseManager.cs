@@ -3,6 +3,7 @@ using ExpenseManager.Entities.Interfaces;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.Business.Concrete
@@ -24,13 +25,22 @@ namespace ExpenseManager.Business.Concrete
             Repository = repository;
         }
 
-        public List<T> GetAll()
+        public T Get(Expression<Func<T, bool>> filter)
         {
-            return Repository.GetList();
+            return Repository.Get(filter);
         }
-        public Task<List<T>> GetAllAsync()
+
+        public Task<T> GetAsync(Expression<Func<T, bool>> filter)
         {
-            return Repository.GetListAsync();
+            return Repository.GetAsync(filter);
+        }
+        public List<T> GetList(Expression<Func<T, bool>> filter = null)
+        {
+            return Repository.GetList(filter);
+        }
+        public Task<List<T>> GetListAsync(Expression<Func<T, bool>> filter = null)
+        {
+            return Repository.GetListAsync(filter);
         }
 
         public T GetById(TKey id)
@@ -83,5 +93,7 @@ namespace ExpenseManager.Business.Concrete
         {
             return Repository.SaveAsync();
         }
+
+       
     }
 }
