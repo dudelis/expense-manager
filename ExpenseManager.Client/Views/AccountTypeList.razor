@@ -7,16 +7,16 @@
     <CollapsibleCard Header="Account Types" Collapsed="true">
         <BSRow>
             <BSCol>
-                <SplitButton Name="New" Icon="ButtonIcon.Plus" Color="Color.Success" />
-                <SplitButton Name="Edit" Icon="ButtonIcon.Edit" Color="Color.Info"/>
-                <SplitButton Name="Delete" Icon="ButtonIcon.Trash" Color="Color.Danger"/>
+                <BSButton Class="btn btn-primary btn-circle float-right" OnClick="AddItem">
+                    <i class="fas fa-plus"></i>
+                </BSButton>
             </BSCol>
         </BSRow>
         <BSRow>
             <BSCol>
                 @if (_task.IsCompleted)
                 {
-                    <GridComponent T="AccountTypeModel" Grid="@_grid"></GridComponent>
+                    <GridComponent T="AccountTypeModel" Grid="@_grid" OnRowClicked="@EditItem"></GridComponent>
                 }
                 else
                 {
@@ -25,27 +25,32 @@
             </BSCol>
         </BSRow>
     </CollapsibleCard>
+<AccountTypeEdit
+                 @ref="EditInstance"
+                 ModalHeader="Add/Edit Account Type"
+                 OnHide="@(()=> _grid.UpdateGrid())"
+                 Model="selectedItem" />
 
 @code {
+    private AccountTypeEdit EditInstance;
     private CGrid<AccountTypeModel> _grid;
     private Task _task;
+    private Modal AccountTypeModal;
+    private AccountTypeModel selectedItem { get; set; } = new AccountTypeModel();
 
     public static Action<IGridColumnCollection<AccountTypeModel>> Columns = c =>
     {
-        c.Add(o => o.Id);
-        c.Add(o => o.CreatedTime, "Created").Format("{0:yyyy-MM-dd}");
-        c.Add(o => o.ModifiedTime, "Modified").Format("{0:yyyy-MM-dd}");
-        c.Add(o => o.Name);
+        c.Add(o => o.Id).SetWidth("10%").Sortable(true);
+        c.Add(o => o.Name).SetWidth("90%").Sortable(true);
     };
-    
+
     protected override async Task OnInitializedAsync()
     {
         string url = navigationManager.BaseUri + "api/accounttype";
-
         var query = new QueryDictionary<StringValues>();
-
         var client = new GridClient<AccountTypeModel>(url, query, false, "AccountTypes", Columns)
             .Searchable(true, true)
+            .WithPaging(10)
             .Selectable(true);
         _grid = client.Grid;
 
@@ -53,5 +58,17 @@
         _task = client.UpdateGrid();
         await _task;
     }
-
+    void AddItem()
+    {
+        selectedItem = new AccountTypeModel();
+        EditInstance.Toggle();
+    }
+    protected void EditItem(object item)
+    {
+        if (item.GetType() == typeof(AccountTypeModel))
+        {
+            var selectedItem = (AccountTypeModel)item;
+            EditInstance.Toggle(selectedItem);
+        }
+    }
 }

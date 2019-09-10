@@ -39,6 +39,8 @@ namespace ExpenseManager.Server.Controllers
             var dtos = _mapper.Map<List<AccountTypeModel>>(aTypes);
             var server = new GridServer<AccountTypeModel>(dtos, Request.Query, true, "AccountTypes")
                 .AutoGenerateColumns()
+                .WithPaging(10)
+                .Sortable(true)
                 .Searchable(true, true);
             return Ok(server.ItemsToDisplay);
         }

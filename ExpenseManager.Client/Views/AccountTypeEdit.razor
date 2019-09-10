@@ -1,0 +1,72 @@
+﻿@inject NavigationManager navigationManager;
+@inject HttpClient httpClient;
+
+    <BSModal @ref="ModalInstance" HideEvent="OnHide">
+        <BSModalHeader OnClick="@(()=> ModalInstance.Hide())">
+            @ModalHeader
+        </BSModalHeader>
+        <BSModalBody>
+            <BSContainer IsFluid="true">
+                <BSRow>
+                    <BSCol>
+                        <BSForm Model="@Model" OnValidSubmit="@HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            <BSRow Class="form-row">
+                                <BSCol>
+                                    <BSFormGroup>
+                                        <BSLabel For="Name">Name</BSLabel>
+                                        <BSInput Id="Name" InputType="InputType.Text" PlaceHolder="Enter Account Type" @bind-Value="Model.Name"></BSInput>
+                                        <BSFormFeedback For="@(() => Model.Name)" />
+                                    </BSFormGroup>
+                                </BSCol> 
+                            </BSRow>
+                            <BSRow Class="form-row">
+                                <BSCol Class="d-flex justify-content-around">
+                                    <BSButton ButtonType="ButtonType.Submit" Value="Save"></BSButton>
+                                    <BSButton IsOutline="true" Color="Color.Secondary" @onclick="@(()=> ModalInstance.Hide())">Cancel</BSButton>
+                                </BSCol>
+                            </BSRow>
+                        </BSForm>
+                    </BSCol>
+                </BSRow>
+            </BSContainer>
+        </BSModalBody>
+        
+    </BSModal>
+
+@code{
+    [Parameter]
+    public AccountTypeModel Model { get; set; }
+    [Parameter]
+    public string ModalHeader { get; set; }
+    [Parameter]
+    public EventCallback OnHide { get; set; }
+    BSModal ModalInstance;
+
+
+    async Task HandleValidSubmit()
+    {
+        if (Model.Id == 0)
+        {
+            await httpClient.PostJsonAsync("/api/accounttype", Model);
+            ModalInstance.Hide();
+        } else
+        {
+            await httpClient.PutJsonAsync($"/api/accounttype/{Model.Id}", Model);
+            ModalInstance.Hide();
+        }
+    }
+
+    public void Toggle(AccountTypeModel model = null)
+    {
+        if (model != null)
+        {
+            Model = model;
+        }
+        else
+        {
+            Model = new AccountTypeModel();
+        }
+        ModalInstance.Toggle();
+    }
+}

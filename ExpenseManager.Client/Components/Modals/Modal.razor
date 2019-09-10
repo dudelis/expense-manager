@@ -1,0 +1,24 @@
+﻿<BSModal @ref="ModalInstance">
+    <BSModalHeader OnClick="@(() => ModalInstance.Hide())">@ModalHeader</BSModalHeader>
+    <BSModalBody>@ChildContent</BSModalBody>
+</BSModal>
+@code {
+    [Parameter]
+    public string ModalHeader { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnSubmitClick { get; set; }
+
+    BSModal ModalInstance;
+
+    public void Toggle()
+    {
+        ModalInstance.Toggle();
+    }
+    public void Hide()
+    {
+        ModalInstance.Hide();
+    }
+
+}

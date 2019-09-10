@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ExpenseManager.Client.Components.Controls
+namespace ExpenseManager.Client.Components.ToolbarButton
 {
-    public enum ButtonIcon
+    public enum Icon
     {
         Plus,
         Edit,
         Trash,
-        Check
+        Check,
+        Empty
     }
 }

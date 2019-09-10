@@ -169,12 +169,14 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public override int SaveChanges()
         {
             AddTimeStamps();
+            SetProfileGuid();
             return base.SaveChanges();
         }
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken token)
         {
             AddTimeStamps();
+            SetProfileGuid();
             return base.SaveChangesAsync(acceptAllChangesOnSuccess, token);
         }
 
@@ -205,6 +207,15 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     entity.Property("LastModifiedUserId").CurrentValue = _claimsProvider.UserId;
                 }                    
             }                        
+        }
+        private void SetProfileGuid()
+        {
+            var addedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added && x.Entity is IProfileDependent);
+            foreach(var entry in addedEntries)
+            {
+                var entity = entry.Entity as IProfileDependent;
+                entity.SetProfileId(_claimsProvider.UserProfileId);
+            }
         }
     }
 }

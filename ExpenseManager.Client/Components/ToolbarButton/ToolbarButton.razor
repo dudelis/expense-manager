@@ -1,0 +1,25 @@
+﻿
+
+    <a class="btn btn-@Color.ToString().ToLower() btn-icon-split text-white btn-sm" style="cursor:pointer" @onclick="HandleClickEvent">
+        <span class="icon text-white-50">
+            @ChildIcon
+        </span>
+        <span class="text">@Name</span>
+    </a>
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public Color Color { get; set; } = Color.Success;
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+    [Parameter]
+    public RenderFragment ChildIcon { get; set; }
+
+    void HandleClickEvent(MouseEventArgs args)
+    {
+        OnClick.InvokeAsync(args);
+    }
+
+}
