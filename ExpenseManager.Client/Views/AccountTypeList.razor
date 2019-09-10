@@ -26,18 +26,25 @@
         </BSRow>
     </CollapsibleCard>
 <AccountTypeEdit
-                 @ref="EditInstance"
-                 ModalHeader="Add/Edit Account Type"
-                 OnHide="@(()=> _grid.UpdateGrid())"
-                 Model="selectedItem" />
+    @ref="EditInstance"
+    ModalHeader="Add/Edit Account Type"
+    OnHide="@(()=> _grid.UpdateGrid())"
+    Model="@selectedItem" />
 
 @code {
     private AccountTypeEdit EditInstance;
     private CGrid<AccountTypeModel> _grid;
     private Task _task;
     private Modal AccountTypeModal;
-    private AccountTypeModel selectedItem { get; set; } = new AccountTypeModel();
+    private AccountTypeModel selectedItem { get; set; }
 
+    
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        selectedItem = selectedItem ?? new AccountTypeModel();
+    }
+    
     public static Action<IGridColumnCollection<AccountTypeModel>> Columns = c =>
     {
         c.Add(o => o.Id).SetWidth("10%").Sortable(true);
@@ -67,8 +74,11 @@
     {
         if (item.GetType() == typeof(AccountTypeModel))
         {
-            var selectedItem = (AccountTypeModel)item;
-            EditInstance.Toggle(selectedItem);
+            
+            var newItem = (AccountTypeModel)item;
+            selectedItem = newItem;
+            this.StateHasChanged();
+            EditInstance.Toggle();
         }
     }
 }

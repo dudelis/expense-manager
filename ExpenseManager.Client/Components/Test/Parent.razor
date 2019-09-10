@@ -1,0 +1,40 @@
+﻿
+    <div>
+        This is parent component
+    </div>
+    <Child ChildString="@ParentString" />
+    <div>
+        <Child2  OnClick="ParentStringUpdate"/>
+    </div>
+
+
+@code {
+    
+    string ParentString { get; set; }
+
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        Console.WriteLine("Parent - SetParametersAsync - " + ParentString);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Parent - OnInitialized - " + ParentString);
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("Parent - OnParametersSet- " + ParentString);
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("Parent - OnParametersSet- " + ParentString + " This is first render:" + firstRender);
+    }
+
+    void ParentStringUpdate()
+    {
+        ParentString = DateTime.UtcNow.ToString();
+    }
+}

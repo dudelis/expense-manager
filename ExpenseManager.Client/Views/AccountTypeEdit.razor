@@ -1,8 +1,8 @@
 ﻿@inject NavigationManager navigationManager;
 @inject HttpClient httpClient;
 
-    <BSModal @ref="ModalInstance" HideEvent="OnHide">
-        <BSModalHeader OnClick="@(()=> ModalInstance.Hide())">
+    <BSModal @ref="ModalInstance" HideEvent="OnHide" Size="Size.Large">
+        <BSModalHeader OnClick="CloseSubview">
             @ModalHeader
         </BSModalHeader>
         <BSModalBody>
@@ -22,16 +22,23 @@
                             </BSRow>
                             <BSRow Class="form-row">
                                 <BSCol Class="d-flex justify-content-around">
-                                    <BSButton ButtonType="ButtonType.Submit" Value="Save"></BSButton>
-                                    <BSButton IsOutline="true" Color="Color.Secondary" @onclick="@(()=> ModalInstance.Hide())">Cancel</BSButton>
+                                    <BSButton Color="Color.Primary" ButtonType="ButtonType.Submit" Value="Save"></BSButton>
+                                    <BSButton IsOutline="true" Color="Color.Secondary" @onclick="CloseSubview">Cancel</BSButton>
+
+
                                 </BSCol>
+                            @if (Model.Id > 0)
+                            {
+                                <div class="float-right">
+                                    <DeleteButtonWithConfirm OnConfirmDelete="DeleteItem" />
+                                </div>                            
+                            }
                             </BSRow>
                         </BSForm>
                     </BSCol>
                 </BSRow>
             </BSContainer>
-        </BSModalBody>
-        
+        </BSModalBody>        
     </BSModal>
 
 @code{
@@ -41,8 +48,17 @@
     public string ModalHeader { get; set; }
     [Parameter]
     public EventCallback OnHide { get; set; }
-    BSModal ModalInstance;
 
+    private BSModal ModalInstance;
+    private DeleteButtonWithConfirm deleteButton;
+
+
+
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        Model = Model ?? new AccountTypeModel();
+    }
 
     async Task HandleValidSubmit()
     {
@@ -56,17 +72,18 @@
             ModalInstance.Hide();
         }
     }
-
-    public void Toggle(AccountTypeModel model = null)
+    async Task DeleteItem()
     {
-        if (model != null)
-        {
-            Model = model;
-        }
-        else
-        {
-            Model = new AccountTypeModel();
-        }
+        await httpClient.DeleteAsync($"/api/accounttype/{Model.Id}");
+        this.CloseSubview();
+    }
+    void CloseSubview()
+    {
+        this.ModalInstance.Toggle();
+    }
+
+    public void Toggle()
+    {
         ModalInstance.Toggle();
     }
 }

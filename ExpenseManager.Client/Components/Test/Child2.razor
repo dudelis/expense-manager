@@ -1,0 +1,33 @@
+﻿<h3>Child2</h3>
+<BSButton OnClick="HandleOnClick"></BSButton>
+
+@code {
+    [Parameter]
+    public string ChildString { get; set; }
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+    //public override async Task SetParametersAsync(ParameterView parameters)
+    //{
+    //    await base.SetParametersAsync(parameters);
+    //    Console.WriteLine("Child2 - SetParametersAsync - " + ChildString);
+    //}
+
+    //protected override void OnInitialized()
+    //{
+    //    Console.WriteLine("Child2 - OnInitialized - " + ChildString);
+    //}
+
+    //protected override void OnParametersSet()
+    //{
+    //    Console.WriteLine("Child2 - OnParametersSet- " + ChildString);
+    //}
+    //protected override void OnAfterRender(bool firstRender)
+    //{
+    //    Console.WriteLine("Child2 - OnParametersSet- " + ChildString + " This is first render:" + firstRender);
+    //}
+    async Task HandleOnClick()
+    {
+        await OnClick.InvokeAsync(null);
+    }
+}

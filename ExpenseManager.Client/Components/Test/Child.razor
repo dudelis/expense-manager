@@ -1,0 +1,29 @@
+﻿<h3>
+    This is Child 1 and its Child String: @ChildString
+</h3>
+
+@code {
+    [Parameter]
+    public string ChildString { get; set; }
+
+
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        Console.WriteLine("Child - SetParametersAsync - " + ChildString);
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("Child - OnInitialized - " + ChildString);
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("Child - OnParametersSet- " + ChildString);
+    }
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine("Child - OnAfterRender - " + ChildString + " This is first render:" + firstRender);
+    }
+}

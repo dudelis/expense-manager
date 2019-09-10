@@ -1,0 +1,41 @@
+﻿
+<BSButton Id="confirmDelete" Class="btn-circle" Color="Color.Danger" @onclick="TogglePopover">
+    <i class="fas fa-trash"></i>
+</BSButton>
+<BSPopover Target="confirmDelete" Placement="PopoverPlacement" @ref="_bsPopover">
+    <BSPopoverHeader>Are you sure you would like to delete the current item?</BSPopoverHeader>
+    <BSPopoverBody Class="d-flex justify-content-around">
+        <BSButton Color="Color.Danger" Class="btn-circle btn-sm" @onclick="HandleDeleteButtonClick" >
+            <i class="fas fa-trash"></i>
+        </BSButton>
+        <BSButton Color="Color.Secondary" Class="btn-circle btn-sm" @onclick="Hide">
+            <i class="fas fa-times"></i>
+        </BSButton>
+    </BSPopoverBody>
+</BSPopover>
+
+@code {
+    [Parameter]
+    public Placement PopoverPlacement { get; set; }
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnConfirmDelete { get; set; }
+
+    BSPopover _bsPopover;
+   
+
+    public void Hide()
+    {
+        _bsPopover.Hide();
+    }
+
+    async Task HandleDeleteButtonClick(MouseEventArgs args)
+    {
+        await OnConfirmDelete.InvokeAsync(args);
+        this.Hide();
+    }
+    void TogglePopover()
+    {
+        _bsPopover.Toggle();
+    }
+
+}
