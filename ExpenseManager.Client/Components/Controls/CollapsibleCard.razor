@@ -1,0 +1,38 @@
+﻿
+
+    <card class="card shadow mb-4">
+        <!-- Card Header - Accordion -->
+        @if (!string.IsNullOrWhiteSpace(Header))
+        {
+            <a class="d-block card-header py-3 @(collapsed ? "collapsed" : "")" role="button" data-toggle="collapse" @onclick="Toggle" style="cursor:pointer">
+                <h6 class="m-0 font-weight-bold text-primary">@Header</h6>
+            </a>
+        }
+        <!-- Card Content - Collapse -->
+        <div class="collapse @(collapsed ? "" : "show")" style="">
+            <div class="card-body overflow-auto">
+                @ChildContent
+            </div>
+        </div>
+    </card>
+
+@code {
+    [Parameter]
+    public string Header { get; set; }
+    [Parameter]
+    public bool Collapsed { get; set; } = true;
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+
+    bool collapsed;
+
+    protected override void OnInitialized()
+    {
+        collapsed = Collapsed;
+    }
+
+    void Toggle()
+    {
+        collapsed = !collapsed;
+    }
+}

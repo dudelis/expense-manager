@@ -1,0 +1,20 @@
+﻿
+
+    <a class="btn btn-@Color.ToString().ToLower() btn-icon-split text-white" style="cursor:pointer" @onclick="OnClick">
+        <span class="icon text-white-50">
+            <i class="fas fa-@Icon.ToString().ToLower()"></i>
+        </span>
+        <span class="text">@Name</span>
+    </a>
+
+@code {
+    [Parameter]
+    public string Name { get; set; }
+    [Parameter]
+    public ButtonIcon Icon { get; set; } = ButtonIcon.Plus;
+    [Parameter]
+    public Color Color { get; set; } = Color.Success;
+    [Parameter]
+    public EventCallback OnClick { get; set; }
+
+}

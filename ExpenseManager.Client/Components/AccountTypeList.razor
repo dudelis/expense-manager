@@ -1,0 +1,57 @@
+﻿@using GridShared
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@inject NavigationManager navigationManager;
+@inject HttpClient httpClient;
+
+    <CollapsibleCard Header="Account Types" Collapsed="true">
+        <BSRow>
+            <BSCol>
+                <SplitButton Name="New" Icon="ButtonIcon.Plus" Color="Color.Success" />
+                <SplitButton Name="Edit" Icon="ButtonIcon.Edit" Color="Color.Info"/>
+                <SplitButton Name="Delete" Icon="ButtonIcon.Trash" Color="Color.Danger"/>
+            </BSCol>
+        </BSRow>
+        <BSRow>
+            <BSCol>
+                @if (_task.IsCompleted)
+                {
+                    <GridComponent T="AccountTypeModel" Grid="@_grid"></GridComponent>
+                }
+                else
+                {
+                    <p><em>Loading...</em></p>
+                }
+            </BSCol>
+        </BSRow>
+    </CollapsibleCard>
+
+@code {
+    private CGrid<AccountTypeModel> _grid;
+    private Task _task;
+
+    public static Action<IGridColumnCollection<AccountTypeModel>> Columns = c =>
+    {
+        c.Add(o => o.Id);
+        c.Add(o => o.CreatedTime, "Created").Format("{0:yyyy-MM-dd}");
+        c.Add(o => o.ModifiedTime, "Modified").Format("{0:yyyy-MM-dd}");
+        c.Add(o => o.Name);
+    };
+    
+    protected override async Task OnInitializedAsync()
+    {
+        string url = navigationManager.BaseUri + "api/accounttype";
+
+        var query = new QueryDictionary<StringValues>();
+
+        var client = new GridClient<AccountTypeModel>(url, query, false, "AccountTypes", Columns)
+            .Searchable(true, true)
+            .Selectable(true);
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+
+}

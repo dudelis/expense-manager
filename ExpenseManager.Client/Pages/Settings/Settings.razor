@@ -1,0 +1,22 @@
+﻿@page "/settings"
+
+@inject HttpClient httpClient;
+@inject NavigationManager navigationManager;
+
+<BSContainer IsFluid="true">
+    <BSRow>
+        <BSCol>
+            <AccountTypeList />            
+        </BSCol>
+    </BSRow>
+    <BSRow>
+        <BSCol>
+            <CollapsibleCard />
+
+        </BSCol>
+    </BSRow>
+</BSContainer>
+
+@code {
+
+}

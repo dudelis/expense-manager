@@ -11,6 +11,9 @@ namespace ExpenseManager.Server
     {
         public MappingProfile()
         {
+            CreateMap<AccountType, AccountTypeModel>();
+            CreateMap<AccountTypeModel, AccountType>();
+
             CreateMap<Currency, CurrencyModel>();
             CreateMap<CurrencyModel, Currency>();
 
