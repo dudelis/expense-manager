@@ -40,8 +40,7 @@ namespace ExpenseManager.Server.Controllers
             var server = new GridServer<AccountTypeModel>(dtos, Request.Query, true, "AccountTypes")
                 .AutoGenerateColumns()
                 .WithPaging(10)
-                .Sortable(true)
-                .Searchable(true, true);
+                .Sortable(true);
             return Ok(server.ItemsToDisplay);
         }
 

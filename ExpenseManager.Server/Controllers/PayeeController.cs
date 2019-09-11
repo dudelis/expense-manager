@@ -17,75 +17,76 @@ namespace ExpenseManager.Server.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class CurrencyController : ControllerBase
+    public class PayeeController : ControllerBase
     {
-        private readonly ICurrencyService _currencyService;
+        private readonly IPayeeService _payeeService;
         private readonly IMapper _mapper;
 
-        public CurrencyController(ICurrencyService service, IMapper mapper)
+        public PayeeController(IPayeeService service, IMapper mapper)
         {
-            _currencyService = service;
+            _payeeService = service;
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetCurrencies")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<CurrencyModel>))]
+        [HttpGet(Name = "GetPayees")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PayeeModel>))]
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ServiceFilter(typeof(ValidateModelActionFilter))]
         public async Task<IActionResult> Get()
         {
-            var items = await _currencyService.GetListAsync();
-            var dtos = _mapper.Map<List<CurrencyModel>>(items);
-            var server = new GridServer<CurrencyModel>(dtos, Request.Query, true, "Currencies")
+            var items = await _payeeService.GetListAsync();
+            var dtos = _mapper.Map<List<PayeeModel>>(items);
+            var server = new GridServer<PayeeModel>(dtos, Request.Query, true, "Payees")
                 .AutoGenerateColumns()
                 .WithPaging(10)
-                .Sortable(true);
+                .Sortable(true)
+                .Searchable(true, true);
             return Ok(server.ItemsToDisplay);
         }
 
-        [HttpGet("{id:int}", Name = "GetCurrency")]
-        [ProducesResponseType(200, Type = typeof(CurrencyModel))]
+        [HttpGet("{id:int}", Name = "GetPayee")]
+        [ProducesResponseType(200, Type = typeof(PayeeModel))]
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ServiceFilter(typeof(ValidateModelActionFilter))]
         public async Task<IActionResult> Get(int id)
         {
-            var currency = await _currencyService.GetByIdAsync(id);
-            if (currency == null)
+            var item = await _payeeService.GetByIdAsync(id);
+            if (item == null)
                 return NotFound();
-            var dto = _mapper.Map<CurrencyModel>(currency);
+            var dto = _mapper.Map<PayeeModel>(item);
             return Ok(dto);
         }
-        [HttpPost(Name = "Create Currency")]
-        [ProducesResponseType(201, Type = typeof(CurrencyModel))]
+        [HttpPost(Name = "Create Payee")]
+        [ProducesResponseType(201, Type = typeof(PayeeModel))]
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ServiceFilter(typeof(ValidateModelActionFilter))]
-        public async Task<IActionResult> Create([FromBody] CurrencyModel dto)
+        public async Task<IActionResult> Create([FromBody] PayeeModel dto)
         {
-            var currency = _mapper.Map<Currency>(dto);
-            await _currencyService.CreateAsync(currency);
-            await _currencyService.SaveChangesAsync();
-            _mapper.Map(currency, dto);
-            return CreatedAtRoute("GetCurrency", new { id = dto.Id }, dto);
+            var item = _mapper.Map<Payee>(dto);
+            await _payeeService.CreateAsync(item);
+            await _payeeService.SaveChangesAsync();
+            _mapper.Map(item, dto);
+            return CreatedAtRoute("GetPayee", new { id = dto.Id }, dto);
         }
-        [HttpPut("{id}", Name = "Update Currency")]
+        [HttpPut("{id}", Name = "Update Payee")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
         [ServiceFilter(typeof(ValidateModelActionFilter))]
-        public async Task<IActionResult> Update(int id, [FromBody] CurrencyModel dto)
+        public async Task<IActionResult> Update(int id, [FromBody] PayeeModel dto)
         {
             if (id != dto.Id) return BadRequest(ModelState);
-            if (!await _currencyService.ItemExistsAsync(id)) return NotFound();
-            var currency = _mapper.Map<Currency>(dto);
-            _currencyService.Update(currency);
-            await _currencyService.SaveChangesAsync();
+            if (!await _payeeService.ItemExistsAsync(id)) return NotFound();
+            var item = _mapper.Map<Payee>(dto);
+            _payeeService.Update(item);
+            await _payeeService.SaveChangesAsync();
             return NoContent();
         }
-        [HttpDelete("{id}", Name = "Delete Currency")]
+        [HttpDelete("{id}", Name = "Delete Payee")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
@@ -93,11 +94,11 @@ namespace ExpenseManager.Server.Controllers
         [ServiceFilter(typeof(ValidateModelActionFilter))]
         public async Task<IActionResult> Delete(int id)
         {
-            var currency = await _currencyService.GetByIdAsync(id);
-            if (currency == null)
+            var item = await _payeeService.GetByIdAsync(id);
+            if (item == null)
                 return NotFound();
-            _currencyService.Delete(currency);
-            await _currencyService.SaveChangesAsync();
+            _payeeService.Delete(item);
+            await _payeeService.SaveChangesAsync();
             return NoContent();
         }
     }

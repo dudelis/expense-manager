@@ -3,22 +3,29 @@
 @inject HttpClient httpClient;
 @inject NavigationManager navigationManager;
 
-<BSContainer IsFluid="true">
-    <BSRow>
-        <BSCol>
-            <CollapsibleCard Header="Account Types" Collapsed="true">
-                <AccountTypeList />
-            </CollapsibleCard>
-        </BSCol>
-    </BSRow>
-    <BSRow>
-        <BSCol>
-            <CollapsibleCard Header="Currencies" Collapsed="true">
-                <CurrencyList />
-            </CollapsibleCard>
-        </BSCol>
-    </BSRow>
-</BSContainer>
+    <BSContainer IsFluid="true">
+        <BSRow>
+            <BSCol>
+                <CollapsibleCard Header="Account Types" Collapsed="true">
+                    <AccountTypeList />
+                </CollapsibleCard>
+            </BSCol>
+        </BSRow>
+        <BSRow>
+            <BSCol>
+                <CollapsibleCard Header="Currencies" Collapsed="true">
+                    <CurrencyList />
+                </CollapsibleCard>
+            </BSCol>
+        </BSRow>
+        <BSRow>
+            <BSCol>
+                <CollapsibleCard Header="Payees" Collapsed="true">
+                    <PayeeList />
+                </CollapsibleCard>
+            </BSCol>
+        </BSRow>
+    </BSContainer>
 
 @code {
 
