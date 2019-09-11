@@ -16,6 +16,5 @@ namespace ExpenseManager.Shared.Models
         public string Name { get; set; }
         public string Symbol { get; set; }
 
-        public bool Selected { get; set; }
     }
 }

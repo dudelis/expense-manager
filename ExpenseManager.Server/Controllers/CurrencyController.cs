@@ -7,6 +7,7 @@ using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Server.ActionFilters;
 using ExpenseManager.Shared.Models;
+using GridMvc.Server;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,9 +35,14 @@ namespace ExpenseManager.Server.Controllers
         [ServiceFilter(typeof(ValidateModelActionFilter))]
         public async Task<IActionResult> Get()
         {
-            var currencies = await _currencyService.GetListAsync();
-            var dtos = _mapper.Map<List<CurrencyModel>>(currencies);
-            return Ok(dtos);
+            var items = await _currencyService.GetListAsync();
+            var dtos = _mapper.Map<List<CurrencyModel>>(items);
+            var server = new GridServer<CurrencyModel>(dtos, Request.Query, true, "Currencies")
+                .AutoGenerateColumns()
+                .WithPaging(10)
+                .Sortable(true)
+                .Searchable(true, true);
+            return Ok(server.ItemsToDisplay);
         }
 
         [HttpGet("{id:int}", Name = "GetCurrency")]

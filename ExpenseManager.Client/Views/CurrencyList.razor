@@ -4,7 +4,7 @@
 @inject NavigationManager navigationManager;
 @inject HttpClient httpClient;
 
-    <CollapsibleCard Header="Account Types" Collapsed="true">
+    <CollapsibleCard Header="Currencies" Collapsed="true">
         <BSRow>
             <BSCol>
                 <BSButton Class="btn btn-primary btn-circle float-right" OnClick="AddItem">
@@ -16,7 +16,7 @@
             <BSCol>
                 @if (_task.IsCompleted)
                 {
-                    <GridComponent T="AccountTypeModel" Grid="@_grid" OnRowClicked="@EditItem"></GridComponent>
+                    <GridComponent T="CurrencyModel" Grid="@_grid" OnRowClicked="@EditItem"></GridComponent>
                 }
                 else
                 {
@@ -24,39 +24,39 @@
                 }
             </BSCol>
         </BSRow>
-        <AccountTypeEdit @ref="EditInstance"
-                         ModalHeader="Add/Edit Account Type"
-                         OnHide="@(()=> _grid.UpdateGrid())"
-                         Model="@selectedItem" />
+        <CurrencyEdit @ref="EditInstance"
+                      ModalHeader="Add/Edit Currency"
+                      OnHide="@(()=> _grid.UpdateGrid())"
+                      Model="@selectedItem" />
     </CollapsibleCard>
 
 
 @code {
-    private AccountTypeEdit EditInstance;
-    private CGrid<AccountTypeModel> _grid;
+    private CurrencyEdit EditInstance;
+    private CGrid<CurrencyModel> _grid;
     private Task _task;
-    private Modal AccountTypeModal;
-    private AccountTypeModel selectedItem { get; set; }
+    private Modal CurrencyModal;
+    private CurrencyModel selectedItem { get; set; }
 
     
     public async override Task SetParametersAsync(ParameterView parameters)
     {
         await base.SetParametersAsync(parameters);
-        selectedItem = selectedItem ?? new AccountTypeModel();
+        selectedItem = selectedItem ?? new CurrencyModel();
     }
     
-    public static Action<IGridColumnCollection<AccountTypeModel>> Columns = c =>
+    public static Action<IGridColumnCollection<CurrencyModel>> Columns = c =>
     {
-        c.Add(o => o.Id).SetWidth("10%").Sortable(true);
-        c.Add(o => o.Name).SetWidth("90%").Sortable(true);
+        c.Add(o => o.Code).SetWidth("20%").Sortable(true);
+        c.Add(o => o.Name).SetWidth("70%").Sortable(true);
+        c.Add(o => o.Symbol).SetWidth("10%");
     };
 
     protected override async Task OnInitializedAsync()
     {
-        string url = navigationManager.BaseUri + "api/accounttype";
+        string url = navigationManager.BaseUri + "api/currency";
         var query = new QueryDictionary<StringValues>();
-        var client = new GridClient<AccountTypeModel>(url, query, false, "AccountTypes", Columns)
-            .Searchable(true, true)
+        var client = new GridClient<CurrencyModel>(url, query, false, "Currencies", Columns)
             .WithPaging(10)
             .Selectable(true);
         _grid = client.Grid;
@@ -67,15 +67,15 @@
     }
     void AddItem()
     {
-        selectedItem = new AccountTypeModel();
+        selectedItem = new CurrencyModel();
         EditInstance.Toggle();
     }
     protected void EditItem(object item)
     {
-        if (item.GetType() == typeof(AccountTypeModel))
+        if (item.GetType() == typeof(CurrencyModel))
         {
             
-            var newItem = (AccountTypeModel)item;
+            var newItem = (CurrencyModel)item;
             selectedItem = newItem;
             this.StateHasChanged();
             EditInstance.Toggle();
