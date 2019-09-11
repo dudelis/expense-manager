@@ -22,6 +22,7 @@ namespace ExpenseManager.Entities.Concrete
 
         public ICollection<AccountTransfer> SourceAccountTransfers { get; set; }
         public ICollection<AccountTransfer> DestinationAccountTransfers { get; set; }
+        public ICollection<Income> Incomes { get; set; }
 
         public virtual ICollection<Expense> Expenses { get; set; }
         public Guid ProfileId { get; private set; }

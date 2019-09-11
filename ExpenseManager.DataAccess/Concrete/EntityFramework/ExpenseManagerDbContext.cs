@@ -26,6 +26,8 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<Currency> Currencies { get; set; }
         public DbSet<Expense> Expenses { get; set; }
+        public DbSet<Income> Incomes { get; set; }
+        public DbSet<IncomeCategory> IncomeCategories { get; set; }
         public DbSet<Payee> Payees { get; set; }
         public DbSet<Profile> Profiles { get; set; }
         public DbSet<ProfileMember> ProfileMembers { get; set; }
@@ -125,6 +127,23 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.HasOne(p => p.Payee).WithMany(p => p.Expenses).HasForeignKey(p => p.PayeeId).OnDelete(DeleteBehavior.Restrict);
 
             });
+            modelBuilder.Entity<Income>(entity => {
+                entity
+                    .HasOne(p => p.Category)
+                    .WithMany(p => p.Incomes)
+                    .HasForeignKey(p => p.CategoryId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity
+                    .HasOne(p => p.Account)
+                    .WithMany(p => p.Incomes)
+                    .HasForeignKey(p => p.AccountId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity.Property(p => p.IncomeDate).IsRequired();
+                entity.Property(p => p.Amount).IsRequired();
+            });
+            modelBuilder.Entity<IncomeCategory>(entity => {
+                entity.Property(p => p.Name).IsRequired();
+            });
             modelBuilder.Entity<ExpenseCategory>(entity =>
             {
                 entity
@@ -172,6 +191,8 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             modelBuilder.Entity<Currency>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<Expense>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<ExpenseCategory>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<Income>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<IncomeCategory>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<Payee>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<Profile>().HasQueryFilter(x => x.ProfileMembers.Any(p => p.UserId == _claimsProvider.UserId));
             modelBuilder.Entity<ProfileConfiguration>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
