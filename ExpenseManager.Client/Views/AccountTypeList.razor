@@ -56,7 +56,6 @@
         string url = navigationManager.BaseUri + "api/accounttype";
         var query = new QueryDictionary<StringValues>();
         var client = new GridClient<AccountTypeModel>(url, query, false, "AccountTypes", Columns)
-            .Searchable(true, true)
             .WithPaging(10)
             .Selectable(true);
         _grid = client.Grid;
