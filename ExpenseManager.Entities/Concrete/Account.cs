@@ -20,6 +20,9 @@ namespace ExpenseManager.Entities.Concrete
 
         public bool IncludeInTotals { get; set; }
 
+        public ICollection<AccountTransfer> SourceAccountTransfers { get; set; }
+        public ICollection<AccountTransfer> DestinationAccountTransfers { get; set; }
+
         public virtual ICollection<Expense> Expenses { get; set; }
         public Guid ProfileId { get; private set; }
         public Profile Profile { get; private set; }

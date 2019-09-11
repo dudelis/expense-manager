@@ -27,6 +27,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             _claimsProvider = claimsProvider;
         }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<AccountTransfer> AccountTransfers { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
         public DbSet<Currency> Currencies { get; set; }
@@ -91,6 +92,20 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(p => p.AccountTypeId)
                     .OnDelete(DeleteBehavior.Restrict);
+                entity
+                    .HasMany(p => p.SourceAccountTransfers)
+                    .WithOne(p => p.SourceAccount)
+                    .HasForeignKey(p => p.SourceAccountId)
+                    .OnDelete(DeleteBehavior.Restrict);
+                entity
+                    .HasMany(p => p.DestinationAccountTransfers)
+                    .WithOne(p => p.DestinationAccount)
+                    .HasForeignKey(p => p.DestinationAccountId)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+            modelBuilder.Entity<AccountTransfer>(entity =>
+            {
+                entity.Property(p => p.Name).IsRequired();
             });
             modelBuilder.Entity<AccountType>(entity =>
             {

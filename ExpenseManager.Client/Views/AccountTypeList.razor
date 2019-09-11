@@ -4,31 +4,31 @@
 @inject NavigationManager navigationManager;
 @inject HttpClient httpClient;
 
-    <CollapsibleCard Header="Account Types" Collapsed="true">
-        <BSRow>
-            <BSCol>
-                <BSButton Class="btn btn-primary btn-circle float-right" OnClick="AddItem">
-                    <i class="fas fa-plus"></i>
-                </BSButton>
-            </BSCol>
-        </BSRow>
-        <BSRow>
-            <BSCol>
-                @if (_task.IsCompleted)
-                {
-                    <GridComponent T="AccountTypeModel" Grid="@_grid" OnRowClicked="@EditItem"></GridComponent>
-                }
-                else
-                {
-                    <p><em>Loading...</em></p>
-                }
-            </BSCol>
-        </BSRow>
-        <AccountTypeEdit @ref="EditInstance"
-                         ModalHeader="Add/Edit Account Type"
-                         OnHide="@(()=> _grid.UpdateGrid())"
-                         Model="@selectedItem" />
-    </CollapsibleCard>
+    
+<BSRow>
+    <BSCol>
+        <BSButton Class="btn btn-primary btn-circle float-right" OnClick="AddItem">
+            <i class="fas fa-plus"></i>
+        </BSButton>
+    </BSCol>
+</BSRow>
+<BSRow>
+    <BSCol>
+        @if (_task.IsCompleted)
+        {
+            <GridComponent T="AccountTypeModel" Grid="@_grid" OnRowClicked="@EditItem"></GridComponent>
+        }
+        else
+        {
+            <p><em>Loading...</em></p>
+        }
+    </BSCol>
+</BSRow>
+<AccountTypeEdit
+    @ref="EditInstance"
+    ModalHeader="Add/Edit Account Type"
+    OnHide="@(()=> _grid.UpdateGrid())"
+    Model="@selectedItem" />
 
 
 @code {
