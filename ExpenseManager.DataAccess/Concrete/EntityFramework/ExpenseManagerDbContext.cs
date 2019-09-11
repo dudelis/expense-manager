@@ -3,17 +3,11 @@ using ExpenseManager.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Web;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using ExpenseManager.Auth.Concrete;
 using Microsoft.EntityFrameworkCore.Metadata;
-using System.Security.Claims;
 using ExpenseManager.Auth.Interfaces;
-using Microsoft.AspNetCore.Identity;
 using System.Threading;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
@@ -105,7 +99,9 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
             });
             modelBuilder.Entity<AccountTransfer>(entity =>
             {
-                entity.Property(p => p.Name).IsRequired();
+                entity.Property(p => p.TransferDate).IsRequired();
+                entity.Property(p => p.Amount).IsRequired();
+
             });
             modelBuilder.Entity<AccountType>(entity =>
             {
@@ -171,6 +167,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     .OnDelete(DeleteBehavior.Cascade);
             });
             modelBuilder.Entity<Account>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
+            modelBuilder.Entity<AccountTransfer>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<AccountType>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<Currency>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
             modelBuilder.Entity<Expense>().HasQueryFilter(x => x.ProfileId == _claimsProvider.UserProfileId);
