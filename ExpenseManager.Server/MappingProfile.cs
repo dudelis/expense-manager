@@ -16,6 +16,8 @@ namespace ExpenseManager.Server
 
             CreateMap<Currency, CurrencyModel>();
             CreateMap<CurrencyModel, Currency>();
+            CreateMap<ExpenseCategoryModel, ExpenseCategory>();
+            CreateMap<ExpenseCategory, ExpenseCategoryModel>();
 
             CreateMap<Payee, PayeeModel>();
             CreateMap<PayeeModel, Payee>();
