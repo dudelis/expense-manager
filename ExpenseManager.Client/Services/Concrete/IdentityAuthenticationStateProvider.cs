@@ -48,7 +48,7 @@ namespace ExpenseManager.Client
             NotifyAuthenticationStateChanged(GetAuthenticationStateAsync());
         }
 
-        private async Task<UserInfoModel> GetUserInfo()
+        public async Task<UserInfoModel> GetUserInfo()
         {
             if (_userInfoCache != null && _userInfoCache.IsAuthenticated) return _userInfoCache;
             _userInfoCache = await _authorizeApi.GetUserInfo();

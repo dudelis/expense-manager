@@ -81,7 +81,6 @@
         try
         {
             await authStateProvider.Register(model);
-            await authStateProvider.Logout();
             navigationManager.NavigateTo("/login", true);
         }
         catch (Exception ex)

@@ -11,5 +11,7 @@ namespace ExpenseManager.Entities.Concrete
         public string UserId { get; set; }
         public Guid DefaultProfileId { get; set; }
         public Profile DefaultProfile { get; set; }
+        public int MonthStartDay { get; set; }
+        public string DefaultCurrency { get; set; }
     }
 }

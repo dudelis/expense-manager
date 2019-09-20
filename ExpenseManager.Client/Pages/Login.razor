@@ -70,6 +70,15 @@
     LoginModel model { get; set; } = new LoginModel();
     string error;
 
+    protected override async Task OnInitializedAsync()
+    {
+        var userInfo = await authStateProvider.GetUserInfo();
+        if (userInfo.IsAuthenticated)
+        {
+            await authStateProvider.Logout();
+        }
+    }
+
     async Task OnSubmit()
     {
         error = null;

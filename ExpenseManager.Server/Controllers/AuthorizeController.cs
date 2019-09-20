@@ -70,7 +70,6 @@ namespace ExpenseManager.Server.Controllers
                         UserId = user.UserName
                     }
                 },
-                ProfileConfiguration = new ProfileConfiguration(),
                 UserSettings = new List<UserSettings>()
                 {
                     new UserSettings()
