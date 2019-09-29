@@ -3,17 +3,16 @@ using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ExpenseManager.Business.Concrete
 {
     public class ExpenseDataManager : BaseManager<Expense, IExpenseRepository>, IExpenseService
     {
-        
-        public ExpenseDataManager(IExpenseRepository repository): base(repository)
+
+        public ExpenseDataManager(IExpenseRepository repository) : base(repository)
         {
         }
-        
+
 
         public List<Expense> GetByAccount(int payFromAccountId)
         {
@@ -27,7 +26,7 @@ namespace ExpenseManager.Business.Concrete
 
         public List<Expense> GetExpenseForMonth(DateTime expenseDate)
         {
-            return this.Repository.GetList(e => e.ExpenseDate.Year == expenseDate.Year && e.ExpenseDate.Month == expenseDate.Month);            
+            return this.Repository.GetList(e => e.ExpenseDate.Year == expenseDate.Year && e.ExpenseDate.Month == expenseDate.Month);
         }
 
         public List<Expense> GetByPayee(int payeeId)

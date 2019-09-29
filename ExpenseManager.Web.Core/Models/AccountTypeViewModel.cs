@@ -1,14 +1,12 @@
 ﻿using ExpenseManager.Entities.Concrete;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ExpenseManager.Web.Core.Models
 {
-    public class AccountTypeViewModel: BaseViewModel
+    public class AccountTypeViewModel : BaseViewModel
     {
         [Required]
         [Display(Name = "Name")]
@@ -16,7 +14,7 @@ namespace ExpenseManager.Web.Core.Models
         public string Name { get; set; }
         public ICollection<AccountViewModel> Accounts { get; set; }
 
-        public AccountTypeViewModel(){}
+        public AccountTypeViewModel() { }
 
         public AccountTypeViewModel(AccountType source)
         {

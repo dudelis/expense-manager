@@ -5,17 +5,19 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <OutputType>Exe</OutputType>
     <LangVersion>7.3</LangVersion>
+    <UserSecretsId>dc2908fc-52d8-4703-b768-b2a4bb3a520b</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="BlazorStrap" Version="1.0.0-preview9-03" />
+    <PackageReference Include="BlazorStrap" Version="1.0.1" />
     <PackageReference Include="BuildWebCompiler" Version="1.12.405" />
-    <PackageReference Include="GridBlazor" Version="0.9.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview9.19424.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview9.19424.4" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19424.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.0.0-preview9.19424.4" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.0.0-preview9.19424.4" />
+    <PackageReference Include="GridBlazor" Version="1.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor" Version="3.0.0-preview9.19465.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.Build" Version="3.0.0-preview9.19465.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.DevServer" Version="3.0.0-preview9.19465.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Blazor.HttpClient" Version="3.0.0-preview9.19465.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="3.0.0" />
   </ItemGroup>
 
   <ItemGroup>

@@ -3,9 +3,7 @@ using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace ExpenseManager.Web.Core.Seed
 {

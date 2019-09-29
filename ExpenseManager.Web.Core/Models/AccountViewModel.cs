@@ -3,11 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ExpenseManager.Web.Core.Models
 {
-    public class AccountViewModel: BaseViewModel
+    public class AccountViewModel : BaseViewModel
     {
         [Required]
         public string Name { get; set; }
@@ -15,10 +14,10 @@ namespace ExpenseManager.Web.Core.Models
 
         [Required]
         [MaxLength(3)]
-        [Display(Name="Currency")]
+        [Display(Name = "Currency")]
         public string CurrencyCode { get; set; }
         public virtual Currency Currency { get; set; }
-        
+
         public decimal Balance { get; set; }
         [Display(Name = "As of")]
         public DateTime BalanceDate { get; set; }
@@ -36,7 +35,7 @@ namespace ExpenseManager.Web.Core.Models
         public ICollection<AccountType> ListOfAccountTypes { get; set; }
 
 
-        public AccountViewModel(){}
+        public AccountViewModel() { }
 
         public AccountViewModel(Account a)
         {

@@ -1,16 +1,11 @@
 ﻿using ExpenseManager.Client.Services.Interfaces;
 using ExpenseManager.Shared.Models;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.AspNetCore.Components;
-using Microsoft.JSInterop;
+using Microsoft.AspNetCore.Components.Authorization;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace ExpenseManager.Client
 {

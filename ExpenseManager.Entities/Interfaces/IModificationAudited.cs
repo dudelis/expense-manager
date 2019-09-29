@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExpenseManager.Entities.Interfaces
+﻿namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IModificationAudited: IHasModificationTime
+    public interface IModificationAudited : IHasModificationTime
     {
         string LastModifiedUserId { get; set; }
     }

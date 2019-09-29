@@ -1,15 +1,13 @@
 ﻿using ExpenseManager.Entities.Concrete;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ExpenseManager.Web.Core.Models
 {
-    public class PayeeViewModel: BaseViewModel
+    public class PayeeViewModel : BaseViewModel
     {
-        [Required(ErrorMessage ="Name is a required field")]
+        [Required(ErrorMessage = "Name is a required field")]
         public string Name { get; set; }
         [Display(Name = "Account Number")]
         public string AccountNumber { get; set; }

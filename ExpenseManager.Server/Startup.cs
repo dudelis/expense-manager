@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
-using System.Threading.Tasks;
 using AutoMapper;
 using ExpenseManager.Auth.Concrete;
 using ExpenseManager.Auth.Interfaces;
@@ -12,18 +7,18 @@ using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Server.ActionFilters;
 using ExpenseManager.Server.Extensions;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
+using System.Net.Mime;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Server
 {
@@ -78,8 +73,8 @@ namespace ExpenseManager.Server
                 };
             });
 
-            
-            
+
+
             services.AddScoped<IGetClaimsProvider, GetClaimsFromUser>();
             services.AddScoped<IUserClaimsPrincipalFactory<ApplicationUser>, CustomUserClaimsPrincipalFactory>();
 
@@ -126,7 +121,7 @@ namespace ExpenseManager.Server
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseClientSideBlazorFiles<Client.Startup>();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

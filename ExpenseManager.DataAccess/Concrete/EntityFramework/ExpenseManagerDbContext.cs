@@ -1,18 +1,18 @@
-﻿using ExpenseManager.Entities.Concrete;
+﻿using ExpenseManager.Auth.Concrete;
+using ExpenseManager.Auth.Interfaces;
+using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Entities.Interfaces;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
 using System;
 using System.Linq;
-using System.Threading.Tasks;
-using ExpenseManager.Auth.Concrete;
-using Microsoft.EntityFrameworkCore.Metadata;
-using ExpenseManager.Auth.Interfaces;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class ExpenseManagerDbContext: IdentityDbContext<ApplicationUser>
+    public class ExpenseManagerDbContext : IdentityDbContext<ApplicationUser>
     {
         private readonly IGetClaimsProvider _claimsProvider;
 
@@ -121,13 +121,15 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                     .IsRequired();
 
             });
-            modelBuilder.Entity<Expense>(entity => {
+            modelBuilder.Entity<Expense>(entity =>
+            {
                 entity.HasOne(p => p.Category).WithMany(p => p.Expenses).HasForeignKey(p => p.CategoryId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(p => p.PayFromAccount).WithMany(p => p.Expenses).HasForeignKey(p => p.PayFromAccountId).OnDelete(DeleteBehavior.Restrict);
                 entity.HasOne(p => p.Payee).WithMany(p => p.Expenses).HasForeignKey(p => p.PayeeId).OnDelete(DeleteBehavior.Restrict);
 
             });
-            modelBuilder.Entity<Income>(entity => {
+            modelBuilder.Entity<Income>(entity =>
+            {
                 entity
                     .HasOne(p => p.Category)
                     .WithMany(p => p.Incomes)
@@ -141,7 +143,8 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 entity.Property(p => p.IncomeDate).IsRequired();
                 entity.Property(p => p.Amount).IsRequired();
             });
-            modelBuilder.Entity<IncomeCategory>(entity => {
+            modelBuilder.Entity<IncomeCategory>(entity =>
+            {
                 entity.Property(p => p.Name).IsRequired();
             });
             modelBuilder.Entity<ExpenseCategory>(entity =>
@@ -226,7 +229,7 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 if (entity.Entity is ICreationAudited)
                     entity.Property("CreatorUserId").CurrentValue = _claimsProvider.UserId;
                 if (entity.Entity is IModificationAudited)
-                    entity.Property("LastModifiedUserId").CurrentValue = _claimsProvider.UserId;                
+                    entity.Property("LastModifiedUserId").CurrentValue = _claimsProvider.UserId;
             }
             var modifiedEntities = ChangeTracker.Entries().Where(x => x.State == EntityState.Modified);
             foreach (var entity in modifiedEntities)
@@ -234,17 +237,17 @@ namespace ExpenseManager.DataAccess.Concrete.EntityFramework
                 if (entity.Entity is IHasModificationTime)
                 {
                     entity.Property("ModifiedTime").CurrentValue = DateTime.UtcNow;
-                }                    
+                }
                 if (entity.Entity is IModificationAudited)
                 {
                     entity.Property("LastModifiedUserId").CurrentValue = _claimsProvider.UserId;
-                }                    
-            }                        
+                }
+            }
         }
         private void SetProfileGuid()
         {
             var addedEntries = ChangeTracker.Entries().Where(x => x.State == EntityState.Added && x.Entity is IProfileDependent);
-            foreach(var entry in addedEntries)
+            foreach (var entry in addedEntries)
             {
                 var entity = entry.Entity as IProfileDependent;
                 entity.SetProfileId(_claimsProvider.UserProfileId);

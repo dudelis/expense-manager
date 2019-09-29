@@ -1,0 +1,111 @@
+﻿@inject NavigationManager navigationManager;
+@inject HttpClient httpClient;
+
+    <BSModal @ref="ModalInstance" HideEvent="OnHide" Size="Size.Large">
+        <BSModalHeader OnClick="CloseSubview">
+            @ModalHeader
+        </BSModalHeader>
+        <BSModalBody>
+            <BSContainer IsFluid="true">
+                <BSRow>
+                    <BSCol>
+                        <BSForm Model="@Model" OnValidSubmit="@HandleValidSubmit">
+                            <DataAnnotationsValidator />
+                            <BSRow Class="form-row">
+                                <BSCol>
+                                    <BSFormGroup>
+                                        <BSLabel For="ParentCategoryId">Parent Category</BSLabel>
+                                        <select Id="ParentCategoryId" class="form-control" PlaceHolder="Select the parent expense category" @bind="Model.ParentCategoryId">
+                                            <option value=""></option>
+                                            @foreach (var category in parentExpenseCategories)
+                                            {
+                                                <option value="@category.Id">@category.Name</option>
+
+                                            }
+                                        </select>
+                                        <BSFormFeedback For="@(() => Model.ParentCategoryId)" />
+                                    </BSFormGroup>
+                                </BSCol>
+                            </BSRow>
+                            <BSRow Class="form-row">
+
+                                <BSCol>
+                                    <BSFormGroup>
+                                        <BSLabel For="Name">Name</BSLabel>
+                                        <BSInput Id="Name" InputType="InputType.Text" PlaceHolder="Enter Expense Category" @bind-Value="Model.Name"></BSInput>
+                                        <BSFormFeedback For="@(() => Model.Name)" />
+                                    </BSFormGroup>
+                                </BSCol>
+                            </BSRow>
+                            <BSRow Class="form-row">
+                                <BSCol Class="d-flex justify-content-around">
+                                    <BSButton Color="Color.Primary" ButtonType="ButtonType.Submit" Value="Save"></BSButton>
+                                    <BSButton IsOutline="true" Color="Color.Secondary" @onclick="CloseSubview">Cancel</BSButton>
+
+
+                                </BSCol>
+                                @if (Model.Id > 0)
+                                {
+                                    <div class="float-right">
+                                        <DeleteButtonWithConfirm OnConfirmDelete="DeleteItem" />
+                                    </div>
+                                }
+                            </BSRow>
+                        </BSForm>
+                    </BSCol>
+                </BSRow>
+            </BSContainer>
+        </BSModalBody>        
+    </BSModal>
+
+@code{
+    [Parameter]
+    public ExpenseCategoryModel Model { get; set; }
+    [Parameter]
+    public string ModalHeader { get; set; }
+    [Parameter]
+    public EventCallback OnHide { get; set; }
+
+    private BSModal ModalInstance;
+    private DeleteButtonWithConfirm deleteButton;
+    private List<ExpenseCategoryModel> parentExpenseCategories = new List<ExpenseCategoryModel>();
+
+    //protected override async Task OnInitializedAsync()
+    //{
+    //    await base.OnInitializedAsync();
+    //    parentExpenseCategories = await httpClient.GetJsonAsync<List<ExpenseCategoryModel>>("/api/expensecategory/parent");
+    //}
+
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        Model = Model ?? new ExpenseCategoryModel();
+    }
+
+    async Task HandleValidSubmit()
+    {
+        if (Model.Id == 0)
+        {
+            await httpClient.PostJsonAsync("/api/expensecategory", Model);
+            ModalInstance.Hide();
+        } else
+        {
+            await httpClient.PutJsonAsync($"/api/expensecategory/{Model.Id}", Model);
+            ModalInstance.Hide();
+        }
+    }
+    async Task DeleteItem()
+    {
+        await httpClient.DeleteAsync($"/api/expensecategory/{Model.Id}");
+        this.CloseSubview();
+    }
+    void CloseSubview()
+    {
+        this.ModalInstance.Toggle();
+    }
+
+    public void Toggle()
+    {
+        ModalInstance.Toggle();
+    }
+}

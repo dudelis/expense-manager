@@ -1,13 +1,8 @@
-﻿using ExpenseManager.Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Web.Core.Models
 {
-    public class CurrencyViewModel: BaseViewModel
+    public class CurrencyViewModel : BaseViewModel
     {
         [Required]
         [StringLength(3, ErrorMessage = "Code should not contain more than 3 characters")]

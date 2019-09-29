@@ -3,14 +3,11 @@ using ExpenseManager.Business.Concrete;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.DataAccess.Interfaces;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ExpenseManager.Web.Core.Extensions
 {
@@ -40,7 +37,7 @@ namespace ExpenseManager.Web.Core.Extensions
         public static void ConfigureIdentityServices(this IServiceCollection services, IConfiguration config)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ExpenseManagerDbContext>();
-            
+
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = true;

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 
 namespace ExpenseManager.DataAccess.Interfaces
 {
     public interface IRepositoryWrapper
     {
-        IAccountRepository Account { get;  }
+        IAccountRepository Account { get; }
         IAccountTypeRepository AccountType { get; }
         ICurrencyRepository Currency { get; }
         IExpenseRepository Expense { get; }

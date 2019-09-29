@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Web.Core.Models
 {
@@ -24,9 +20,9 @@ namespace ExpenseManager.Web.Core.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Compare("Password", ErrorMessage ="Passwords must match")]
+        [Compare("Password", ErrorMessage = "Passwords must match")]
         [DataType(DataType.Password)]
-        [Display(Name ="Confirm Password")]
+        [Display(Name = "Confirm Password")]
         public string ConfirmPassword { get; set; }
     }
 }

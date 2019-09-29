@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseManager.Business.Interfaces;
-using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Server.ActionFilters;
 using ExpenseManager.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Server.Controllers
 {
@@ -39,7 +36,7 @@ namespace ExpenseManager.Server.Controllers
             return Ok(dtos);
         }
 
-        
+
         [HttpPut("{id}", Name = "Update Profile")]
         [ProducesResponseType(204)]
         [ProducesResponseType(401)]

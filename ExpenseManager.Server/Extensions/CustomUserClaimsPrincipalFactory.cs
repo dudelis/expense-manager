@@ -1,19 +1,16 @@
 ﻿using ExpenseManager.Auth.Concrete;
-using ExpenseManager.Business.Interfaces;
 using ExpenseManager.DataAccess.Concrete.EntityFramework;
 using ExpenseManager.Shared.Constants;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.Server.Extensions
 {
-    public class CustomUserClaimsPrincipalFactory: UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
+    public class CustomUserClaimsPrincipalFactory : UserClaimsPrincipalFactory<ApplicationUser, IdentityRole>
     {
         private readonly ExpenseManagerDbContext _dbContext;
         public CustomUserClaimsPrincipalFactory(
@@ -33,7 +30,7 @@ namespace ExpenseManager.Server.Extensions
             if (userSettings != null)
             {
                 identity.AddClaim(new Claim(CustomClaimTypes.DefaultProfileGuid, userSettings.DefaultProfileId.ToString() ?? ""));
-            }            
+            }
             return identity;
         }
     }

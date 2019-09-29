@@ -3,30 +3,29 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace ExpenseManager.Web.Core.Models
 {
-    public class ExpenseViewModel: BaseViewModel
-    {        
+    public class ExpenseViewModel : BaseViewModel
+    {
         [Required]
-        [Display(Name ="Date")]
+        [Display(Name = "Date")]
         public DateTime ExpenseDate { get; set; }
         [Required]
         public decimal Amount { get; set; }
         public string Notes { get; set; }
 
         [Required]
-        [Display(Name ="Pay from")]
+        [Display(Name = "Pay from")]
         public int? PayFromAccountId { get; set; }
         public Account PayFromAccount { get; set; }
 
         [Required]
-        [Display(Name ="Category")]
+        [Display(Name = "Category")]
         public int? CategoryId { get; set; }
         public ExpenseCategory Category { get; set; }
         [Required]
-        [Display(Name ="Currency")]
+        [Display(Name = "Currency")]
         public string CurrencyCode { get; set; }
         public Currency Currency { get; set; }
 

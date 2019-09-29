@@ -1,14 +1,11 @@
 ﻿using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Entities.Concrete;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ExpenseManager.DataAccess.Concrete.EntityFramework
 {
-    public class EfExpenseRepository: EfEntityRepositoryBase<Expense, ExpenseManagerDbContext>, IExpenseRepository
+    public class EfExpenseRepository : EfEntityRepositoryBase<Expense, ExpenseManagerDbContext>, IExpenseRepository
     {
-        public EfExpenseRepository(ExpenseManagerDbContext context): base(context)
+        public EfExpenseRepository(ExpenseManagerDbContext context) : base(context)
         {
 
         }

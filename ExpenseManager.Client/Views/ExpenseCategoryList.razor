@@ -1,0 +1,98 @@
+﻿@using GridShared
+@using GridShared.Utility
+@using Microsoft.Extensions.Primitives
+@inject NavigationManager navigationManager;
+@inject HttpClient httpClient;
+
+    
+<BSRow>
+    <BSCol>
+        <BSButton Class="btn btn-primary btn-circle float-right" OnClick="AddItem">
+            <i class="fas fa-plus"></i>
+        </BSButton>
+    </BSCol>
+</BSRow>
+<BSRow>
+    <BSCol>
+        @if (_task.IsCompleted)
+        {
+            <GridComponent T="ExpenseCategoryModel" Grid="@_grid" OnRowClicked="@EditItem"></GridComponent>
+        }
+        else
+        {
+            <p><em>Loading...</em></p>
+        }
+    </BSCol>
+</BSRow>
+<ExpenseCategoryEdit
+    @ref="EditInstance"
+    ModalHeader="Add/Edit Expense Category"
+    OnHide="@(()=> _grid.UpdateGrid())"
+    Model="@selectedItem" />
+
+
+@code {
+    private ExpenseCategoryEdit EditInstance;
+    private CGrid<ExpenseCategoryModel> _grid;
+    private Task _task;
+    private Modal ExpenseCategoryModal;
+    private ExpenseCategoryModel selectedItem { get; set; }
+
+    
+    public async override Task SetParametersAsync(ParameterView parameters)
+    {
+        await base.SetParametersAsync(parameters);
+        selectedItem = selectedItem ?? new ExpenseCategoryModel();
+    }
+    
+    public static Action<IGridColumnCollection<ExpenseCategoryModel>> Columns = c =>
+    {
+        c.Add(o => o.Id).SetWidth("10%").Sortable(true);
+        c.Add(o => o.Name).SetWidth("90%").Sortable(true);
+    };
+
+    protected override async Task OnParametersSetAsync()
+    {
+        //Sub Grid
+        Func<object[], Task<ICGrid>> subGrids = async keys =>
+        {
+            string subGridUrl = navigationManager.BaseUri + "api/expensecategory/" + keys[0] + "/grid";
+            var subGridQuery = new QueryDictionary<StringValues>();
+            var subGridClient = new GridClient<ExpenseCategoryModel>(subGridUrl, subGridQuery, false,
+                "expenseCategoriesGrid" + keys[0].ToString(), Columns);
+
+            await subGridClient.UpdateGrid();
+            return subGridClient.Grid;
+        };
+
+
+        //Main Grid
+        string url = navigationManager.BaseUri + "api/expensecategory/grid";
+        var query = new QueryDictionary<StringValues>();
+        var client = new GridClient<ExpenseCategoryModel>(url, query, false, "ExpenseCategories", Columns)
+            .WithPaging(10)
+            .Selectable(true)
+            .SubGrid(subGrids, "ParentCategoryId");
+        _grid = client.Grid;
+
+        // Set new items to grid
+        _task = client.UpdateGrid();
+        await _task;
+    }
+    void AddItem()
+    {
+        selectedItem = new ExpenseCategoryModel();
+        EditInstance.Toggle();
+    }
+    protected void EditItem(object item)
+    {
+        if (item.GetType() == typeof(ExpenseCategoryModel))
+        {
+            
+            var newItem = (ExpenseCategoryModel)item;
+            selectedItem = newItem;
+            this.StateHasChanged();
+            EditInstance.Toggle();
+        }
+    }
+}

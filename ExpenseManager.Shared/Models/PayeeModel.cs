@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Shared.Models
 {
-    public class PayeeModel: BaseModel
+    public class PayeeModel : BaseModel
     {
         [Required]
         public string Name { get; set; }

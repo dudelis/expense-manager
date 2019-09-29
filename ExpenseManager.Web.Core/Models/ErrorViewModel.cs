@@ -1,5 +1,3 @@
-using System;
-
 namespace ExpenseManager.Web.Core.Models
 {
     public class ErrorViewModel

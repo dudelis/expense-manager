@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace ExpenseManager.Shared.Models
 {
-    public class CurrencyModel: BaseModel
+    public class CurrencyModel : BaseModel
     {
         [Required]
         [StringLength(3, ErrorMessage = "Code should not contain more than 3 characters")]

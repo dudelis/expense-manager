@@ -1,8 +1,6 @@
 ﻿using ExpenseManager.Entities.Concrete;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace ExpenseManager.Web.Core.Models
 {

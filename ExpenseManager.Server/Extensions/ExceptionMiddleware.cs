@@ -1,8 +1,6 @@
 ﻿using ExpenseManager.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -23,7 +21,7 @@ namespace ExpenseManager.Server.Extensions
             {
                 await _next(context);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await HandleExceptionsAsync(context, ex);
             }

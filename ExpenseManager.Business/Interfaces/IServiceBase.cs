@@ -3,20 +3,19 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.Business.Interfaces
 {
-    public interface IServiceBase<T, TRepo>: IServiceBase<T, int, TRepo>
-        where T: class, IEntity<int>, new()
+    public interface IServiceBase<T, TRepo> : IServiceBase<T, int, TRepo>
+        where T : class, IEntity<int>, new()
         where TRepo : class, IEntityRepository<T>
     {
 
     }
-        public interface IServiceBase<T, TKey, TRepo>
-            where T : class, IEntity<TKey>, new()
-            where TRepo: class, IEntityRepository<T, TKey>
+    public interface IServiceBase<T, TKey, TRepo>
+        where T : class, IEntity<TKey>, new()
+        where TRepo : class, IEntityRepository<T, TKey>
     {
 
         T Get(Expression<Func<T, bool>> filter);
@@ -24,7 +23,7 @@ namespace ExpenseManager.Business.Interfaces
 
         List<T> GetList(Expression<Func<T, bool>> filter = null);
         Task<List<T>> GetListAsync(Expression<Func<T, bool>> filter = null);
-        
+
         T GetById(TKey id);
         Task<T> GetByIdAsync(TKey id);
         bool ItemExists(TKey id);

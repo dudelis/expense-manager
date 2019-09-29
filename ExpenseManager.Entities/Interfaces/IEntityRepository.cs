@@ -2,12 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IEntityRepository<T>: IEntityRepository<T, int> where T : class, IEntity<int>, new()
+    public interface IEntityRepository<T> : IEntityRepository<T, int> where T : class, IEntity<int>, new()
     {
 
     }

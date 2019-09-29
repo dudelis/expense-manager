@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ExpenseManager.Business.Concrete
 {
-    public class BaseManager<T, TRepository>: BaseManager<T, int, TRepository>
+    public class BaseManager<T, TRepository> : BaseManager<T, int, TRepository>
         where T : class, IEntity, new()
         where TRepository : class, IEntityRepository<T>
     {
@@ -94,6 +94,6 @@ namespace ExpenseManager.Business.Concrete
             return Repository.SaveAsync();
         }
 
-       
+
     }
 }

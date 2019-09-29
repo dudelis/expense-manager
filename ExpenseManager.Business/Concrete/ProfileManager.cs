@@ -2,7 +2,6 @@
 using ExpenseManager.DataAccess.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using System;
-using System.Collections.Generic;
 
 namespace ExpenseManager.Business.Concrete
 {

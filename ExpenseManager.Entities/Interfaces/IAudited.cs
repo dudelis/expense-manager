@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExpenseManager.Entities.Interfaces
+﻿namespace ExpenseManager.Entities.Interfaces
 {
-    public interface IAudited: ICreationAudited, IModificationAudited
+    public interface IAudited : ICreationAudited, IModificationAudited
     {
     }
 }

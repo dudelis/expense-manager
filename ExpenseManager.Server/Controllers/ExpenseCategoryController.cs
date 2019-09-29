@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Server.ActionFilters;
 using ExpenseManager.Shared.Models;
 using GridMvc.Server;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Server.Controllers
 {
@@ -28,14 +25,14 @@ namespace ExpenseManager.Server.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet(Name = "GetExpenseCategoriesGrid")]
+        [HttpGet("grid", Name = "GetExpenseCategoriesGrid")]
         [ProducesResponseType(200)]
         [ProducesResponseType(401)]
         [ProducesResponseType(400)]
         [ServiceFilter(typeof(ValidateModelActionFilter))]
         public async Task<IActionResult> Get()
         {
-            var items = await _expenseCategoryService.GetListAsync();
+            var items = await _expenseCategoryService.GetListAsync(x => x.ParentCategoryId.HasValue == false);
             var dtos = _mapper.Map<List<ExpenseCategoryModel>>(items);
             var server = new GridServer<ExpenseCategoryModel>(dtos, Request.Query, true, "ExpenseCategories")
                 .AutoGenerateColumns()
@@ -45,6 +42,34 @@ namespace ExpenseManager.Server.Controllers
             return Ok(server.ItemsToDisplay);
         }
 
+        [HttpGet("{ParentCategoryId:int}/grid", Name = "GetExpenseCategoriesSubGrid")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(400)]
+        [ServiceFilter(typeof(ValidateModelActionFilter))]
+        public async Task<IActionResult> GetSubCategories(int ParentCategoryId)
+        {
+            var items = await _expenseCategoryService.GetListAsync(x => x.ParentCategoryId.Value == ParentCategoryId);
+            var dtos = _mapper.Map<List<ExpenseCategoryModel>>(items);
+            var server = new GridServer<ExpenseCategoryModel>(dtos, Request.Query, true, "expenseCategoriesGrid" + ParentCategoryId.ToString())
+                .AutoGenerateColumns()
+                .WithPaging(10)
+                .Sortable(true)
+                .Searchable(true, true);
+            return Ok(server.ItemsToDisplay);
+        }
+
+        [HttpGet("parent", Name = "GetParentExpenseCategories")]
+        [ProducesResponseType(200, Type = typeof(List<ExpenseCategoryModel>))]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(400)]
+        [ServiceFilter(typeof(ValidateModelActionFilter))]
+        public async Task<IActionResult> GetParentCategories()
+        {
+            var items = await _expenseCategoryService.GetListAsync(x => x.ParentCategoryId.HasValue == false);
+            var dtos = _mapper.Map<List<ExpenseCategoryModel>>(items);
+            return Ok(dtos);
+        }
         [HttpGet("{id:int}", Name = "GetExpenseCategory")]
         [ProducesResponseType(200, Type = typeof(ExpenseCategoryModel))]
         [ProducesResponseType(401)]

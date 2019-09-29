@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Server.ActionFilters;
 using ExpenseManager.Shared.Models;
 using GridMvc.Server;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Server.Controllers
 {

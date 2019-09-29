@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using ExpenseManager.Auth.Concrete;
+﻿using ExpenseManager.Auth.Concrete;
 using ExpenseManager.Business.Interfaces;
 using ExpenseManager.Entities.Concrete;
 using ExpenseManager.Server.ActionFilters;
@@ -11,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ExpenseManager.Server.Controllers
 {
@@ -77,7 +76,7 @@ namespace ExpenseManager.Server.Controllers
                         UserId = user.UserName
                     }
                 }
-                
+
             };
             await _profileServiceManager.CreateAsync(profile);
             await _profileServiceManager.SaveChangesAsync();
